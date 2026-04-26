@@ -288,6 +288,50 @@ La indexabilidad de la SPA por Google es aceptable: no es una app de contenido d
 
 ---
 
+### 18. Observabilidad: analítica y monitorización de errores
+
+**Decisión**: Un proyecto publicado sin observabilidad falla en silencio. Se instrumenta con dos herramientas, priorizando privacidad y coste cero.
+
+**Analytics: Plausible Analytics**
+
+Plausible Analytics (cloud o self-hosted, tier gratuito) como única herramienta de analítica. No usa cookies, no requiere banner de consentimiento RGPD, no envía datos a terceros, es GDPR-compliant por diseño, y el script pesa ~1KB.
+
+Eventos a trackear en MVP:
+
+| Evento | Descripción |
+|---|---|
+| `pageview` | Automático (Plausible) |
+| `layer_change` | Qué capas usa la gente — para priorizar trabajo futuro |
+| `concello_search` | Búsquedas realizadas (sin el término, solo el evento) |
+| `concello_detail_open` | Cuántos usuarios llegan al detalle |
+| `provider_fallback` | Cuando Open-Meteo actúa como fallback de AEMET — señal de que el proxy falla |
+
+No se trackea: términos de búsqueda concretos, provincias o concellos seleccionados, ni ningún dato que permita inferir ubicación del usuario.
+
+**Monitorización de errores: Sentry**
+
+Sentry Free tier (5K errores/mes) para el único componente con riesgo de fallo silencioso en producción: el proxy de AEMET. Un 429, un cambio en la estructura del JSON de AEMET, o una URL firmada expirada pueden romper la app sin aviso.
+
+Instrumentar en MVP:
+- Errores de red en todos los providers (`OpenMeteoProvider`, `AemetProvider`)
+- Errores del proxy Vercel Edge Function (Vercel ya los expone en su dashboard; Sentry añade contexto de stack trace)
+- Errores de parseo de GeoJSON (señal de que un asset estático está corrupto o no carga)
+
+El SDK de Sentry para Svelte es tree-shakeable — importar solo en el entry point para no impactar el bundle.
+
+**Observabilidad del proxy AEMET**
+
+El proxy debe loguear en cada request: timestamp, endpoint solicitado, status de la primera request a AEMET, status de la segunda request a la URL firmada, y tiempo total. Vercel guarda logs 1 hora en el tier gratuito — suficiente para debugging reactivo.
+
+Añadir un endpoint `/api/health` que haga una request mínima a AEMET (municipio de Lugo) y devuelva `{ status: "ok", provider: "aemet", latency_ms: N }` o `{ status: "degraded", reason: "..." }`. Permite verificar el estado del proxy sin abrir la app.
+
+**Fuera de scope:**
+Alertas automáticas (PagerDuty, email) — revisar Sentry periódicamente es suficiente para un proyecto personal. Métricas RUM en tiempo real — Lighthouse CI en el pipeline cubre esto.
+
+**Rationale**: Plausible da datos de uso reales sin comprometer privacidad ni añadir fricción legal. Sentry cierra el gap de visibilidad del proxy AEMET, que es el único punto de fallo no recuperable automáticamente.
+
+---
+
 ## Open Questions
 
 - ~~¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?~~ → **Resuelto**: Vercel (tarea 1.5; Edge Function del proxy convive en el mismo repo)
