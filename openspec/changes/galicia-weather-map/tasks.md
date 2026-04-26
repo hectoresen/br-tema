@@ -161,15 +161,22 @@
 - [ ] 17.3 Actualizar reactivamente al cambiar `selectedDay` o `selectedTimeSlot`
 - [ ] 17.4 Implementar botÃ³n de cierre; etiquetas via i18n
 
-## 18. Pulido UI, mobile-first y calidad
+## 18. SEO, metadatos y compartibilidad social
 
-- [ ] 18.1 Revisar cada pantalla en viewport 390px (iPhone); ajustar layout, tamaÃ±os de texto y controles tÃ¡ctiles
-- [ ] 18.2 Verificar breakpoints sm/md/lg para tablet y desktop
-- [ ] 18.3 AÃ±adir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
-- [ ] 18.4 AÃ±adir mensaje de error global si el proveedor falla
-- [ ] 18.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
-- [ ] 18.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
-- [ ] 18.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
-- [ ] 18.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
-- [ ] 18.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
+- [ ] 18.1 Añadir metadatos estáticos completos en `index.html`: `<meta name="description">`, `og:title`, `og:description`, `og:image`, `og:type`, `twitter:card`
+- [ ] 18.2 Crear imagen OG `/public/og-image.png` (1200×630px) con captura real del mapa con datos cargados
+- [ ] 18.3 Implementar `<title>` dinámico reactivo a `selectedConcello`: `"${concello.nombre} — Brétema"` cuando seleccionado, `"Brétema"` en vista general — actualizar con `document.title` en un `$:` reactivo
+- [ ] 18.4 Crear `public/robots.txt` que permita indexación; crear `public/sitemap.xml` mínimo con la URL raíz
+
+## 19. Pulido UI, mobile-first y calidad
+
+- [ ] 19.1 Revisar cada pantalla en viewport 390px (iPhone); ajustar layout, tamaños de texto y controles táctiles
+- [ ] 19.2 Verificar breakpoints sm/md/lg para tablet y desktop
+- [ ] 19.3 Añadir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
+- [ ] 19.4 Añadir mensaje de error global si el proveedor falla
+- [ ] 19.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
+- [ ] 19.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
+- [ ] 19.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
+- [ ] 19.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
+- [ ] 19.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
 

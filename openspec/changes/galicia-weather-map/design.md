@@ -256,6 +256,38 @@ Cambiar de proveedor de tiles = cambiar la URL de estilo en `src/config/map.ts`.
 
 ---
 
+### 17. SEO, metadatos y compartibilidad social
+
+**Decisión**: Brétema es una SPA sin SSR — los crawlers y previsualizadores de redes sociales ven HTML vacío por defecto. Esta decisión documenta qué se resuelve en el MVP y qué queda fuera de scope.
+
+**En scope para el MVP:**
+
+1. **Metadatos estáticos en `index.html`** que describen la aplicación en general:
+   ```html
+   <meta name="description" content="Previsión del tiempo para Galicia — mapa interactivo por provincia e concello">
+   <meta property="og:title" content="Brétema — O tempo en Galicia">
+   <meta property="og:description" content="Mapa interactivo do tempo en Galicia. Previsión 4 días por provincia e concello.">
+   <meta property="og:image" content="/og-image.png">
+   <meta property="og:type" content="website">
+   <meta name="twitter:card" content="summary_large_image">
+   ```
+
+2. **Imagen OG** (`/og-image.png`, 1200×630px): captura real del mapa con datos, no un logo sobre fondo blanco. Es lo primero que ve alguien cuando comparte la URL en WhatsApp o Twitter.
+
+3. **`<title>` dinámico reactivo a `selectedConcello`**: `Lugo — Brétema` cuando hay concello seleccionado, `Brétema` en la vista general. No requiere SSR — es un `document.title` reactivo al store.
+
+4. **`robots.txt`** que permite indexación. **`sitemap.xml`** mínimo con la URL raíz.
+
+**Fuera de scope del MVP (limitación conocida):**
+
+URLs compartibles por concello con metadatos específicos (`og:title = "Tempo en Lugo hoxe"`) requieren SSR o prerendering por ruta — incompatible con la arquitectura SPA sin router (Decisión 1). Si en el futuro se quiere resolver, la migración a SvelteKit con prerendering estático por concello es el camino natural.
+
+La indexabilidad de la SPA por Google es aceptable: no es una app de contenido donde el SEO sea crítico para el discovery.
+
+**Rationale**: Los metadatos estáticos y la imagen OG son coste mínimo con impacto visible al compartir la URL. El `<title>` dinámico mejora el contexto de pestaña sin ningún trabajo de infraestructura.
+
+---
+
 ## Open Questions
 
 - ~~¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?~~ → **Resuelto**: Vercel (tarea 1.5; Edge Function del proxy convive en el mismo repo)
