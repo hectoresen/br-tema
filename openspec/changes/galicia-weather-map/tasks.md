@@ -17,6 +17,7 @@
 - [ ] 2.6 Definir la interfaz `WeatherProvider` (incluyendo mÃ©todo opcional `getAlerts()`) en `src/providers/types.ts`
 - [ ] 2.7 Definir tipos `Alert`, `WeatherIcon`, `TimeSlot`, `Concello`, `Locale` en `src/types/`
 - [ ] 2.8 Crear `src/config/map.ts` con `MAP_STYLE_URL` apuntando a OpenFreeMap (free, sin API key) — único punto donde se configura el proveedor de tiles del mapa
+- [ ] 2.9 Instalar `vite-bundle-visualizer` como devDependency — ejecutar antes de publicar para verificar que el bundle inicial no supera 150KB gzipped; no incluir MapLibre ni GeoJSON en el chunk principal
 
 ## 3. InternacionalizaciÃ³n (i18n)
 
@@ -80,6 +81,7 @@
 
 ## 9. Componente de mapa principal
 
+- [ ] 9.0 Crear componente `MapPlaceholder.svelte` con SVG estático de las 4 provincias gallegas — visible mientras MapLibre inicializa; sustituido por el mapa real en cuanto `map.loaded()` sea `true`. Garantiza LCP ≤ 2.5s independientemente del tiempo de carga de MapLibre.
 - [ ] 9.1 Crear componente `Map.svelte` que inicialice MapLibre GL JS con tiles de **OpenFreeMap** (sin API key). ⚠️ **Componente de mayor riesgo técnico — validar rendimiento en móvil (390px) antes de continuar con bloques 10–18.**
 - [ ] 9.2 AÃ±adir capa vectorial GeoJSON de provincias sobre el mapa base
 - [ ] 9.3 Renderizar icono meteorolÃ³gico compuesto en el centro geogrÃ¡fico de cada provincia
@@ -167,4 +169,7 @@
 - [ ] 18.4 AÃ±adir mensaje de error global si el proveedor falla
 - [ ] 18.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
 - [ ] 18.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
+- [ ] 18.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
+- [ ] 18.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
+- [ ] 18.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
 

@@ -232,6 +232,30 @@ Cambiar de proveedor de tiles = cambiar la URL de estilo en `src/config/map.ts`.
 
 ---
 
+### 16. Objetivos de rendimiento y estrategia de optimización
+
+**Decisión**: El proyecto publicado debe cumplir estos umbrales medibles en dispositivo móvil real (Moto G4 o similar, red 4G):
+
+| Métrica | Umbral | Contexto |
+|---|---|---|
+| LCP | ≤ 2.5s | El mapa con provincias debe ser visible antes de este umbral |
+| CLS | < 0.1 | Sin saltos de layout al cargar capas o el panel de concello |
+| FID / INP | < 200ms | Interacciones del mapa y selector de capas sin bloqueo |
+
+**Estrategias concretas a implementar**:
+
+1. **Placeholder SVG del mapa**: el mapa es el elemento de mayor riesgo para el LCP. Mitigación: renderizar un SVG estático de las 4 provincias gallegas mientras MapLibre inicializa. El usuario ve algo inmediatamente aunque no sea interactivo todavía.
+
+2. **Bundle inicial ≤ 150KB gzipped**: MapLibre pesa ~250KB sin comprimir — asegurarse de no importar nada innecesario en el chunk inicial. Verificar con `vite-bundle-visualizer` antes de publicar.
+
+3. **GeoJSON de concellos nunca en el bundle**: el archivo (~5MB sin simplificar) se carga bajo demanda con un fetch diferido y se cachea en memoria durante la sesión. Objetivo post-simplificación con mapshaper: ≤ 200KB gzipped.
+
+4. **Lighthouse CI en Vercel**: falla el deploy si LCP > 4s en mobile. Red de seguridad para no publicar regresiones de rendimiento sin darse cuenta.
+
+**Rationale**: Los umbrales son medibles y verificables en CI, no aspiraciones. El SVG placeholder desacopla la percepción de carga del tiempo real de inicialización de MapLibre, que es el cuello de botella más probable en móvil.
+
+---
+
 ## Open Questions
 
 - ~~¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?~~ → **Resuelto**: Vercel (tarea 1.5; Edge Function del proxy convive en el mismo repo)
