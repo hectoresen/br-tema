@@ -375,6 +375,63 @@ AEMET OpenData prohíbe el uso comercial sin autorización expresa. Cualquier mo
 
 ---
 
+### 20. Privacidad de usuarios y cumplimiento RGPD
+
+**Decisión**: Brétema es accesible desde la UE y está sujeta al RGPD. Esta decisión documenta qué datos se tratan y cómo, y establece que no se necesita banner de cookies con la configuración actual.
+
+**Inventario de datos tratados:**
+
+| Dato | Origen | Propósito | Se almacena | Se envía a terceros |
+|---|---|---|---|---|
+| IP del usuario | Vercel | Logs de servidor | Sí, logs Vercel (automático) | No |
+| `navigator.language` | Browser API | Detectar idioma | No — solo en memoria | No |
+| Concello/provincia seleccionado | Interacción usuario | Cargar previsión | No | No — solo coordenadas a Open-Meteo/AEMET |
+| Eventos de uso anónimos | Plausible | Analytics agregada | Sí, en Plausible | Plausible (sin datos personales) |
+| Errores y stack traces | Sentry | Monitorización | Sí, en Sentry | Sentry |
+
+**Por qué no se necesita banner de cookies:**
+
+Plausible no usa cookies ni fingerprinting — es RGPD-compliant sin consentimiento. Sentry en modo básico tampoco usa cookies. Con esta configuración, Brétema no necesita banner de cookies ni CMP (Consent Management Platform).
+
+Lo que invalidaría esta decisión: cualquier integración futura con Google Analytics, Meta Pixel, o cualquier herramienta que use cookies de terceros o fingerprinting.
+
+**Política de privacidad:**
+
+Primer publicación desde la UE requiere una página `/privacidad` (o modal desde el footer) con el contenido mínimo:
+- Qué datos se recogen y con qué finalidad
+- Que no se usan cookies de seguimiento
+- Que los datos de analytics son agregados y anónimos (Plausible)
+- Que los errores se registran de forma anónima (Sentry)
+- Datos de contacto del responsable del tratamiento (email)
+- Que los datos meteorológicos consultados no se almacenan ni asocian al usuario
+
+El texto debe estar disponible en español y gallego — siendo una app con i18n, la política de privacidad es contenido UI y sigue el mismo estándar.
+
+**Sentry — sanitización de datos personales:**
+
+Configurar `beforeSend` para evitar que Sentry capture datos que puedan identificar al usuario:
+
+```typescript
+Sentry.init({
+  beforeSend(event) {
+    if (event.user) delete event.user.ip_address
+    return event
+  }
+})
+```
+
+**Responsable del tratamiento:**
+
+El desarrollador es el responsable del tratamiento a efectos del RGPD. El email de contacto para solicitudes ARCO debe estar visible en la política de privacidad. En la práctica, dado que no se almacenan datos personales, estas solicitudes tendrán respuesta trivial.
+
+**Datos de menores:** Brétema no recoge datos de usuarios ni tiene registro — no aplican obligaciones adicionales.
+
+**Fuera de scope:** DPA formal con Vercel y Sentry — para un proyecto personal sin usuarios registrados, el tier gratuito de ambos incluye términos suficientes. Revisar si Brétema escala o incorpora registro de usuarios.
+
+**Rationale**: La ausencia de banner de cookies es una ventaja de UX significativa — se mantiene eligiendo deliberadamente herramientas RGPD-compliant por diseño. La política de privacidad es una obligación legal, no opcional.
+
+---
+
 ## Open Questions
 
 - ~~¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?~~ → **Resuelto**: Vercel (tarea 1.5; Edge Function del proxy convive en el mismo repo)

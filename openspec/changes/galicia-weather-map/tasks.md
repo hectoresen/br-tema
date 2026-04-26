@@ -190,15 +190,23 @@
 - [ ] 20.5 Verificar que OpenFreeMap permite proyectos publicados sin acuerdo comercial en su tier gratuito actual
 - [ ] 20.6 Añadir sección _Fuentes de datos y atribución_ en `README.md` con tabla de proveedores, licencias y URLs
 
-## 21. Pulido UI, mobile-first y calidad
+## 21. Privacidad y RGPD
 
-- [ ] 21.1 Revisar cada pantalla en viewport 390px (iPhone); ajustar layout, tamaños de texto y controles táctiles
-- [ ] 21.2 Verificar breakpoints sm/md/lg para tablet y desktop
-- [ ] 21.3 Añadir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
-- [ ] 21.4 Añadir mensaje de error global si el proveedor falla
-- [ ] 21.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
-- [ ] 21.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
-- [ ] 21.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
-- [ ] 21.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
-- [ ] 21.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
+- [ ] 21.1 Configurar Sentry con `beforeSend` para eliminar `event.user.ip_address` antes de enviar eventos
+- [ ] 21.2 Crear página/modal `/privacidad` accesible desde el footer con el contenido mínimo RGPD (qué datos, cookies, Plausible, Sentry, contacto responsable)
+- [ ] 21.3 Traducir el contenido de `/privacidad` al gallego (`gl`) — igual que cualquier otro string UI
+- [ ] 21.4 Añadir enlace _Privacidade_ / _Privacidad_ visible en el footer de la app
+- [ ] 21.5 Verificar que no se añade ningún script de terceros (Google Analytics, Meta Pixel, etc.) que requiera banner de cookies — si se añade alguno en el futuro, revisar esta decisión primero
+
+## 22. Pulido UI, mobile-first y calidad
+
+- [ ] 22.1 Revisar cada pantalla en viewport 390px (iPhone); ajustar layout, tamaños de texto y controles táctiles
+- [ ] 22.2 Verificar breakpoints sm/md/lg para tablet y desktop
+- [ ] 22.3 Añadir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
+- [ ] 22.4 Añadir mensaje de error global si el proveedor falla
+- [ ] 22.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
+- [ ] 22.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
+- [ ] 22.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
+- [ ] 22.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
+- [ ] 22.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
 
