@@ -332,6 +332,49 @@ Alertas automáticas (PagerDuty, email) — revisar Sentry periódicamente es su
 
 ---
 
+### 19. Licencias de terceros y atribución obligatoria
+
+**Decisión**: Un proyecto publicado que usa fuentes de datos y tiles de terceros tiene obligaciones legales de atribución. Esta decisión documenta qué requiere cada dependencia y cómo se implementa en la UI.
+
+**Tabla de dependencias y condiciones:**
+
+| Recurso | Proveedor | Licencia | Atribución obligatoria | Restricciones |
+|---|---|---|---|---|
+| Tiles mapa base | OpenFreeMap | ODbL | Sí, en el mapa | Solo uso no comercial sin acuerdo |
+| Datos OSM subyacentes | OpenStreetMap | ODbL | `© OpenStreetMap contributors` | Obligatorio en cualquier derivado |
+| Radar / satélite animado | RainViewer | Propietaria (free tier) | Sí, en la capa activa | No redistribuir tiles directamente |
+| Previsión meteorológica | Open-Meteo | CC BY 4.0 | Sí, visible en la UI | Mencionar fuente en datos mostrados |
+| Previsión meteorológica | AEMET OpenData | Reutilización con condiciones | Sí, `Agencia Estatal de Meteorología` | **No uso comercial sin autorización expresa** |
+| GeoJSON provincias | IGN España | Reutilización libre | Sí, `© IGN España` | Mantener atribución en derivados |
+| GeoJSON concellos | IGN / fuente pública | Pendiente confirmar (tarea 4.3) | Documentar al obtener el archivo | — |
+
+**Implementación en la UI:**
+
+Componente `Attribution.svelte` fijo en la esquina inferior derecha del mapa (estándar MapLibre). Contenido mínimo siempre visible:
+
+```
+© OpenStreetMap contributors · OpenFreeMap · AEMET · Open-Meteo
+```
+
+Cuando la capa satélite está activa, añadir dinámicamente `· RainViewer`. La atribución es reactiva al store `activeLayer`.
+
+**Licencia del proyecto:**
+
+MIT para el código fuente. Los datos meteorológicos y GeoJSON no forman parte del código y tienen sus propias licencias. `LICENSE` en la raíz cubre solo el código. El `README.md` debe incluir una sección _Fuentes de datos y atribución_ con la tabla anterior y URLs de licencia.
+
+**Límite de uso comercial:**
+
+AEMET OpenData prohíbe el uso comercial sin autorización expresa. Cualquier modelo de monetización futuro (donaciones con contraprestación, publicidad, API de pago) requiere revisar los términos de AEMET antes de activarlo.
+
+**Pendiente de verificar antes de publicar:**
+- Confirmar licencia exacta del GeoJSON de concellos al obtenerlo en tarea 4.3
+- Leer términos actualizados de RainViewer free tier
+- Verificar que OpenFreeMap permite proyectos publicados sin acuerdo comercial en su tier gratuito actual
+
+**Rationale**: La atribución correcta es tanto una obligación legal como una señal de transparencia. Centralizar las condiciones de licencia en esta decisión evita que sean un gap invisible al publicar.
+
+---
+
 ## Open Questions
 
 - ~~¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?~~ → **Resuelto**: Vercel (tarea 1.5; Edge Function del proxy convive en el mismo repo)

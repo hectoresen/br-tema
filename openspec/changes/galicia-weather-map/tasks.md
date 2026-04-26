@@ -181,15 +181,24 @@
 - [ ] 19.9 Añadir logging estructurado al proxy AEMET (`/api/aemet-proxy`): timestamp, endpoint, status request 1, status request 2, latency total
 - [ ] 19.10 Crear endpoint `/api/health`: request mínima a AEMET (municipio de Lugo); devuelve `{ status, provider, latency_ms }` o `{ status: "degraded", reason }`
 
-## 20. Pulido UI, mobile-first y calidad
+## 20. Licencias y atribución
 
-- [ ] 20.1 Revisar cada pantalla en viewport 390px (iPhone); ajustar layout, tamaños de texto y controles táctiles
-- [ ] 20.2 Verificar breakpoints sm/md/lg para tablet y desktop
-- [ ] 20.3 Añadir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
-- [ ] 20.4 Añadir mensaje de error global si el proveedor falla
-- [ ] 20.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
-- [ ] 20.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
-- [ ] 20.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
-- [ ] 20.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
-- [ ] 20.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
+- [ ] 20.1 Crear componente `Attribution.svelte` fijo en la esquina inferior derecha del mapa; contenido mínimo: `© OpenStreetMap contributors · OpenFreeMap · AEMET · Open-Meteo`
+- [ ] 20.2 Conectar `Attribution.svelte` al store `activeLayer`; añadir `· RainViewer` dinámicamente cuando la capa satélite está activa
+- [ ] 20.3 Confirmar licencia exacta del GeoJSON de concellos al obtenerlo (tarea 4.3) y documentarla en `design.md`
+- [ ] 20.4 Verificar términos actualizados de RainViewer free tier antes de publicar
+- [ ] 20.5 Verificar que OpenFreeMap permite proyectos publicados sin acuerdo comercial en su tier gratuito actual
+- [ ] 20.6 Añadir sección _Fuentes de datos y atribución_ en `README.md` con tabla de proveedores, licencias y URLs
+
+## 21. Pulido UI, mobile-first y calidad
+
+- [ ] 21.1 Revisar cada pantalla en viewport 390px (iPhone); ajustar layout, tamaños de texto y controles táctiles
+- [ ] 21.2 Verificar breakpoints sm/md/lg para tablet y desktop
+- [ ] 21.3 Añadir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
+- [ ] 21.4 Añadir mensaje de error global si el proveedor falla
+- [ ] 21.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
+- [ ] 21.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
+- [ ] 21.7 Ejecutar `vite-bundle-visualizer` y confirmar bundle inicial ≤ 150KB gzipped; MapLibre y GeoJSON de concellos fuera del chunk principal
+- [ ] 21.8 Configurar Lighthouse CI en el pipeline de Vercel — umbral de fallo: LCP > 4s en mobile; objetivo real: LCP ≤ 2.5s, CLS < 0.1, INP < 200ms
+- [ ] 21.9 Verificar que el SVG placeholder (`MapPlaceholder.svelte`) aparece antes de que MapLibre termine de inicializar — medir LCP real con DevTools en modo móvil throttled (4G)
 
