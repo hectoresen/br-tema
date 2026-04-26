@@ -298,6 +298,8 @@ Open-Meteo usa estándar WMO:
 | Predicción por concello | `https://servizos.meteogalicia.gal/mf/roquetes/proxys/predConcello?coords={lon},{lat}&lang=es&tz=Europe/Madrid` |
 | RSS predicción Galicia | `https://www.meteogalicia.gal/web/RSS/rssNacional.action` |
 
+> ⚠️ **Nota sobre CORS y Referer**: el proxy de MeteoGalicia en `/mf/roquetes/proxys/` a veces devuelve **403 dependiendo del header `Referer`**. En la validación manual hacer la request **dos veces**: una sin Referer (curl básico o fetch desde Node) y otra con `Referer: https://www.meteogalicia.gal`. Si solo la segunda funciona, habrá que enviar ese header desde el cliente o añadir un proxy ligero similar al de AEMET.
+
 ### Estructura esperada (pendiente verificación)
 
 MeteoGalicia expone predicción en formato JSON con campos similares a AEMET pero con nombres en gallego. La verificación debe:
@@ -411,11 +413,14 @@ Tabla de correspondencia de campos para el adaptador `AemetProvider`:
 
 ```typescript
 function pickPeriod(items: {value: string, periodo: string}[], slot: TimeSlot): string | undefined {
-  // Mapeo de slot a rangos de horas que lo cubren
+  // Mapeo de slot a rangos de horas que lo cubren (en orden de preferencia)
   const ranges: Record<TimeSlot, [number, number][]> = {
-    morning:   [[6, 12], [6, 14], [0, 12]],    // en orden de preferencia
-    afternoon: [[12, 18], [12, 24], [12, 18]],
-    night:     [[18, 24], [0, 6], [12, 24], [0, 24]],
+    morning:   [[6, 12], [0, 12]],
+    afternoon: [[12, 18], [12, 24]],
+    // Night: preferir la segunda mitad del día o última parte; evitar "00-24" como
+    // valor exacto porque lo comparte con todos los slots — si solo hay un único valor
+    // diario, se usa como aproximación y se marca como tal.
+    night:     [[18, 24], [21, 24]],
   }
   // Intentar hacer match con cada rango preferido
   for (const [start, end] of ranges[slot]) {
@@ -423,8 +428,13 @@ function pickPeriod(items: {value: string, periodo: string}[], slot: TimeSlot): 
     const found = items.find(i => i.periodo === key)
     if (found) return found.value
   }
-  // Fallback: coger el único valor disponible ("00-24") o el primero
-  return items.find(i => i.periodo === '00-24')?.value ?? items[0]?.value
+  // Fallback último recurso: único valor diario ("00-24").
+  // ⚠️ Este valor cubre todo el día y se usa como aproximación para los tres slots.
+  // El componente debe indicar visualmente que la granularidad es baja (p. ej. icono
+  // sin distinción de franja) en lugar de presentarlo como dato preciso de noche.
+  const daily = items.find(i => i.periodo === '00-24')
+  if (daily) return daily.value  // aproximación — documentar en SlotForecast con `approximate: true`
+  return items[0]?.value
 }
 ```
 

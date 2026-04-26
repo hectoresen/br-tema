@@ -59,7 +59,7 @@
 
 - [ ] 7.1 Crear thin proxy serverless (`/api/aemet-proxy`) en la plataforma decidida en 1.5
 - [ ] 7.2 Implementar `AemetProvider` en `src/providers/aemet.ts` con `getForecast` usando endpoint municipal
-- [ ] 7.3 Implementar `getAlerts()` usando AEMET Meteoalerta por CCAA/provincia
+- [ ] 7.3 Implementar `getAlerts()` usando AEMET Meteoalerta por CCAA/provincia — ⚠️ **Formato CAP/XML** (posiblemente ZIP+XML, no JSON): evaluar complejidad de parseo antes de implementar; si es costoso, mantener `mock-alerts.json` como fallback y dejar esta tarea para una iteración posterior
 - [ ] 7.4 Mapear respuesta AEMET al modelo `DayForecast` (usando `docs/api-research.md`)
 - [ ] 7.5 AÃ±adir gestiÃ³n de API key via variable de entorno; fallback a Open-Meteo si no estÃ¡ configurada
 - [ ] 7.6 Cambiar el proveedor activo en `src/providers/index.ts` a `AemetProvider`
@@ -75,7 +75,8 @@
 - [ ] 8.7 Crear store `forecastData` (cachÃ© por concello/provincia + dÃ­a + slot)
 - [ ] 8.8 Crear store `alerts` (lista `Alert[]`)
 - [ ] 8.9 Crear store `locale` (`es` | `gl`, detectado desde `navigator.language`)
-- [ ] 8.10 Implementar carga inicial de datos al arrancar la app: cargar previsión (slot morning, día 0) para las 4 provincias gallegas en paralelo; poblar el store forecastData; mostrar spinner en el mapa hasta que las 4 estén disponibles. No se espera interacción del usuario para iniciar la carga.
+- [ ] 8.10 Crear store `concellosGeoJSONLoaded` (`boolean`, defecto `false`) — `Map.svelte` lo pone a `true` al completar la carga lazy del GeoJSON de concellos; bloquea la interactividad a nivel concello hasta que sea `true`
+- [ ] 8.12 Implementar carga inicial de datos al arrancar la app: cargar previsión (slot morning, día 0) para las 4 provincias gallegas en paralelo; poblar el store forecastData; mostrar spinner en el mapa hasta que las 4 estén disponibles. No se espera interacción del usuario para iniciar la carga.
 
 ## 9. Componente de mapa principal
 
@@ -143,7 +144,7 @@
 
 ## 16. Vista de detalle de concello
 
-- [ ] 16.1 Crear vista/ruta `ConcellosDetail.svelte` accesible desde click en el mapa o buscador
+- [ ] 16.1 Crear panel `ConcellosDetail.svelte` reactivo al store `selectedConcello` (visible cuando `!== null`); accesible desde click en el mapa o buscador — en móvil: slide-up 100% viewport; en desktop: drawer lateral
 - [ ] 16.2 Renderizar cabecera: nombre del concello, provincia, temperatura actual, icono estado, amanecer/ocaso
 - [ ] 16.3 Renderizar 4 columnas (Hoy + 3 dÃ­as) Ã— 3 franjas (MaÃ±ana/Tarde/Noche) con icono, lluvia %, viento
 - [ ] 16.4 Mostrar temp mÃ¡x/mÃ­n en cabecera de cada columna de dÃ­a; columna de hoy destacada

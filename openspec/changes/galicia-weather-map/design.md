@@ -194,6 +194,7 @@ Los iconos se renderizan como SVG inline para máxima calidad y personalización
 - `forecastData`: caché de datos por provincia/concello + día + slot
 - `alerts`: lista de `Alert[]`
 - `locale`: idioma activo (`es` | `gl`)
+- `concellosGeoJSONLoaded`: `boolean` — `false` hasta que el GeoJSON de concellos haya sido descargado y parseado; `Map.svelte` lo pone a `true` al completar la carga lazy. Mientras sea `false`, el mapa no activa la interactividad a nivel concello (clicks, hover, iconos individuales).
 
 ## Risks / Trade-offs
 
@@ -205,6 +206,16 @@ Los iconos se renderizan como SVG inline para máxima calidad y personalización
 - **Rendimiento de MapLibre en móvil** → MapLibre con GeoJSON de concellos (~313 polígonos) y capas raster puede ser pesado en dispositivos bajos. **Riesgo alto, descubrir temprano**: el componente `Map.svelte` con GeoJSON real debe ser lo primero funcional end-to-end antes de construir el resto de la app. Mitigación: simplificar GeoJSON con mapshaper (tolerancia 0.001°), lazy load de concellos, deshabilitar anti-aliasing en MapLibre en móvil si es necesario.
 - **GeoJSON de concellos** → El GeoJSON de los ~313 concellos gallegos es pesado (~5 MB sin simplificar). Mitigación: simplificar con turf.js o mapshaper; cargar a petición al acceder al detalle de concello.
 - **Satélite animado** → RainViewer tier gratuito tiene límites de requests. Si se supera, degradar a imagen estática.
+
+### 14. Accesibilidad (a11y)
+
+**Decisión**: La accesibilidad completa (foco de teclado en MapLibre, roles ARIA en selector de capas y barra temporal, contraste de badges de alerta) queda **fuera de scope del MVP (v1)**. Se nombra aquí para que no sea un gap invisible.
+
+**Compromisos mínimos que sí aplican en v1**: contraste de color conforme a WCAG AA en textos sobre fondos sólidos (badges, botones, cabecera); atributos `aria-label` en controles sin texto visible (flechas de navegación, botón play/pausa del satélite).
+
+**Backlog v2**: navegación completa por teclado del mapa, anuncios de cambio de estado para lectores de pantalla, foco atrapado en panel de detalle de concello.
+
+---
 
 ### 15. Proveedor de tiles del mapa: free-tier primero, desacoplado
 
@@ -218,16 +229,6 @@ Los iconos se renderizan como SVG inline para máxima calidad y personalización
 Cambiar de proveedor de tiles = cambiar la URL de estilo en `src/config/map.ts`. Ningún componente del mapa importa directamente la URL del tile provider.
 
 **Rationale**: No gastar dinero en APIs de tiles en el MVP. El desacoplamiento garantiza que si un proveedor gratuito cambia sus términos se puede migrar en minutos.
-
----
-
-### 14. Accesibilidad (a11y)
-
-**Decisión**: La accesibilidad completa (foco de teclado en MapLibre, roles ARIA en selector de capas y barra temporal, contraste de badges de alerta) queda **fuera de scope del MVP (v1)**. Se nombra aquí para que no sea un gap invisible.
-
-**Compromisos mínimos que sí aplican en v1**: contraste de color conforme a WCAG AA en textos sobre fondos sólidos (badges, botones, cabecera); atributos `aria-label` en controles sin texto visible (flechas de navegación, botón play/pausa del satélite).
-
-**Backlog v2**: navegación completa por teclado del mapa, anuncios de cambio de estado para lectores de pantalla, foco atrapado en panel de detalle de concello.
 
 ---
 
