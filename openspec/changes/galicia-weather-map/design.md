@@ -105,6 +105,7 @@ El selector de idioma (ES/GL) se muestra en la cabecera. El idioma por defecto s
 interface WeatherProvider {
   getForecast(lat: number, lon: number, days: number): Promise<DayForecast[]>
   getProvinceForecast(provinceId: string, days: number): Promise<DayForecast[]>
+  getConcelloForecast(concelloId: string, days: number): Promise<DayForecast[]>
   getAlerts?(): Promise<Alert[]>
 }
 ```
@@ -117,7 +118,7 @@ interface WeatherProvider {
 
 ### 7. Datos geoespaciales de Galicia
 
-**Decisión**: GeoJSON de provincias gallegas (A Coruña, Lugo, Ourense, Pontevedra) obtenido de fuentes públicas (IGN, Natural Earth). El GeoJSON se sirve como asset estático. GeoJSON de concellos (~313) se carga lazy al entrar en la vista de detalle.
+**Decisión**: GeoJSON de provincias gallegas (A Coruña, Lugo, Ourense, Pontevedra) obtenido de fuentes públicas (IGN, Natural Earth). El GeoJSON se sirve como asset estático. GeoJSON de concellos (~313) se carga lazy en el primer render del mapa (no en bundle inicial, no espera a que el usuario abra el detalle de concello). Con `mapLevel === 'concello'` activo desde el MVP, el GeoJSON de concellos se necesita para renderizar la capa vectorial del mapa — se precarga de forma diferida pero lo antes posible tras la carga inicial de provincias.
 
 **Rationale**: Sin dependencia de servicio externo para la geometría base. Las 4 provincias son un dataset pequeño y estable.
 
@@ -198,17 +199,42 @@ Los iconos se renderizan como SVG inline para máxima calidad y personalización
 
 - **CORS con AEMET** → Requiere thin proxy serverless (Cloudflare Worker/Vercel Edge). Es el único componente con compute externo; mínimo mantenimiento.
 - **Acceso a MeteoSIX pendiente** → Si el acceso no se concede antes del MVP, Open-Meteo cubre todos los datos necesarios.
-- **Calidad de tiles meteorológicos** → Las capas raster (viento, precipitación) dependen de la calidad visual del proveedor de tiles. Fallback: interpolación de datos puntuales en Canvas/WebGL.
+- **Calidad de tiles meteorológicos** → Las capas raster (viento, precipitación) dependen de la calidad visual del proveedor de tiles. *(Interpolación Canvas/WebGL fuera de scope del MVP; se acepta degradación visual si los tiles de la fuente son de baja resolución.)*
 - **Disponibilidad de webcams** → Las URLs de webcams pueden cambiar. El JSON estático requerirá mantenimiento manual. Entradas mock aceptables para MVP.
 - **Avisos meteorológicos sin API** → Si Open-Meteo no provee alertas, se usará un mock estático hasta integrar AEMET Meteoalerta.
-- **Rendimiento en móvil** → MapLibre con datos vectoriales puede ser pesado en dispositivos bajos. Mitigación: lazy load de capas, simplificación del GeoJSON.
+- **Rendimiento de MapLibre en móvil** → MapLibre con GeoJSON de concellos (~313 polígonos) y capas raster puede ser pesado en dispositivos bajos. **Riesgo alto, descubrir temprano**: el componente `Map.svelte` con GeoJSON real debe ser lo primero funcional end-to-end antes de construir el resto de la app. Mitigación: simplificar GeoJSON con mapshaper (tolerancia 0.001°), lazy load de concellos, deshabilitar anti-aliasing en MapLibre en móvil si es necesario.
 - **GeoJSON de concellos** → El GeoJSON de los ~313 concellos gallegos es pesado (~5 MB sin simplificar). Mitigación: simplificar con turf.js o mapshaper; cargar a petición al acceder al detalle de concello.
 - **Satélite animado** → RainViewer tier gratuito tiene límites de requests. Si se supera, degradar a imagen estática.
 
+### 15. Proveedor de tiles del mapa: free-tier primero, desacoplado
+
+**Decisión**: Los tiles base del mapa se obtienen de **OpenFreeMap** (sin API key, sin límite de requests, tiles vectoriales libres) como fuente por defecto en el MVP. La URL del tile provider se configura en un único punto (`src/config/map.ts`) — no se hardcodea en ningún componente.
+
+**Alternativas cuando se quiera mejorar calidad visual**:
+- MapTiler (tier gratuito: 100k tiles/mes, estilos personalizados)
+- Stadia Maps (tier gratuito: sin límite con atribución)
+- Maptiler Cloud / Esri (de pago, para producción con tráfico alto)
+
+Cambiar de proveedor de tiles = cambiar la URL de estilo en `src/config/map.ts`. Ningún componente del mapa importa directamente la URL del tile provider.
+
+**Rationale**: No gastar dinero en APIs de tiles en el MVP. El desacoplamiento garantiza que si un proveedor gratuito cambia sus términos se puede migrar en minutos.
+
+---
+
+### 14. Accesibilidad (a11y)
+
+**Decisión**: La accesibilidad completa (foco de teclado en MapLibre, roles ARIA en selector de capas y barra temporal, contraste de badges de alerta) queda **fuera de scope del MVP (v1)**. Se nombra aquí para que no sea un gap invisible.
+
+**Compromisos mínimos que sí aplican en v1**: contraste de color conforme a WCAG AA en textos sobre fondos sólidos (badges, botones, cabecera); atributos `aria-label` en controles sin texto visible (flechas de navegación, botón play/pausa del satélite).
+
+**Backlog v2**: navegación completa por teclado del mapa, anuncios de cambio de estado para lectores de pantalla, foco atrapado en panel de detalle de concello.
+
+---
+
 ## Open Questions
 
-- ¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?
-- ¿Se requiere soporte offline / PWA?
-- ¿Las webcams deben mostrar un embed en la UI o solo abrir en nueva pestaña?
-- ¿El nivel de concellos en el mapa (iconos individuales por concello) debe activarse desde el MVP o en versión posterior?
-- ¿Hay preferencia sobre si el detalle de concello es una ruta/página separada o un panel sobre el home?
+- ~~¿Se desplegará en Vercel (recomendado para edge proxy AEMET), GitHub Pages u otro?~~ → **Resuelto**: Vercel (tarea 1.5; Edge Function del proxy convive en el mismo repo)
+- ~~¿Se requiere soporte offline / PWA?~~ → **Resuelto**: No — explícitamente en Non-Goals
+- ~~¿Las webcams deben mostrar un embed en la UI o solo abrir en nueva pestaña?~~ → **Resuelto**: nueva pestaña (spec `webcam-layer`)
+- ~~¿El nivel de concellos en el mapa (iconos individuales por concello) debe activarse desde el MVP o en versión posterior?~~ → **Resuelto**: activo desde el MVP; el GeoJSON de concellos se carga lazy al arrancar la vista del mapa (no en bundle inicial)
+- ~~¿Arquitectura de la vista detalle de concello: panel sobre el mapa (SPA sin router) o ruta separada (SvelteKit)?~~ → **Resuelto**: **panel reactivo sobre el mapa** (SPA sin router). El panel es UI reactiva al store `selectedConcello`: visible cuando `!== null`, oculto cuando `null`. En móvil: slide-up 100% viewport; en desktop: drawer lateral. URLs compartibles por concello no son un goal del MVP. Stack: Vite + Svelte puro, sin SvelteKit.

@@ -61,3 +61,29 @@ El sistema SHALL usar un modelo de datos interno normalizado (`DayForecast`) ind
 #### Scenario: Normalización de datos del proveedor
 - **WHEN** el adaptador recibe la respuesta de cualquier proveedor
 - **THEN** devuelve un objeto `DayForecast` con los campos: fecha, slots horarios (mañana/tarde/noche), temperatura máx/mín, estado general (WMO code), probabilidad de precipitación, viento (velocidad y dirección), humedad
+
+### Requirement: Definición canónica de franjas horarias y tratamiento de medianoche
+Las tres franjas horarias son:
+- **Mañana**: 06:00–13:59 del día N
+- **Tarde**: 14:00–20:59 del día N
+- **Noche**: 21:00–23:59 del día N **+ 00:00–05:59 del día N+1**
+
+La franja Noche cruza la medianoche. `DayForecast` para el día N SHALL incluir las horas de madrugada del día N+1 como parte de su slot `night`. Es decir, cuando se construye `DayForecast[N].night`, el adaptador SHALL leer horas 21–23 de la fecha N y horas 00–05 de la fecha N+1 de la respuesta horaria de la API.
+
+Los valores agregados del slot (temperatura representativa, precipitación, icono) se calculan sobre ese bloque completo de 9 horas (21:00–05:59).
+
+#### Scenario: Construcción del slot noche para un día interior
+- **GIVEN** que Open-Meteo devuelve datos horarios para varios días
+- **WHEN** el adaptador construye `DayForecast[N].night`
+- **THEN** agrega las horas `[N 21:00, N 22:00, N 23:00, N+1 00:00, N+1 01:00, N+1 02:00, N+1 03:00, N+1 04:00, N+1 05:00]`
+
+#### Scenario: Slot noche del último día disponible (degradación graceful)
+- **GIVEN** que el último día del forecast es el día con índice 3 (hoy+3)
+- **WHEN** el proveedor no dispone de datos para hoy+4 (00:00–05:59)
+- **THEN** el adaptador construye `DayForecast[3].night` únicamente con las horas disponibles (21:00–23:59 del día 3) y marca el slot como `partial: true`
+- **AND** la UI muestra el icono y datos calculados sobre las horas disponibles sin errores
+
+#### Scenario: Open-Meteo tiene suficiente rango para cubrir la noche del día 3
+- **GIVEN** que Open-Meteo devuelve datos con rango de al menos 5 días (valor habitual en su API gratuita)
+- **WHEN** el adaptador construye `DayForecast[3].night`
+- **THEN** dispone de las horas 00:00–05:59 del día 4 y construye el slot completo sin degradación

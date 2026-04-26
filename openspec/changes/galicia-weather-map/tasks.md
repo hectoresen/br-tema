@@ -4,16 +4,19 @@
 - [ ] 1.2 Validar acceso a MeteoSIX (MeteoGalicia) y documentar endpoints disponibles en `docs/api-research.md`
 - [ ] 1.3 Mapear campos de AEMET y MeteoSIX al modelo `DayForecast` interno; documentar gaps
 - [ ] 1.4 Evaluar RainViewer API: obtener timestamps de animaciÃ³n, verificar lÃ­mites del tier gratuito, documentar endpoint
+- [x] 1.5 **Resuelto**: Vercel — Edge Function para proxy AEMET en el mismo repo, SPA desplegada automáticamente desde Git, tier gratuito suficiente. Configurar `vercel.json` con rewrite `/api/*` en el bloque 7.
+- [x] 1.6 **Resuelto**: Panel reactivo sobre el mapa (SPA sin router). selectedConcello store controla visibilidad. Stack: Vite + Svelte puro sin SvelteKit.
 
 ## 2. Proyecto base
 
-- [ ] 2.1 Inicializar proyecto con Vite + Svelte + TypeScript (`npm create vite@latest`)
+- [ ] 2.1 Inicializar proyecto con Vite + Svelte + TypeScript (`npm create vite@latest`) — SPA sin router; la vista de detalle de concello es un panel reactivo a `selectedConcello`
 - [ ] 2.2 Configurar TailwindCSS con design tokens (colores, spacing, tipografÃ­a) en `tailwind.config.ts`
 - [ ] 2.3 Instalar dependencias: `maplibre-gl`, `svelte-i18n`, tipos necesarios
-- [ ] 2.4 Configurar estructura de carpetas: `src/components`, `src/stores`, `src/providers`, `src/data`, `src/types`, `src/icons`, `src/i18n`
+- [ ] 2.4 Configurar estructura de carpetas: `src/components`, `src/stores`, `src/providers`, `src/data`, `src/types`, `src/icons`, `src/i18n`, `src/config`
 - [ ] 2.5 Definir el modelo de datos interno `DayForecast` (con slots `morning`/`afternoon`/`night`) en `src/types/forecast.ts`
 - [ ] 2.6 Definir la interfaz `WeatherProvider` (incluyendo mÃ©todo opcional `getAlerts()`) en `src/providers/types.ts`
 - [ ] 2.7 Definir tipos `Alert`, `WeatherIcon`, `TimeSlot`, `Concello`, `Locale` en `src/types/`
+- [ ] 2.8 Crear `src/config/map.ts` con `MAP_STYLE_URL` apuntando a OpenFreeMap (free, sin API key) — único punto donde se configura el proveedor de tiles del mapa
 
 ## 3. InternacionalizaciÃ³n (i18n)
 
@@ -40,10 +43,11 @@
 - [ ] 5.3 Implementar funciÃ³n `getWeatherIcon(forecast: SlotForecast): WeatherIconId` con la lÃ³gica de umbrales (cloudCover, precipitationProbability, weatherCode)
 - [ ] 5.4 Implementar componente `WeatherIcon.svelte` que renderiza el icono compuesto correctamente
 - [ ] 5.5 Cubrir todos los casos WMO: soleado, parcialmente nublado, nublado, niebla, lluvia suave, lluvia intensa, nieve + altitud, tormenta
+- [ ] 5.6 Crear página `/dev/icons` (ruta solo en modo desarrollo) que renderice todos los estados posibles del icono compuesto con sus inputs de umbral visibles — permite verificación visual sin tocar el mapa
 
 ## 6. Adaptador meteorolÃ³gico (Open-Meteo â€” MVP)
 
-- [ ] 6.1 Implementar `OpenMeteoProvider` en `src/providers/open-meteo.ts` con `getForecast` devolviendo datos por slot horario
+- [ ] 6.1 Implementar `OpenMeteoProvider` en `src/providers/open-meteo.ts` — es el **proveedor MVP**; AEMET y MeteoSIX son mejoras post-MVP, no bloqueantes
 - [ ] 6.2 Implementar `getProvinceForecast` usando coordenadas centrales de cada provincia
 - [ ] 6.3 Implementar `getConcelloForecast` para bÃºsqueda por concello
 - [ ] 6.4 Transformar datos horarios de Open-Meteo a slots `morning`/`afternoon`/`night`
@@ -53,7 +57,7 @@
 
 ## 7. Adaptador AEMET OpenData (prioridad post-MVP inmediata)
 
-- [ ] 7.1 Crear thin proxy serverless (`/api/aemet-proxy`) en Cloudflare Worker o Vercel Edge Function
+- [ ] 7.1 Crear thin proxy serverless (`/api/aemet-proxy`) en la plataforma decidida en 1.5
 - [ ] 7.2 Implementar `AemetProvider` en `src/providers/aemet.ts` con `getForecast` usando endpoint municipal
 - [ ] 7.3 Implementar `getAlerts()` usando AEMET Meteoalerta por CCAA/provincia
 - [ ] 7.4 Mapear respuesta AEMET al modelo `DayForecast` (usando `docs/api-research.md`)
@@ -71,11 +75,11 @@
 - [ ] 8.7 Crear store `forecastData` (cachÃ© por concello/provincia + dÃ­a + slot)
 - [ ] 8.8 Crear store `alerts` (lista `Alert[]`)
 - [ ] 8.9 Crear store `locale` (`es` | `gl`, detectado desde `navigator.language`)
-- [ ] 8.10 Implementar lÃ³gica de carga inicial de datos al arrancar la app
+- [ ] 8.10 Implementar carga inicial de datos al arrancar la app: cargar previsión (slot morning, día 0) para las 4 provincias gallegas en paralelo; poblar el store forecastData; mostrar spinner en el mapa hasta que las 4 estén disponibles. No se espera interacción del usuario para iniciar la carga.
 
 ## 9. Componente de mapa principal
 
-- [ ] 9.1 Crear componente `Map.svelte` que inicialice MapLibre GL JS centrado en Galicia
+- [ ] 9.1 Crear componente `Map.svelte` que inicialice MapLibre GL JS con tiles de **OpenFreeMap** (sin API key). ⚠️ **Componente de mayor riesgo técnico — validar rendimiento en móvil (390px) antes de continuar con bloques 10–18.**
 - [ ] 9.2 AÃ±adir capa vectorial GeoJSON de provincias sobre el mapa base
 - [ ] 9.3 Renderizar icono meteorolÃ³gico compuesto en el centro geogrÃ¡fico de cada provincia
 - [ ] 9.4 Implementar tooltip al hacer hover en provincia (temp mÃ­n/mÃ¡x, humedad, viento, lluvia %)
@@ -90,9 +94,13 @@
 - [ ] 10.1 Crear componente `LayerSelector.svelte` con botones: General, Viento, Temperatura, Humedad, PrecipitaciÃ³n, Tormentas, Webcams, SatÃ©lite
 - [ ] 10.2 Conectar selector al store `activeLayer`; resaltar botÃ³n activo; etiquetas via i18n
 - [ ] 10.3 Implementar capa `general` (iconos compuestos por provincia)
-- [ ] 10.4 Implementar capas `wind`, `temperature`, `humidity`, `precipitation`, `storms`
-- [ ] 10.5 Implementar capa `webcams` (ver tarea 11)
-- [ ] 10.6 Implementar capa `satellite` (ver tarea 12)
+- [ ] 10.4 Implementar capa `temperature`: colormap por temperatura sobre las provincias (degradado frío→cálido)
+- [ ] 10.5 Implementar capa `precipitation`: intensidad de precipitación con colormap azul por provincia
+- [ ] 10.6 Implementar capa `humidity`: porcentaje de humedad por provincia con colormap
+- [ ] 10.7 Implementar capa `storms`: indicador de tormenta activa por provincia (badge/icono sobre la capa general)
+- [ ] 10.8 Implementar capa `wind`: flechas o barbas de viento por provincia indicando velocidad y dirección — nota: puede requerir renderizado vectorial personalizado en MapLibre
+- [ ] 10.9 Implementar capa `webcams` (ver tarea 11)
+- [ ] 10.10 Implementar capa `satellite` (ver tarea 12)
 
 ## 11. Capa de webcams
 
@@ -115,6 +123,7 @@
 - [ ] 13.3 AÃ±adir flecha derecha para avanzar al dÃ­a siguiente (mÃ¡x. hoy + 3)
 - [ ] 13.4 AÃ±adir flecha izquierda para retroceder (deshabilitada en dÃ­a actual)
 - [ ] 13.5 Mostrar icono de estado y etiqueta del dÃ­a activo en la barra (etiqueta i18n: "Hoy"/"Hoxe", dÃ­as de semana)
+- [ ] 13.6 **Auditoría i18n — primera pasada** (bloques 8–13): verificar que ningún componente creado hasta aquí tiene strings hardcodeados; corregir antes de continuar
 
 ## 14. Tarjeta de avisos meteorolÃ³gicos
 
@@ -155,5 +164,6 @@
 - [ ] 18.2 Verificar breakpoints sm/md/lg para tablet y desktop
 - [ ] 18.3 AÃ±adir estados de carga (skeleton/spinner) en mapa, tarjeta de concello y vista detalle
 - [ ] 18.4 AÃ±adir mensaje de error global si el proveedor falla
-- [ ] 18.5 AuditorÃ­a final: verificar que no hay ningÃºn string hardcodeado en ningÃºn componente
+- [ ] 18.5 **Auditoría i18n — segunda pasada** (bloques 14–17): verificar strings hardcodeados en los componentes creados tras la primera auditoría (13.6)
 - [ ] 18.6 Verificar que cambiar el proveedor en `src/providers/index.ts` funciona sin tocar UI
+

@@ -35,6 +35,17 @@ Galicia carece de una herramienta web moderna y enfocada que visualice el tiempo
 - `forecast-navigation`: Reemplazar navegación de días simples por barra temporal con franjas Mañana/Tarde/Noche dentro de cada día + flecha para avanzar/retroceder días
 - `weather-layers`: Añadir capa satélite al sistema de conmutación (capa 3 junto a general y webcams)
 
+## Contributing a new weather provider
+
+Añadir un nuevo proveedor meteorológico (p. ej. MeteoSIX, IPMA, OpenWeatherMap) requiere exactamente 4 pasos:
+
+1. **Implementar la interfaz** — crear `src/providers/<nombre>.ts` que implemente `WeatherProvider` (definida en `src/providers/types.ts`). Métodos obligatorios: `getForecast(lat, lon, days)`. Métodos opcionales: `getAlerts(lat, lon)`.
+2. **Registrar el proveedor** — en `src/providers/index.ts`, importar la nueva clase y asignarla como proveedor activo. No hay más cambios en la aplicación.
+3. **Mapear los campos** — transformar la respuesta de la API al modelo `DayForecast` interno. El mapeo de campos y sus gaps respecto al modelo SHALL documentarse en `docs/api-research.md`. Prestar especial atención a la construcción del slot `night` (ver spec `weather-api-adapter`: cruza medianoche, 21:00–05:59 del día siguiente).
+4. **Tests de transformación** — añadir tests unitarios en `src/providers/<nombre>.test.ts` que cubran al menos: respuesta nominal → `DayForecast` correcto, campo faltante → valor por defecto, error de red → estado de error propagado. Los tests deben poder ejecutarse sin acceso a internet (usar fixtures JSON del proveedor como mocks).
+
+El resto de la aplicación (UI, stores, i18n, mapa) no necesita modificaciones.
+
 ## Impact
 
 - **Frontend**: Aplicación web nueva (Vite + Svelte + TypeScript); mobile-first 100%; sin backend propio
