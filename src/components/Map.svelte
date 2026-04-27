@@ -6,7 +6,7 @@
    *                9.4 hover tooltip · 9.5 select province · 9.6 select concello ·
    *                9.7 visual highlight · 9.8 mapLevel flag · 9.9 responsive
    */
-  import { onMount, onDestroy } from 'svelte'
+  import { onMount, onDestroy, tick } from 'svelte'
   import { get } from 'svelte/store'
   import maplibregl from 'maplibre-gl'
   import 'maplibre-gl/dist/maplibre-gl.css'
@@ -157,7 +157,11 @@
 
   let hoveredProvinceId: string | null = null
 
-  onMount(() => {
+  onMount(async () => {
+    // Ensure the container div has its CSS layout computed before
+    // MapLibre reads its size (avoids 0-height canvas on first paint)
+    await tick()
+
     map = new maplibregl.Map({
       container: mapEl,
       style: MAP_STYLE_URL,
@@ -177,6 +181,9 @@
 
     map.on('load', () => {
       if (!map) return
+
+      // Re-compute canvas size in case the container was laid out after Map init
+      map.resize()
 
       // ── Province source ──────────────────────────────────────────────────
       map.addSource('provinces', {
@@ -253,11 +260,16 @@
       // ── Province icon markers (task 9.3) ──────────────────────────────────
       addProvinceMarkers()
 
-      mapReady = true
       updateProvincePaint()
 
       // ── Lazily load concello GeoJSON ──────────────────────────────────────
       loadConcellosLayer()
+
+      // Hide the placeholder only once tiles are actually rendered.
+      // 'idle' fires when no camera animation, no pending loads, no fades.
+      map.once('idle', () => {
+        mapReady = true
+      })
     })
   })
 
