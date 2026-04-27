@@ -73,6 +73,7 @@
 - [ ] 7b.2 Crear `src/providers/meteosix-codes.ts` con la tabla de mapping `sky_state → WMO-like code` (20 entradas, ver `docs/api-research.md` sección 3.5)
 - [ ] 7b.3 Implementar `MeteoSIXProvider` en `src/providers/meteosix.ts`:
   - Petición a `/api/meteosix` con `coords=lon,lat&variables=sky_state,temperature,precipitation_amount,wind,relative_humidity,cloud_area_fraction&lang=gl&format=application/json`
+  - **Omitir el parámetro `grids`** — la API selecciona automáticamente la mejor malla disponible. Comportamiento esperado: en consultas por la mañana temprana puede retornar WRF 1km; por la tarde, cuando el run de 1km aún no ha terminado o el horizonte lo supera, retornará WRF 4km. Esto es correcto, no es un error.
   - Parseo de la respuesta GeoJSON v5 (estructura `features[0].properties.days[].variables[]`)
   - Agrupación de valores horarios en slots `morning`/`afternoon`/`night`
 - [ ] 7b.4 Mapear respuesta MeteoSIX al modelo `DayForecast` siguiendo la tabla en `design.md` Decision 21:
@@ -84,6 +85,7 @@
   - `relative_humidity` → `humidity` (media del slot)
   - `cloud_area_fraction` → `cloudCover` (media del slot, %) — **rellena el gap de AEMET**
   - `precipitationProbability`: heurística por `sky_state` (RAIN/SHOWERS→80%, DRIZZLE→50%, etc.)
+  - ⚠️ **Offset dinámico en slot mapping**: los timestamps de MeteoSIX incluyen offset explícito (`+01:00` invierno / `+02:00` verano CEST). Parsear con `new Date(isoString)` y usar horas locales (Europa/Madrid). **No asumir UTC+1 fijo** — en verano los slots se desplazarían una hora.
 - [ ] 7b.5 Añadir gestión de errores: excepción 216 (fuera de cobertura geográfica) → fallback a `OpenMeteoProvider` sin error UI; errores 005/006 (API key) → log en Sentry + fallback
 - [ ] 7b.6 Cambiar el proveedor activo en `src/providers/index.ts` a `MeteoSIXProvider` (con AEMET como fallback para alertas y cobertura fuera de Galicia)
 - [ ] 7b.7 Añadir `METEOSIX_API_KEY` a las variables de entorno de Vercel y al `.env.example` local

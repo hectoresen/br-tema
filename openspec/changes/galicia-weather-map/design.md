@@ -477,9 +477,11 @@ sky_state,temperature,precipitation_amount,wind,relative_humidity,cloud_area_fra
 | `cloudCover` | `cloud_area_fraction` | Media del slot (%) — ✅ sin gap |
 
 **Slot mapping** (datos horarios → morning/afternoon/night):
-- `morning`: horas 06–12 UTC+1 (horas 05–11 UTC)
-- `afternoon`: horas 12–18 UTC+1 (horas 11–17 UTC)
-- `night`: horas 18–06 UTC+1 del día siguiente (horas 17–05 UTC)
+- `morning`: horas 06–12 en horario local de Galicia
+- `afternoon`: horas 12–18 en horario local de Galicia
+- `night`: horas 18–06 en horario local de Galicia (día siguiente)
+
+> ⚠️ **Offset dinámico**: Galicia usa CET (UTC+1) en invierno y CEST (UTC+2) en verano. MeteoSIX v5 devuelve timestamps con offset explícito (`+01:00` o `+02:00`). El parsing **debe usar el offset incluido en cada timestamp** — nunca asumir UTC+1 fijo. Usar `new Date(isoString)` en JS/TS (que respeta el offset) y comparar horas locales mediante `getHours()` sobre un objeto Date con timezone de Europa/Madrid, o equivalente. Si se asume UTC+1 fijo, los slots se desplazarán una hora en horario de verano (junio–octubre, que es precisamente el período de mayor uso).
 
 **Idioma**: `lang=gl` en todas las peticiones → textos devueltos en gallego nativo. Ventaja única frente a AEMET.
 

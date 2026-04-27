@@ -491,17 +491,21 @@ GET https://servizos.meteogalicia.gal/apiv5/getNumericForecastInfo
 |---|---|---|---|
 | WRF | 1km, 4km, 12km, 36km | 96h (1km) / 96h+84h resto | 00:00 / 12:00 |
 | WW3 | Galicia (0.05°), Ibérica (0.25°), AtlánticoNorte (0.5°) | 109h / 97h | 00:00 / 12:00 |
-| SWAN | Galicia (variable) | 97h | 00:00 |
+| SWAN *(v4)* / USWAN *(v5)* | Galicia (variable) | 97h | 00:00 |
 | ROMS | Galicia (0.02°) | 97h | 00:00 |
 | MOHID | Artabro/Arousa/Vigo (0.003°) | 49h | 00:00 |
 
-> Para Brétema (predicción atmosférica): usar WRF. La malla se selecciona automáticamente (mejor disponible) si no se especifica `grids`. La malla 1km tiene mayor resolución pero menor disponibilidad (solo run 00:00 UTC).
+> ⚠️ **Discrepancia SWAN/USWAN**: El capítulo 10 del PDF oficial (novedades v5) indica que el modelo SWAN fue reemplazado por **USWAN** en v5. Sin embargo, la tabla de variables del capítulo 6.1 aún lista `SWAN` como modelo para `significative_wave_height`, `mean_wave_direction` y `relative_peak_period`. Esta inconsistencia existe en la documentación oficial (septiembre 2025). **Para Brétema no es relevante** (solo usamos variables WRF atmosféricas), pero si en el futuro se añaden datos de oleaje, verificar el nombre correcto antes de implementar.
+
+> **Para Brétema (predicción atmosférica)**: usar WRF, omitir el parámetro `grids`. La API selecciona automáticamente la mejor malla disponible. **Comportamiento esperado de disponibilidad de la malla 1km**: esta malla solo tiene ejecución a las 00:00 UTC y finaliza ~07:30 UTC. Si el usuario consulta por la tarde y la malla 1km del día siguiente aún no está disponible, la API retornará datos de la mejor malla disponible (típicamente 4km). Este es el comportamiento correcto y esperado — no es un error ni un gap. La omisión de `grids` garantiza que siempre se obtienen los mejores datos disponibles en cada momento.
 
 ### 3.8 CORS y proxy
 
 > ⚠️ **CORS pendiente de verificación directa**. La API requiere `API_KEY` en la URL. Por seguridad, la clave **no debe exponerse en el cliente**. Se planifica un Vercel Edge Function proxy en `/api/meteosix/` análogo al de AEMET. Ver Decision 21 en `design.md`.
 
 El proxy intercepta la petición del cliente, añade la `API_KEY` desde variable de entorno, reenvía a MeteoGalicia y retorna la respuesta. Es una redirección directa (sin doble-redirect como AEMET).
+
+**Nota sobre fallback directo**: La decisión de usar proxy es correcta independientemente de si MeteoSIX v5 tiene CORS abierto (la clave no puede exponerse al cliente). En el hipotético caso de fallo del proxy de Vercel (cold start extremo, límite de invocaciones gratuitas), el fallback correcto es `OpenMeteoProvider` — no un intento de llamada directa al cliente. No bloquea la implementación, pero debe tenerse en cuenta al definir la lógica de fallback en `MeteoSIXProvider`.
 
 ### 3.9 Excepciones relevantes
 
