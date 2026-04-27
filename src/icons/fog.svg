@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <!-- Fog horizontal lines -->
+  <g stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <line x1="8" y1="16" x2="40" y2="16"/>
+    <line x1="12" y1="24" x2="36" y2="24"/>
+    <line x1="8" y1="32" x2="40" y2="32"/>
+    <line x1="14" y1="40" x2="34" y2="40"/>
+  </g>
+</svg>
