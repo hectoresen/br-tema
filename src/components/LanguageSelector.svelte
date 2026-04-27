@@ -14,7 +14,7 @@
       class="px-2 py-1 text-xs font-medium uppercase rounded transition-colors
         {$locale === lang
           ? 'bg-sky-600 text-white'
-          : 'text-neutral-400 hover:text-neutral-100 hover:bg-neutral-800'}"
+          : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-100 dark:hover:bg-neutral-800'}"
       aria-pressed={$locale === lang}
       on:click={() => setLocale(lang)}
     >

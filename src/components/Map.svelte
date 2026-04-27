@@ -6,7 +6,7 @@
    *                9.4 hover tooltip · 9.5 select province · 9.6 select concello ·
    *                9.7 visual highlight · 9.8 mapLevel flag · 9.9 responsive
    */
-  import { onMount, onDestroy, tick } from 'svelte'
+  import { onMount, onDestroy } from 'svelte'
   import { get } from 'svelte/store'
   import maplibregl from 'maplibre-gl'
   import 'maplibre-gl/dist/maplibre-gl.css'
@@ -46,6 +46,12 @@
 
   // Marker DOM elements — updated imperatively when store values change
   const markerEls: Partial<Record<ProvinceId, HTMLDivElement>> = {}
+
+  // ResizeObserver keeps the MapLibre canvas sized to its container
+  let resizeObserver: ResizeObserver | null = null
+
+  // Debounce timer for marker updates
+  let markersDebounce: ReturnType<typeof setTimeout> | null = null
 
   // Hover tooltip
   let tooltipVisible = false
@@ -87,9 +93,10 @@
     const iconId: WeatherIconId = slotData ? getWeatherIcon(slotData) : 'cloudy'
     const isSelected = get(selectedProvince) === provinceId
 
-    const bg = isSelected ? 'rgba(29,78,216,0.92)' : 'rgba(10,10,10,0.85)'
-    const border = isSelected ? '#3b82f6' : '#404040'
-    const color = isSelected ? '#93c5fd' : '#e5e5e5'
+    // Light-mode-first colours; same in both themes (map tiles are always light)
+    const bg = isSelected ? 'rgba(29,78,216,0.9)' : 'rgba(255,255,255,0.92)'
+    const border = isSelected ? '#3b82f6' : '#d4d4d4'
+    const color = isSelected ? '#ffffff' : '#171717'
     const tempText = slotData ? `${Math.round(slotData.temperature.max)}°` : ''
 
     // Extract just the inner SVG content (strip outer <svg> tag) and embed at size 26
@@ -141,10 +148,12 @@
 
   let hoveredProvinceId: string | null = null
 
-  onMount(async () => {
-    // Ensure the container div has its CSS layout computed before
-    // MapLibre reads its size (avoids 0-height canvas on first paint)
-    await tick()
+  onMount(() => {
+    // requestAnimationFrame fires AFTER the browser has calculated CSS layout,
+    // so mapEl.clientWidth/clientHeight are correct when MapLibre reads them.
+    // tick() only flushes Svelte's DOM updates but does NOT guarantee layout.
+    requestAnimationFrame(() => {
+      if (!mapEl) return
 
     map = new maplibregl.Map({
       container: mapEl,
@@ -162,6 +171,14 @@
       new maplibregl.NavigationControl({ showCompass: false }),
       'top-right'
     )
+
+    // Keep canvas correctly sized whenever the flex container resizes
+    resizeObserver = new ResizeObserver(() => { map?.resize() })
+    resizeObserver.observe(mapEl)
+
+    map.on('error', (e) => {
+      console.warn('[MapLibre]', e.error?.message ?? e)
+    })
 
     map.on('load', () => {
       if (!map) return
@@ -254,18 +271,23 @@
       // ── Province icon markers (task 9.3) ──────────────────────────────────
       addProvinceMarkers()
 
-      // ── Lazily load concello GeoJSON ──────────────────────────────────────
-      loadConcellosLayer()
-
-      // Hide the placeholder only once tiles are actually rendered.
-      // 'idle' fires when no camera animation, no pending loads, no fades.
+      // 'idle' fires when tiles are rendered and no pending transitions.
+      // Only then remove the placeholder — keeps it visible during real load.
       map.once('idle', () => {
         mapReady = true
+        // Defer concellos load to AFTER the map is visually stable.
+        // Adding a large GeoJSON source synchronously inside load can
+        // interfere with tile rendering on some drivers.
+        setTimeout(() => { void loadConcellosLayer() }, 300)
       })
     })
+    }) // end requestAnimationFrame
   })
 
   onDestroy(() => {
+    resizeObserver?.disconnect()
+    resizeObserver = null
+    if (markersDebounce) clearTimeout(markersDebounce)
     map?.remove()
     map = null
     mapReady = false
@@ -343,16 +365,19 @@
 
   // ── Reactive updates ──────────────────────────────────────────────────────────
 
-  // Re-render markers when forecast data or selected day/slot/province changes.
-  // updateProvincePaint() has been removed — selection is now handled via
-  // setFeatureState above, which does NOT recompile shaders.
+  // Re-render markers on data/selection changes — debounced to prevent
+  // rapid-fire innerHTML sets when all 4 province forecasts arrive at once.
   $: {
     $forecastData
     $selectedDay
     $selectedTimeSlot
     $selectedProvince
     if (mapReady) {
-      updateAllMarkers()
+      if (markersDebounce) clearTimeout(markersDebounce)
+      markersDebounce = setTimeout(() => {
+        updateAllMarkers()
+        markersDebounce = null
+      }, 60)
     }
   }
 
@@ -380,7 +405,8 @@
 </script>
 
 <!-- 9.9 responsive: fill parent height set by App.svelte (h-screen minus header) -->
-<div class="relative w-full h-full bg-neutral-950">
+<!-- bg-neutral-100 (light) / bg-neutral-950 (dark): shown only while tiles load -->
+<div class="relative w-full h-full bg-neutral-100 dark:bg-neutral-950">
   <!-- MapLibre canvas container (task 9.1) -->
   <div bind:this={mapEl} class="absolute inset-0" role="application" aria-label={$_('map.loading')}></div>
 
@@ -398,42 +424,42 @@
       style="left:{tooltipX + 12}px;top:{tooltipY - 12}px"
     >
       <div
-        class="bg-neutral-900/95 border border-neutral-700 rounded-lg px-3 py-2 shadow-xl text-xs text-neutral-100 min-w-[140px]"
+        class="bg-white/95 dark:bg-neutral-900/95 border border-neutral-200 dark:border-neutral-700 rounded-lg px-3 py-2 shadow-xl text-xs text-neutral-900 dark:text-neutral-100 min-w-[140px]"
       >
         <!-- Province name -->
-        <p class="font-semibold text-sm mb-1 text-neutral-100">
+        <p class="font-semibold text-sm mb-1 text-neutral-900 dark:text-neutral-100">
           {$_(`province.${tooltipProvinceId}`)}
         </p>
 
         {#if tooltipSlot}
           <!-- Weather condition -->
-          <p class="text-neutral-400 mb-1.5">
+          <p class="text-neutral-500 dark:text-neutral-400 mb-1.5">
             {$_(`weather.${tooltipIconId}`)}
           </p>
           <!-- Temperature -->
           <div class="flex items-center justify-between gap-3 mb-0.5">
-            <span class="text-neutral-400">{$_('forecast.temperature.label')}</span>
-            <span class="text-neutral-200 font-medium">
+            <span class="text-neutral-500 dark:text-neutral-400">{$_('forecast.temperature.label')}</span>
+            <span class="text-neutral-800 dark:text-neutral-200 font-medium">
               {Math.round(tooltipSlot.temperature.min)}° /
               {Math.round(tooltipSlot.temperature.max)}°
             </span>
           </div>
           <!-- Precipitation probability -->
           <div class="flex items-center justify-between gap-3 mb-0.5">
-            <span class="text-neutral-400">{$_('forecast.precipitation.label')}</span>
-            <span class="text-neutral-200">
+            <span class="text-neutral-500 dark:text-neutral-400">{$_('forecast.precipitation.label')}</span>
+            <span class="text-neutral-800 dark:text-neutral-200">
               {tooltipSlot.precipitation.probability}%
             </span>
           </div>
           <!-- Wind -->
           <div class="flex items-center justify-between gap-3">
-            <span class="text-neutral-400">{$_('forecast.wind.label')}</span>
-            <span class="text-neutral-200">
+            <span class="text-neutral-500 dark:text-neutral-400">{$_('forecast.wind.label')}</span>
+            <span class="text-neutral-800 dark:text-neutral-200">
               {$_('forecast.wind.speed', { values: { value: Math.round(tooltipSlot.wind.speed) } })}
             </span>
           </div>
         {:else}
-          <p class="text-neutral-500 italic">{$_('app.loading')}</p>
+          <p class="text-neutral-400 dark:text-neutral-500 italic">{$_('app.loading')}</p>
         {/if}
       </div>
     </div>
