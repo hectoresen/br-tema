@@ -7,14 +7,15 @@
   }
 </script>
 
+<!-- Pills rendered on top of the green-800 header -->
 <div class="flex items-center gap-1" role="group" aria-label={$_('language.label')}>
   {#each MVP_LOCALES as lang (lang)}
     <button
       type="button"
-      class="px-2 py-1 text-xs font-medium uppercase rounded transition-colors
-        {$locale === lang
-          ? 'bg-sky-600 text-white'
-          : 'text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-100 dark:hover:bg-neutral-800'}"
+      class="px-2 py-0.5 text-xs font-medium uppercase rounded-full transition-colors"
+      style={$locale === lang
+        ? 'color:#E8F0EC; border:1px solid #7EB89A;'
+        : 'color:#9EC4B0; border:1px solid transparent;'}
       aria-pressed={$locale === lang}
       on:click={() => setLocale(lang)}
     >

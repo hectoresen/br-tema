@@ -22,12 +22,22 @@ export default {
           'amber':     '#C4862A',
           'blue':      '#185FA5',
           'atlantic':  '#B8D4E8',
-          // Alert severity
+          // Text
+          'text-primary':   '#1A1A1A',
+          'text-secondary': '#5A5A5A',
+          'text-tertiary':  '#9A9A9A',
+          // Surfaces
+          'surface':        '#FFFFFF',
+          'surface-raised': '#F5F3EF',
+          // Alert severity — foreground, background and text colours
           'alert-yellow':       '#F9C74F',
+          'alert-yellow-bg':    '#FFF8E1',
           'alert-yellow-text':  '#7A5800',
           'alert-orange':       '#F4845F',
+          'alert-orange-bg':    '#FFF0EB',
           'alert-orange-text':  '#6B2500',
           'alert-red':          '#E63946',
+          'alert-red-bg':       '#FFF0F0',
           'alert-red-text':     '#FFFFFF',
         },
         // ── Legacy tokens (kept for backwards compatibility) ─────────────────

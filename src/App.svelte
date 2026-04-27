@@ -1,75 +1,52 @@
 ﻿<script lang="ts">
   import { onMount } from 'svelte'
-  import { _ } from 'svelte-i18n'
   import LanguageSelector from './components/LanguageSelector.svelte'
+  import AlertsBanner from './components/AlertsBanner.svelte'
+  import LayerSelector from './components/LayerSelector.svelte'
   import Map from './components/Map.svelte'
+  import { alerts } from './stores/alerts'
 
   // Dev-only preview — tree-shaken away in production builds
   const DEV = import.meta.env.DEV
   let showDevIcons = false
 
-  // ── Dark mode ────────────────────────────────────────────────────────────────
-  let isDark = false
-
   onMount(() => {
-    // Default is always light. Dark only if the user has explicitly chosen it.
-    const stored = localStorage.getItem('bretema-theme')
-    isDark = stored === 'dark'
-    applyTheme(isDark)
+    alerts.load()
   })
-
-  function applyTheme(dark: boolean) {
-    document.documentElement.classList.toggle('dark', dark)
-  }
-
-  function toggleTheme() {
-    isDark = !isDark
-    localStorage.setItem('bretema-theme', isDark ? 'dark' : 'light')
-    applyTheme(isDark)
-  }
 </script>
 
-<!-- Light by default; 'dark' class on <html> activates dark: variants -->
-<main class="flex flex-col h-screen bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 overflow-hidden">
-  <header class="flex-shrink-0 flex items-center justify-between px-4 py-3 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950">
-    <span class="text-sm font-semibold tracking-wide">{$_('app.title')}</span>
+<!-- App root — stone surface background, single column mobile-first -->
+<div class="flex flex-col h-screen bg-bretema-stone-100 overflow-hidden">
+
+  <!-- ── Header ── 44px, green-800, bretema logo + language selector ── -->
+  <header
+    class="flex-shrink-0 flex items-center justify-between px-4 h-11"
+    style="background-color:#2D4A3E; border-bottom:0.5px solid #4A7060;"
+  >
+    <!-- Logotype: green dot + "Brétema" -->
     <div class="flex items-center gap-2">
+      <span
+        class="inline-block w-2 h-2 rounded-full flex-shrink-0"
+        style="background-color:#7EB89A;"
+        aria-hidden="true"
+      ></span>
+      <span
+        class="font-medium select-none"
+        style="color:#E8F0EC; font-size:15px; letter-spacing:0.02em;"
+      >Brétema</span>
+    </div>
+
+    <!-- Right side: dev toggle + language selector -->
+    <div class="flex items-center gap-3">
       {#if DEV}
         <button
-          class="text-xs text-neutral-400 hover:text-sky-600 dark:text-neutral-500 dark:hover:text-sky-400 transition-colors"
+          class="text-xs transition-colors"
+          style="color:#9EC4B0;"
           on:click={() => (showDevIcons = !showDevIcons)}
         >
-          {showDevIcons ? 'hide icons' : 'dev: icons'}
+          {showDevIcons ? 'hide icons' : 'icons'}
         </button>
       {/if}
-
-      <!-- Dark/light mode toggle -->
-      <button
-        type="button"
-        aria-label={isDark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro'}
-        title={isDark ? 'Modo claro' : 'Modo oscuro'}
-        class="w-7 h-7 flex items-center justify-center rounded-md text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-        on:click={toggleTheme}
-      >
-        {#if isDark}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <circle cx="12" cy="12" r="4"/>
-            <line x1="12" y1="2" x2="12" y2="4"/>
-            <line x1="12" y1="20" x2="12" y2="22"/>
-            <line x1="2" y1="12" x2="4" y2="12"/>
-            <line x1="20" y1="12" x2="22" y2="12"/>
-            <line x1="4.93" y1="4.93" x2="6.34" y2="6.34"/>
-            <line x1="17.66" y1="17.66" x2="19.07" y2="19.07"/>
-            <line x1="19.07" y1="4.93" x2="17.66" y2="6.34"/>
-            <line x1="6.34" y1="17.66" x2="4.93" y2="19.07"/>
-          </svg>
-        {:else}
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        {/if}
-      </button>
-
       <LanguageSelector />
     </div>
   </header>
@@ -79,8 +56,15 @@
       <svelte:component this={IconPreview} />
     {/await}
   {:else}
+    <!-- ── Alerts banner ── always visible, variable height ── -->
+    <AlertsBanner />
+
+    <!-- ── Layer selector ── horizontal bar ── -->
+    <LayerSelector />
+
+    <!-- ── Map ── fills remaining vertical space ── -->
     <div class="flex-1 min-h-0">
       <Map />
     </div>
   {/if}
-</main>
+</div>

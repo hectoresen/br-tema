@@ -436,93 +436,336 @@ El desarrollador es el responsable del tratamiento a efectos del RGPD. El email 
 
 ### 21. Sistema de diseño visual
 
-**Decisión**: Brétema usa verde atlántico como color corporativo — no el azul institucional de apps de tiempo genéricas. Todos los design tokens derivan de esta identidad.
+**Decisión**: Brétema usa verde atlántico como color corporativo — no el azul institucional de apps de tiempo genéricas. El siguiente documento de diseño es la fuente de verdad para todos los tokens visuales, componentes y reglas de layout.
 
-#### Paleta de color
+```yaml
+name: Brétema
+version: alpha
+description: >
+  Sistema de diseño para Brétema, aplicación web de visualización meteorológica
+  para Galicia. Verde atlántico como color corporativo. Denso e informativo,
+  mobile-first, sin backend propio.
 
-Tokens definidos en `tailwind.config.ts` bajo `theme.extend.colors.bretema`:
+colors:
+  green-900: "#1A2E24"
+  green-800: "#2D4A3E"
+  green-700: "#3D5A3E"
+  green-600: "#4A7060"
+  green-100: "#9EC4B0"
+  green-50:  "#F0F5F2"
 
+  stone-100: "#F5F3EF"
+  stone-50:  "#E8E5DF"
+
+  atlantic:  "#B8D4E8"
+
+  amber:     "#C4862A"
+  blue:      "#185FA5"
+
+  alert-yellow:      "#F9C74F"
+  alert-yellow-bg:   "#FFF8E1"
+  alert-yellow-text: "#7A5800"
+  alert-orange:      "#F4845F"
+  alert-orange-bg:   "#FFF0EB"
+  alert-orange-text: "#6B2500"
+  alert-red:         "#E63946"
+  alert-red-bg:      "#FFF0F0"
+  alert-red-text:    "#FFFFFF"
+
+  text-primary:   "#1A1A1A"
+  text-secondary: "#5A5A5A"
+  text-tertiary:  "#9A9A9A"
+
+  surface:        "#FFFFFF"
+  surface-raised: "#F5F3EF"
+
+typography:
+  app-name:
+    fontFamily: system-ui, sans-serif
+    fontSize: 15px
+    fontWeight: 500
+    letterSpacing: 0.02em
+
+  heading:
+    fontFamily: system-ui, sans-serif
+    fontSize: 13px
+    fontWeight: 500
+
+  body:
+    fontFamily: system-ui, sans-serif
+    fontSize: 12px
+    fontWeight: 400
+
+  label:
+    fontFamily: system-ui, sans-serif
+    fontSize: 11px
+    fontWeight: 400
+
+  caption:
+    fontFamily: system-ui, sans-serif
+    fontSize: 10px
+    fontWeight: 400
+
+  temperature:
+    fontFamily: system-ui, sans-serif
+    fontSize: 11px
+    fontWeight: 500
+
+  attribution:
+    fontFamily: system-ui, sans-serif
+    fontSize: 10px
+    fontWeight: 400
+
+rounded:
+  sm: 3px
+  md: 4px
+  lg: 8px
+  xl: 12px
+  full: 9999px
+
+spacing:
+  xs: 4px
+  sm: 8px
+  md: 12px
+  lg: 16px
+  xl: 24px
+
+components:
+  header:
+    backgroundColor: "{colors.green-800}"
+    textColor: "#E8F0EC"
+    height: 44px
+    borderBottom: "0.5px solid {colors.green-600}"
+
+  layer-btn:
+    backgroundColor: "transparent"
+    textColor: "{colors.text-secondary}"
+    rounded: "{rounded.md}"
+    padding: "4px 10px"
+    borderColor: "{colors.stone-50}"
+
+  layer-btn-active:
+    backgroundColor: "{colors.green-800}"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.md}"
+    padding: "4px 10px"
+
+  lang-btn:
+    backgroundColor: "transparent"
+    textColor: "{colors.green-100}"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
+    borderColor: "{colors.green-600}"
+
+  lang-btn-active:
+    backgroundColor: "transparent"
+    textColor: "#E8F0EC"
+    rounded: "{rounded.full}"
+    padding: "2px 8px"
+    borderColor: "{colors.green-100}"
+
+  time-slot:
+    backgroundColor: "transparent"
+    textColor: "{colors.text-secondary}"
+    padding: "5px 8px"
+
+  time-slot-active:
+    backgroundColor: "{colors.green-800}"
+    textColor: "#FFFFFF"
+    fontWeight: 500
+
+  day-btn:
+    backgroundColor: "transparent"
+    textColor: "{colors.text-secondary}"
+    rounded: "{rounded.sm}"
+    padding: "3px 7px"
+
+  day-btn-active:
+    backgroundColor: "{colors.green-700}"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.sm}"
+    padding: "3px 7px"
+
+  alert-chip-yellow:
+    backgroundColor: "{colors.alert-yellow}"
+    textColor: "{colors.alert-yellow-text}"
+    rounded: "{rounded.sm}"
+    padding: "2px 8px"
+
+  alert-chip-orange:
+    backgroundColor: "{colors.alert-orange}"
+    textColor: "{colors.alert-orange-text}"
+    rounded: "{rounded.sm}"
+    padding: "2px 8px"
+
+  alert-chip-red:
+    backgroundColor: "{colors.alert-red}"
+    textColor: "{colors.alert-red-text}"
+    rounded: "{rounded.sm}"
+    padding: "2px 8px"
+
+  concello-card:
+    backgroundColor: "{colors.surface}"
+    rounded: "{rounded.xl}"
+    padding: "0"
+    borderColor: "{colors.stone-50}"
+
+  concello-day-today:
+    backgroundColor: "{colors.green-50}"
+
+  stat-card:
+    backgroundColor: "{colors.surface-raised}"
+    rounded: "{rounded.lg}"
+    padding: "6px 8px"
+
+  province-icon:
+    backgroundColor: "rgba(255,255,255,0.92)"
+    size: 36px
+    rounded: "{rounded.full}"
+
+  map-date-label:
+    backgroundColor: "rgba(30,50,40,0.75)"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.sm}"
+    padding: "3px 8px"
+
+  search-input:
+    backgroundColor: "{colors.surface-raised}"
+    textColor: "{colors.text-primary}"
+    rounded: "{rounded.lg}"
+    padding: "7px 10px"
+    height: 36px
+    borderColor: "{colors.stone-50}"
 ```
---bretema-green-900: #1A2E24   ← cabecera dark mode
---bretema-green-800: #2D4A3E   ← cabecera, botones activos, layer activo
---bretema-green-700: #3D5A3E   ← hover states, borde provincia seleccionada
---bretema-green-600: #4A7060   ← bordes sobre fondo verde
---bretema-green-100: #9EC4B0   ← texto secundario sobre verde
---bretema-green-50:  #F0F5F2   ← fondo día actual en tarjeta concello
 
---bretema-stone-100: #F5F3EF   ← fondo general de la app (no blanco puro)
---bretema-stone-50:  #E8E5DF   ← bordes sobre fondo stone
+#### Overview
 
---bretema-amber:     #C4862A   ← temperatura máxima
---bretema-blue:      #185FA5   ← temperatura mínima, lluvia %
---bretema-atlantic:  #B8D4E8   ← fondo del mapa (océano Atlántico)
+Brétema es una aplicación de tiempo para Galicia. El nombre es la palabra gallega para
+niebla atlántica — densa, húmeda, cercana. El diseño refleja esa identidad: informativo
+y denso como MeteoGalicia, pero con una identidad visual propia arraigada en el
+territorio, no en la institución.
 
---bretema-alert-yellow:       #F9C74F   ← aviso nivel amarillo
---bretema-alert-yellow-text:  #7A5800
---bretema-alert-orange:       #F4845F   ← aviso nivel naranja
---bretema-alert-orange-text:  #6B2500
---bretema-alert-red:          #E63946   ← aviso nivel rojo
---bretema-alert-red-text:     #FFFFFF
-```
+El color corporativo es el **verde atlántico** (`green-800: #2D4A3E`), no el azul
+genérico de las apps de tiempo. Evoca el territorio: bosques de la costa, valles del
+Miño, montes de Lugo. Cada decisión de color parte de esta raíz.
 
-#### Tipografía
+El tono visual es **denso e informativo** — todo visible de un vistazo, sin sacrificar
+limpieza. La referencia principal es MeteoGalicia en estructura de información, y
+Linear/Vercel en ejecución visual. Mobile-first absoluto: el diseño arranca en 390px
+y se expande hacia desktop.
 
-Fuente del sistema (`font-sans` de Tailwind) en todos los casos — sin fuentes externas para no penalizar el LCP. Jerarquía:
+#### Colors
 
-| Uso | Tamaño | Weight | Notas |
-|---|---|---|---|
-| Cabecera app | 15px | 500 | tracking 0.02em |
-| Nombre concello | 13px | 500 | — |
-| Etiquetas | 12px | 400 | — |
-| Metadatos | 11px | 400 | color secundario |
-| Atribución | 10px | 400 | color terciario |
-| Temperaturas | 11px | 500 | máx amber, mín blue |
+La paleta tiene tres familias:
 
-Mínimo absoluto: 10px. En móvil temperaturas y etiquetas de provincia: 12px mínimo.
+**Verde atlántico** — color corporativo. `green-800` es el tono base para cabecera,
+botones activos y elementos de navegación. `green-700` para hover. `green-100` para
+texto secundario sobre fondo verde. `green-50` para superficies sutilmente tintadas
+(día actual en la tarjeta de concello).
 
-#### Cabecera (`Header.svelte`)
+**Stone** — fondo general de la app. No blanco puro sino `stone-100: #F5F3EF`, un
+blanco cálido con ligero tinte arena. Evita la frialdad del blanco puro y armoniza con
+el verde atlántico. `stone-50` para bordes sobre fondos stone.
 
-Altura fija 44px. Fondo `bretema-green-800`. Sin sombra — borde inferior `0.5px solid bretema-green-600`. Contenido: logotipo (punto verde `#7EB89A` + texto "Brétema" en `#E8F0EC`) a la izquierda. Selector de idioma GL/ES a la derecha como dos botones pill pequeños — activo con borde `#7EB89A`, inactivo en `#9EC4B0` sin borde sólido. En móvil el selector colapsa a un único botón mostrando el idioma activo.
+**Semánticos** — `amber (#C4862A)` para temperatura máxima, `blue (#185FA5)` para
+temperatura mínima y porcentaje de lluvia. Estos dos colores son los únicos que
+aparecen en los datos meteorológicos directamente — el usuario aprende su semántica
+rápidamente por repetición.
 
-#### Barra de avisos (`AlertsBanner.svelte`)
+**Alertas** — jerarquía estricta de tres niveles: amarillo → naranja → rojo. Los chips
+usan fondo claro + texto oscuro del mismo tono para amarillo y naranja, y fondo rojo +
+texto blanco para rojo. Las `*-bg` colors se usan para el fondo de la barra de avisos.
 
-Fondo `#FFF8E1`, borde inferior `0.5px solid bretema-alert-yellow`. Altura variable — nunca fixed. Icono 16px en `#F9C74F`. Texto 12px/500 color `#7A5800`. Chips a la derecha con color según nivel. Sin avisos: fondo `bretema-stone-100`, texto "Sen avisos activos" en color terciario, sin icono. La barra permanece visible (sin avisos) para evitar CLS.
+**Océano atlántico** — `atlantic: #B8D4E8` es el color del mar en el mapa.
 
-#### Selector de capas (`LayerSelector.svelte`)
+#### Typography
 
-Barra horizontal sobre el mapa. Fondo blanco, borde inferior `0.5px`. Botones 11px, padding `4px 10px`, border-radius `4px`. Inactivo: fondo transparente, borde `0.5px` secundario. Activo: fondo `bretema-green-800`, texto blanco. En móvil: scroll horizontal sin wrap.
+Sin fuentes externas — exclusivamente `system-ui, sans-serif`. Cero penalización de
+LCP por carga de fuentes. Dos pesos únicamente: **400 regular** y **500 medium**. Nunca
+600 ni 700 — pesan demasiado contra el fondo stone y el verde atlántico.
 
-Orden fijo (frecuencia de uso esperada, no alfabético): **Xeral · Vento · Temperatura · Humidade · Precipitación · Tormentas · Webcams · Satélite**
+Tamaño mínimo absoluto: **10px**. En móvil (≤390px) los tamaños de 10px y 11px suben
+a 12px para legibilidad táctil.
 
-#### Mapa (`Map.svelte`)
+Las temperaturas usan siempre `temperature` (11px/500): máxima en `amber`, mínima en
+`blue`.
 
-Estilo base: `positron` (OpenFreeMap) — limpio y minimal, permite buena lectura de iconos meteorológicos superpuestos. Zoom inicial: 7.1 (muestra toda Galicia incluyendo borde sur con Portugal sin exceso de contexto).
+#### Layout
 
-Capas de provincia: fill transparente por defecto, hover `bretema-green-700` al 12% opacidad, selected al 22%. Bordes `bretema-green-700` al 60% opacidad, grosor 1.5px.
+**Desktop:** Grid de dos columnas — mapa (flex: 1) + sidebar (280px fijo). El sidebar
+reduce a 240px en tablet (640–1024px).
 
-Iconos de provincia: círculo blanco 36px, opacidad 0.92, borde blanco semitransparente, icono meteorológico 18px. Debajo: nombre en 10px sobre pastilla blanca semitransparente + temperatura máx/mín. En móvil: 28px para no solaparse.
+**Mobile (≤390px):** Columna única. Orden vertical: cabecera → avisos → selector de
+capas → mapa → barra temporal → buscador → tarjeta de concello. El panel de provincia
+es un drawer slide-up desde abajo (100% width, 60% viewport height). La barra de capas
+permite scroll horizontal sin wrap.
 
-Etiqueta de fecha/franja: esquina inferior izquierda, fondo `rgba(30,50,40,0.75)`, texto blanco 11px/500, padding `3px 8px`, border-radius `3px`.
+Spacing base: 4px. Los gaps entre componentes usan múltiplos de 4: 4, 8, 12, 16, 24px.
 
-#### Barra temporal (`TimeBar.svelte`)
+#### Elevation & Depth
 
-Fondo blanco, borde superior `0.5px`. Fila única: flecha ← · slots Mañá/Tarde/Noite · selector días · flecha →. Slots en flex iguales, bordes compartidos, border-radius solo en extremos. Activo: `bretema-green-800`, texto blanco. Días arriba en 10px/0.7 opacidad. Selector de días: 4 pills de 10px, gap 4px; activo `bretema-green-700` texto blanco. Flechas: 28px cuadradas, borde `0.5px`.
+Brétema es una aplicación plana — sin sombras decorativas. La profundidad se consigue
+exclusivamente con:
 
-#### Sidebar — buscador y tarjeta concello
+- Diferencia de fondo: `surface (#FFFFFF)` sobre `surface-raised (#F5F3EF)`
+- Bordes `0.5px` en `stone-50` para delimitar cards
+- Opacidad en elementos sobre el mapa
 
-Buscador: input 36px, fondo `bretema-stone-100`, borde `0.5px` secundario. Debajo: accesos rápidos 7 ciudades principales, 11px `bretema-green-800`. Tarjeta: fondo blanco, border-radius-lg, borde `0.5px`. Grid 4 columnas, columna activa con fondo `bretema-green-50`. Temps: máx `bretema-amber`, mín `bretema-blue`, 11px/500.
+La única excepción permitida es el focus ring de inputs:
+`box-shadow: 0 0 0 2px {colors.green-100}`.
 
-#### Panel de provincia (`ProvinceReport.svelte`)
+#### Shapes
 
-Fondo blanco, border-radius-lg, borde `0.5px`, padding 12px. Grid 2×2 stat cards. Cada stat: fondo `bretema-stone-100`, etiqueta 10px/secundario, valor 14px/500. Sin iconos en stat cards.
+- `sm (3px)`: chips de alerta, etiquetas de fecha sobre el mapa
+- `md (4px)`: botones de capa, botones de franja temporal, botones de día
+- `lg (8px)`: inputs de búsqueda, stat cards del panel de provincia
+- `xl (12px)`: cards de concello, panel de provincia
+- `full`: selector de idioma (pills), iconos de provincia sobre el mapa
 
-#### Layout responsive
+Los separadores entre slots temporales NO tienen border-radius — son bordes
+compartidos entre elementos adyacentes.
 
-| Breakpoint | Sidebar | Notas |
-|---|---|---|
-| ≤390px | Oculto, scroll vertical debajo del mapa | Panel provincia = slide-up drawer 100vw×60vh |
-| 640–1024px | 240px fijo | — |
-| >1024px | 280px fijo | Panel provincia dentro del sidebar, empuja tarjeta hacia abajo |
+#### Components
+
+**Header** — 44px fijo. Verde atlántico `green-800`. Logotipo: punto circular `#7EB89A`
+(8px) + texto "Brétema" en `#E8F0EC` (15px/500, tracking 0.02em). Selector de idioma
+GL/ES a la derecha — activo: borde `#7EB89A`, texto `#E8F0EC`; inactivo: texto
+`green-100`, sin borde visible.
+
+**AlertsBanner** — Altura variable. Fondo `alert-*-bg` según el nivel de aviso más
+grave. Sin avisos: fondo `surface-raised`, texto "Sen avisos activos" en terciario. La
+barra nunca desaparece (evita CLS).
+
+**LayerSelector** — 8 botones en fila. En móvil: `overflow-x: auto`, sin scrollbar
+visible. Orden fijo: Xeral · Vento · Temperatura · Humidade · Precipitación ·
+Tormentas · Webcams · Satélite.
+
+**TimeBar** — Fila única: flecha ‹ · slots Mañá/Tarde/Noite · días · flecha ›. Los
+slots comparten bordes laterales (no gap). Flecha izquierda deshabilitada en día 0 +
+slot Mañá. Flecha derecha deshabilitada en día +3 + slot Noite.
+
+**ConcellosCard** — Card con cabecera y grid de 4 columnas. Columna del día actual con
+fondo `concello-day-today`. Punto de alerta (6px) junto al nombre del día si hay aviso.
+
+**ProvinceReport** — Grid 2×2 de `stat-card`. Etiqueta 10px/secundario, valor
+14px/500/primario. Sin iconos decorativos.
+
+#### Do's and Don'ts
+
+**Do:**
+- Usar `green-800` como único color corporativo activo
+- Mostrar siempre la barra de avisos aunque esté vacía
+- Actualizar la atribución del mapa reactivamente al cambiar de capa
+- Usar `amber` para temp máx y `blue` para temp mín en todos los contextos
+- Mantener el orden fijo del LayerSelector
+
+**Don't:**
+- No usar sombras decorativas — solo bordes 0.5px para delimitar
+- No hardcodear ningún string visible — todo pasa por los archivos i18n
+- No usar pesos 600 o 700 en ningún texto
+- No añadir border-radius a separadores entre elementos adyacentes
+- No usar el azul `atlantic` fuera del contexto del mapa
+- No cargar fuentes externas — solo system-ui
 
 ---
 
