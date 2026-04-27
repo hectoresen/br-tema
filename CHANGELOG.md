@@ -7,6 +7,16 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added (FEAT/stores — Block 8)
+
+- `src/stores/ui.ts` — 8 synchronous Svelte stores: `activeLayer` (`MapLayer`), `selectedDay` (0–3), `selectedTimeSlot` (`TimeSlot`), `selectedProvince`, `selectedConcello`, `searchConcello` (default: Lugo `27028000000`), `concellosGeoJSONLoaded`; derived `forecastDates` (today + 3 YYYY-MM-DD, Europe/Madrid)
+- `src/stores/forecast.ts` — `forecastData` custom store: in-memory cache by `type:id:days` key, per-key loading/error state, `loadProvince()` / `loadConcello()` async loaders, `getProvince()` / `getConcello()` synchronous accessors
+- `src/stores/alerts.ts` — `alerts` custom store: `load()` calls `activeProvider.getAlerts()`, falls back to `mock-alerts.json` on error
+- `src/stores/index.ts` — barrel re-export for all stores
+- `src/lib/bootstrap.ts` — `bootstrapApp()` fires parallel `loadProvince()` for all 4 provinces + `alerts.load()` at startup
+- `src/main.ts` — `bootstrapApp()` called at startup (before App mount)
+- `src/stores/ui.test.ts` — 13 tests; `src/stores/forecast.test.ts` — 6 tests; `src/stores/alerts.test.ts` — 3 tests
+
 ### Added (FEAT/open-meteo — Block 6)
 
 - `src/config/provinces.ts` — canonical province centre coordinates for `getProvinceForecast()` resolution
