@@ -7,6 +7,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added (FEAT/static-data — Block 4)
+
+- `src/data/galicia-provinces.geojson` — 4 provinces, simplified with RDP (0.05° tolerance, island filtering) → 34.6 KB; script: `scripts/build-provinces-geojson.cjs`
+- `src/data/galicia-concellos.geojson` — 313 concellos with polygon boundaries from OSM via Overpass API → 5.2 MB (lazy-loaded); script: `scripts/fetch-concellos-geojson.cjs`
+- `src/data/concellos.json` — 313 concellos with id (INE code), name, nameGl, provinceId, lat, lon; sorted by province then name
+- `src/data/webcams.json` — 10 webcam entries (all `mock: true`); schema: id, name, nameGl, concelloId, provinceId, lat, lon, url, source
+- `src/data/mock-alerts.json` — 5 mock alerts covering all phenomena and severities; used as fallback when provider doesn't support `getAlerts()`
+- `@types/geojson` installed as devDependency
+- `src/vite-env.d.ts` — TypeScript module declarations for all JSON/GeoJSON data files
+- `src/types/concello.ts` — added `nameGl` field, updated `id` to INE code
+- `scripts/` — build scripts for provinces GeoJSON and fetching concellos from Overpass (bbox+way geometry approach)
+
 ### Added (FEAT/i18n — Block 3)
 
 - `svelte-i18n` configured with `navigator.language` auto-detection in `src/i18n/index.ts`
