@@ -7,6 +7,24 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added (FEAT/map-component — Block 9)
+
+- `src/icons/icon-strings.ts` — shared `ICON_SVGS` record with all 8 SVG strings; imported by both `WeatherIcon.svelte` and `Map.svelte` map markers (eliminates duplication)
+- `src/components/WeatherIcon.svelte` — refactored to import SVG strings from `icon-strings.ts`
+- `src/components/MapPlaceholder.svelte` — static SVG of Galicia's 4 provinces (equirectangular projection, viewBox 300×200); pulsing dots + i18n labels; shown while MapLibre initialises to guarantee LCP ≤ 2.5 s (task 9.0)
+- `src/components/Map.svelte` — full MapLibre GL JS 4.x map component:
+  - MapLibre init with OpenFreeMap liberty tiles, `GALICIA_CENTER`/`GALICIA_ZOOM` (task 9.1)
+  - Province GeoJSON `fill` + `line` layers from `galicia-provinces.geojson`; `promoteId: 'id'` for feature-state (task 9.2)
+  - Weather icon HTML markers at each `PROVINCE_CENTRES` coordinate; icons computed from `forecastData` store via `getWeatherIcon()` + `ICON_SVGS`; update reactively on `selectedDay` / `selectedTimeSlot` / `forecastData` changes (task 9.3)
+  - Hover: `feature-state` highlight + Svelte overlay tooltip with province name, condition, temp min/max, rain %, wind speed (task 9.4)
+  - Click province → `selectedProvince` store (toggle) (task 9.5)
+  - Concello layer (fill + line, `visibility: 'none'`) lazily loaded from `galicia-concellos.geojson` via dynamic `import()`; click → `selectedConcello` store; `concellosGeoJSONLoaded.set(true)` on success (task 9.6)
+  - Visual highlight: `fill-color` MapLibre expression switches selected province to `rgba(29,78,216,0.28)` (sky-dark) (task 9.7)
+  - `export let mapLevel: 'province' | 'concello' = 'province'`; toggles concello layer visibility (task 9.8)
+  - Fills parent height (`w-full h-full`); App.svelte uses `flex-1 min-h-0` container (task 9.9)
+- `src/App.svelte` — layout changed from `min-h-screen` to `flex flex-col h-screen overflow-hidden`; Map component replaces tagline placeholder; `<header>` uses `flex-shrink-0`
+- `vite.config.ts` — `vite-plugin-geojson`: inline Rollup plugin transforms `.geojson` files as JSON modules; `chunkSizeWarningLimit: 6000` for concellos chunk
+
 ### Added (FEAT/stores — Block 8)
 
 - `src/stores/ui.ts` — 8 synchronous Svelte stores: `activeLayer` (`MapLayer`), `selectedDay` (0–3), `selectedTimeSlot` (`TimeSlot`), `selectedProvince`, `selectedConcello`, `searchConcello` (default: Lugo `27028000000`), `concellosGeoJSONLoaded`; derived `forecastDates` (today + 3 YYYY-MM-DD, Europe/Madrid)
