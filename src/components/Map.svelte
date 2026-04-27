@@ -1,4 +1,5 @@
 <script lang="ts">
+  /* eslint-disable no-console */
   /**
    * Map.svelte — MapLibre GL map of Galicia.
    *
@@ -155,12 +156,39 @@
     requestAnimationFrame(() => {
       if (!mapEl) return
 
+      const w = mapEl.clientWidth
+      const h = mapEl.clientHeight
+      console.log('[Map] rAF fired — container:', w, 'x', h)
+      if (w === 0 || h === 0) {
+        console.error('[Map] Container has 0 dimensions at rAF time. Layout not ready?')
+        // Retry after another frame to give flex layout more time
+        requestAnimationFrame(() => {
+          if (!mapEl) return
+          console.log('[Map] Retry rAF — container:', mapEl.clientWidth, 'x', mapEl.clientHeight)
+          if (mapEl.clientWidth === 0 || mapEl.clientHeight === 0) {
+            console.error('[Map] Still 0 after double rAF — skipping map init')
+            return
+          }
+          initMapLibre()
+        })
+        return
+      }
+      initMapLibre()
+    })
+  })
+
+  function initMapLibre() {
+    if (!mapEl || map) return
     map = new maplibregl.Map({
       container: mapEl,
       style: MAP_STYLE_URL,
       center: GALICIA_CENTER,
       zoom: GALICIA_ZOOM,
       attributionControl: false,
+      // preserveDrawingBuffer prevents the WebGL framebuffer from being cleared
+      // between frames. Without it, some drivers clear the canvas whenever
+      // MapLibre’s render loop is idle, causing a black screen.
+      preserveDrawingBuffer: true,
     })
 
     map.addControl(
@@ -177,7 +205,20 @@
     resizeObserver.observe(mapEl)
 
     map.on('error', (e) => {
-      console.warn('[MapLibre]', e.error?.message ?? e)
+      console.warn('[MapLibre error]', e.error?.message ?? e)
+    })
+
+    // Detect WebGL context loss (causes canvas to go black permanently)
+    map.getCanvas().addEventListener('webglcontextlost', (e) => {
+      console.error('[Map] WebGL context LOST', e)
+    })
+    map.getCanvas().addEventListener('webglcontextrestored', () => {
+      console.warn('[Map] WebGL context restored — forcing resize+render')
+      map?.resize()
+    })
+
+    map.once('remove', () => {
+      console.error('[Map] map.remove() called unexpectedly!')
     })
 
     map.on('load', () => {
@@ -278,11 +319,21 @@
       // causes MapLibre to re-process its tile stack mid-render, which clears
       // the WebGL canvas on many drivers.
       map.once('idle', () => {
+        const canvas = map?.getCanvas()
+        const cw = canvas?.width ?? 0
+        const ch = canvas?.height ?? 0
+        console.log('[Map] idle fired — canvas:', cw, 'x', ch, '| mapEl:', mapEl?.clientWidth, 'x', mapEl?.clientHeight)
+        if (cw === 0 || ch === 0) {
+          console.error('[Map] Canvas is 0x0 at idle! Forcing resize and waiting for next idle...')
+          map?.resize()
+          map?.once('idle', () => { mapReady = true })
+          return
+        }
         mapReady = true
+        console.log('[Map] mapReady = true')
       })
     })
-    }) // end requestAnimationFrame
-  })
+  }
 
   onDestroy(() => {
     resizeObserver?.disconnect()
