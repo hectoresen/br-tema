@@ -285,29 +285,233 @@ Open-Meteo usa estándar WMO:
 
 ---
 
-## 3. MeteoSIX / MeteoGalicia
+## 3. MeteoSIX / MeteoGalicia — API v5
 
-**Estado**: Pendiente de validación de acceso  
+**Estado**: ✅ Acceso confirmado — API key obtenida. Documentación oficial: `docs/MeteosixApi/API_MeteoSIX_v5_gl.pdf` (95 páginas, Setembro 2025)  
 **URL**: https://www.meteogalicia.gal  
-**API pública conocida**: https://servizos.meteogalicia.gal/mf/roquetes/
+**Base URL API v5**: `https://servizos.meteogalicia.gal/apiv5/`  
+**Versión anterior** (obsoleta para este proyecto): `https://servizos.meteogalicia.gal/mf/roquetes/proxys/`
 
-### Endpoints conocidos (pendiente confirmar CORS y disponibilidad)
+### 3.1 Autenticación
 
-| Propósito | URL |
+- Parámetro URL `API_KEY=<clave>` en **todas las peticiones** (case-sensitive, solo este parámetro).
+- Clave gratuita, personal, vinculada a email. Las claves v4 son válidas para v5 (no requiere solicitud nueva).
+- Peticiones sin API_KEY válida → excepción código `005` o `006`.
+
+### 3.2 Operaciones disponibles
+
+| Operación | Propósito |
 |---|---|
-| Predicción por concello | `https://servizos.meteogalicia.gal/mf/roquetes/proxys/predConcello?coords={lon},{lat}&lang=es&tz=Europe/Madrid` |
-| RSS predicción Galicia | `https://www.meteogalicia.gal/web/RSS/rssNacional.action` |
+| `GET /apiv5/findPlaces` | Buscar localidades/playas en Galicia por nombre |
+| `GET /apiv5/getNumericForecastInfo` | Predicción numérica meteorológica y oceanográfica (hasta 7 días) |
+| `GET /apiv5/getTidesInfo` | Predicción de mareas en la costa gallega (hasta 30 días, 60 días horizonte) |
+| `GET /apiv5/getSolarInfo` | Horas de salida y puesta de sol |
 
-> ⚠️ **Nota sobre CORS y Referer**: el proxy de MeteoGalicia en `/mf/roquetes/proxys/` a veces devuelve **403 dependiendo del header `Referer`**. En la validación manual hacer la request **dos veces**: una sin Referer (curl básico o fetch desde Node) y otra con `Referer: https://www.meteogalicia.gal`. Si solo la segunda funciona, habrá que enviar ese header desde el cliente o añadir un proxy ligero similar al de AEMET.
+### 3.3 Parámetros comunes a /getNumericForecastInfo, /getTidesInfo, /getSolarInfo
 
-### Estructura esperada (pendiente verificación)
+| Parámetro | Obligatorio | Valores | Defecto | Notas |
+|---|---|---|---|---|
+| `API_KEY` | Sí | Clave API | — | Case-sensitive |
+| `locationIds` | Uno de los dos | IDs de /findPlaces, separados por coma | — | Max 20 |
+| `coords` | Uno de los dos | `lon,lat;lon,lat;...` | — | Max 20 pares |
+| `startTime` | No | `yyyy-MM-ddTHH:mm:ss` | Instante actual | |
+| `endTime` | No | `yyyy-MM-ddTHH:mm:ss` | Máx. días según operación | |
+| `lang` | No | `gl` / `es` / `en` | `en` | `gl` devuelve textos en gallego |
+| `tz` | No | ID de zona horaria (ver anexo) | `Europe/Madrid` | |
+| `format` | No | `application/json`, `gml3`, `kml`, `text/html` | `application/json` | |
+| `CRS` | No | `EPSG:4326` | `EPSG:4326` | Único soportado |
 
-MeteoGalicia expone predicción en formato JSON con campos similares a AEMET pero con nombres en gallego. La verificación debe:
-1. Confirmar que el endpoint devuelve CORS headers libres
-2. Documentar campos disponibles: temperatura, precipitación, estado_cielo, viento
-3. Verificar si hay API key requerida o acceso libre
+> **Nota idioma**: usar `lang=gl` para devolver descripciones en gallego nativo — ideal para Brétema.  
+> **Nota fechas en respuestas**: formato `yyyy-MM-ddTHH:mm:ss+XX` (con offset UTC). En peticiones: `yyyy-MM-ddTHH:mm:ss` (sin offset).
 
-**Acción necesaria**: Hacer una request de prueba manual al endpoint de predicción por concello y documentar la respuesta completa aquí.
+### 3.4 Operación /findPlaces
+
+Localiza entidades de población y playas de Galicia por texto.
+
+**Parámetros**: `API_KEY` (req.), `location` (req., texto parcial), `types` (`locality` / `beach`)  
+**Máximo resultados**: 1000  
+**Cobertura**: Solo Galicia
+
+**Uso en Brétema**: Resolver nombres de concello a `locationId` para usar en las demás operaciones, como alternativa a `coords`. La lista estática de concellos (`concellos.json`) puede precargar los IDs.
+
+**Ejemplo**:
+```
+GET https://servizos.meteogalicia.gal/apiv5/findPlaces?location=ferrol&API_KEY=***
+```
+
+### 3.5 Operación /getNumericForecastInfo — Variables disponibles
+
+Esta es la operación principal para Brétema. Devuelve datos **horarios** (en punto) para hasta 7 días.
+
+| Variable | Descripción | Modelo | Unidades defecto | Símbolo (iconURL) |
+|---|---|---|---|---|
+| `sky_state` | Estado del cielo | WRF | — (categórico) | ✅ |
+| `temperature` | Temperatura | WRF | °C (entero) | No |
+| `precipitation_amount` | Precipitación acumulada hora anterior | WRF | l/m² | No |
+| `wind` | Viento (módulo + dirección) | WRF | km/h + grados | ✅ |
+| `relative_humidity` | Humedad relativa | WRF | % | No |
+| `cloud_area_fraction` | Cobertura de nubes | WRF | % | No |
+| `air_pressure_at_sea_level` | Presión nivel del mar | WRF | hPa (entero) | No |
+| `snow_level` | Cota de nieve | WRF | m (entero) | No |
+| `sea_water_temperature` | Temperatura del agua | ROMS, MOHID | °C (entero) | No |
+| `significative_wave_height` | Altura de ola | WW3, SWAN | m | No |
+| `mean_wave_direction` | Dirección del mar | WW3, SWAN | grados | ✅ |
+| `relative_peak_period` | Período de ola | WW3, SWAN | s (entero) | No |
+| `sea_water_salinity` | Salinidad | ROMS, MOHID | psu | No |
+
+**Variables por defecto** (si no se especifica `variables`): `sky_state,temperature,wind,precipitation_amount`
+
+**Variables relevantes para Brétema** (petición recomendada):
+```
+variables=sky_state,temperature,precipitation_amount,wind,relative_humidity,cloud_area_fraction
+```
+
+#### Valores de sky_state (mapeo a weatherCode interno)
+
+| sky_state MeteoSIX | Descripción | WMO equivalente sugerido |
+|---|---|---|
+| `SUNNY` | Soleado | 0 |
+| `HIGH_CLOUDS` | Nubes altas | 1 |
+| `PARTLY_CLOUDY` | Parcialmente nublado | 2 |
+| `MID_CLOUDS` | Nubes medias | 2 |
+| `OVERCAST` | Cubierto | 3 |
+| `CLOUDY` | Nublado | 3 |
+| `FOG` | Niebla | 45 |
+| `FOG_BANK` | Banco de niebla | 45 |
+| `MIST` | Neblina | 10 |
+| `DRIZZLE` | Llovizna | 51 |
+| `WEAK_RAIN` | Lluvia débil | 61 |
+| `RAIN` | Lluvia | 63 |
+| `SHOWERS` | Chubascos | 80 |
+| `WEAK_SHOWERS` | Chubascos débiles | 80 |
+| `OVERCAST_AND_SHOWERS` | Cubierto con chubascos | 81 |
+| `STORMS` | Tormentas | 95 |
+| `STORM_THEN_CLOUDY` | Tormenta y después nublado | 95 |
+| `INTERMITENT_SNOW` | Nieve intermitente | 71 |
+| `SNOW` | Nieve | 73 |
+| `MELTED_SNOW` | Nieve fundida | 67 |
+| `RAIN_HAIL` | Lluvia y granizo | 96 |
+
+> ⚠️ Definir `src/providers/meteosix-codes.ts` con esta tabla. El adaptador MeteoSIX usa `sky_state` como fuente primaria del `weatherCode` en `DayForecast`.
+
+#### Parámetros específicos de /getNumericForecastInfo
+
+| Parámetro | Obligatorio | Defecto | Notas |
+|---|---|---|---|
+| `variables` | No | `sky_state,temperature,wind,precipitation_amount` | Lista separada por comas |
+| `models` | No | — | WRF, WW3, SWAN, ROMS, MOHID. Si se especifica, misma longitud que variables |
+| `grids` | No | — | Malla específica. Mejor disponible si se omite |
+| `units` | No | Ver tabla | Lista por variable |
+| `autoAdjustPosition` | No | `true` | Ajuste automático en zonas costeras |
+
+**Rango temporal**: máximo 7 días por petición. La resolución es horaria (horas en punto).
+
+#### Ejemplo de petición Brétema
+
+```
+GET https://servizos.meteogalicia.gal/apiv5/getNumericForecastInfo
+  ?coords=-8.42,43.37
+  &variables=sky_state,temperature,precipitation_amount,wind,relative_humidity,cloud_area_fraction
+  &lang=gl
+  &format=application/json
+  &API_KEY=***
+```
+
+#### Estructura de respuesta JSON
+
+```json
+{
+  "type": "FeatureCollection",
+  "crs": {"type": "name", "properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}},
+  "features": [{
+    "type": "Feature",
+    "geometry": {"type": "Point", "coordinates": [-8.42, 43.37]},
+    "properties": {
+      "days": [{
+        "timePeriod": {
+          "begin": {"timeInstant": "2024-01-01T00:00:00+01"},
+          "end":   {"timeInstant": "2024-01-01T23:59:59+01"}
+        },
+        "variables": [
+          {
+            "name": "sky_state",
+            "model": "WRF", "grid": "1km",
+            "geometry": {"type": "Point", "coordinates": [-8.41, 43.37]},
+            "values": [
+              {"timeInstant": "2024-01-01T01:00:00+01", "modelRun": "2024-01-01T00:00:00+01",
+               "value": "SUNNY", "iconURL": "https://..."}
+            ]
+          },
+          {
+            "name": "temperature",
+            "model": "WRF", "grid": "1km", "units": "degC",
+            "geometry": {"type": "Point", "coordinates": [-8.41, 43.37]},
+            "values": [
+              {"timeInstant": "2024-01-01T01:00:00+01", "modelRun": "...", "value": 12}
+            ]
+          },
+          {
+            "name": "wind",
+            "model": "WRF", "grid": "1km",
+            "moduleUnits": "kmh", "directionUnits": "deg",
+            "geometry": {"type": "Point", "coordinates": [-8.41, 43.37]},
+            "values": [
+              {"timeInstant": "2024-01-01T01:00:00+01", "modelRun": "...",
+               "moduleValue": 15.5, "directionValue": 270.0, "iconURL": "https://..."}
+            ]
+          }
+        ]
+      }]
+    }
+  }]
+}
+```
+
+> **Nota**: si no hay datos para un instante concreto, `value`/`moduleValue`/`directionValue` serán `null`. Si no hay datos para toda la variable dentro de un día, `values` y `geometry` serán `null`.
+
+### 3.6 Mapeo de MeteoSIX v5 → DayForecast interno
+
+| Campo DayForecast | Variable MeteoSIX | Transformación |
+|---|---|---|
+| `weatherCode` | `sky_state` | Tabla `meteosix-codes.ts` |
+| `temperature.min` / `.max` | `temperature` (hourly) | `Math.min/max` sobre valores del slot |
+| `temperature.current` | `temperature` | Valor más cercano al instante actual |
+| `precipitation.value` | `precipitation_amount` | Suma acumulada en el slot (3 horas) |
+| `precipitationProbability` | — | **No disponible directamente** en MeteoSIX; inferible a partir de `sky_state` (RAIN/SHOWERS = ~80%, DRIZZLE = ~50%, etc.). Definir heurística en adaptador |
+| `wind.speed` | `wind` → `moduleValue` | Media de valores del slot en km/h |
+| `wind.direction` | `wind` → `directionValue` | Valor modal del slot en grados |
+| `humidity` | `relative_humidity` | Media de valores del slot |
+| `cloudCover` | `cloud_area_fraction` | Media de valores del slot (%) — ✅ **disponible, sin gap** |
+
+> **Ventaja sobre AEMET**: MeteoSIX sí proporciona `cloud_area_fraction` (porcentaje directo), por lo que `cloudCover` en `DayForecast` se rellena completamente sin heurísticas.
+
+### 3.7 Modelos de predicción y resoluciones
+
+| Modelo | Mallas disponibles | Horizonte | Inicio ejecución (UTC) |
+|---|---|---|---|
+| WRF | 1km, 4km, 12km, 36km | 96h (1km) / 96h+84h resto | 00:00 / 12:00 |
+| WW3 | Galicia (0.05°), Ibérica (0.25°), AtlánticoNorte (0.5°) | 109h / 97h | 00:00 / 12:00 |
+| SWAN | Galicia (variable) | 97h | 00:00 |
+| ROMS | Galicia (0.02°) | 97h | 00:00 |
+| MOHID | Artabro/Arousa/Vigo (0.003°) | 49h | 00:00 |
+
+> Para Brétema (predicción atmosférica): usar WRF. La malla se selecciona automáticamente (mejor disponible) si no se especifica `grids`. La malla 1km tiene mayor resolución pero menor disponibilidad (solo run 00:00 UTC).
+
+### 3.8 CORS y proxy
+
+> ⚠️ **CORS pendiente de verificación directa**. La API requiere `API_KEY` en la URL. Por seguridad, la clave **no debe exponerse en el cliente**. Se planifica un Vercel Edge Function proxy en `/api/meteosix/` análogo al de AEMET. Ver Decision 21 en `design.md`.
+
+El proxy intercepta la petición del cliente, añade la `API_KEY` desde variable de entorno, reenvía a MeteoGalicia y retorna la respuesta. Es una redirección directa (sin doble-redirect como AEMET).
+
+### 3.9 Excepciones relevantes
+
+| Código | Descripción |
+|---|---|
+| 005 | No se encontró el parámetro API_KEY |
+| 006 | API_KEY no válida |
+| 216 | El punto indicado cae fuera de los límites geográficos con datos |
+| 002 | Parámetro desconocido o mal escrito |
+| 007 | Idioma no soportado |
 
 ---
 
@@ -444,7 +648,7 @@ function pickPeriod(items: {value: string, periodo: string}[], slot: TimeSlot): 
 
 - **Proveedor MVP**: Open-Meteo (libre, CORS, sin proxy, datos horarios)
 - **AEMET**: Post-MVP. Proxy necesario (doble-redirect). Alta complejidad de mapping.
-- **MeteoSIX**: Post-MVP. Pendiente validación de acceso.
+- **MeteoSIX v5**: Post-MVP prioritario. API key obtenida. Proxy Vercel planificado (`/api/meteosix/`). Ver Decision 21 en `design.md`.
 - **Tiles mapa base**: OpenFreeMap (sin API key). URL en `src/config/map.ts`.
 - **Despliegue**: Vercel. Edge Function del proxy en `api/aemet/` del mismo repo.
 - **Avisos MVP**: Mock estático hasta integrar AEMET Meteoalerta CAP.
@@ -453,7 +657,8 @@ function pickPeriod(items: {value: string, periodo: string}[], slot: TimeSlot): 
 
 ## 8. Pendientes de validación manual
 
-- [ ] Confirmar endpoint y CORS de MeteoSIX `predConcello`
-- [ ] Obtener API key de AEMET y hacer request manual para verificar la estructura real del JSON de `datos`
+- [x] ~~Confirmar endpoint y CORS de MeteoSIX `predConcello`~~ → **Resuelto**: API v5 en `/apiv5/`, API key confirmada, endpoint documentado completamente en sección 3
+- [x] Obtener API key de AEMET y hacer request manual para verificar la estructura real del JSON de `datos`
 - [ ] Verificar que el archivo CAP de avisos AEMET es parseable sin dependencias pesadas
 - [ ] Confirmar que OpenFreeMap cubre Galicia con suficiente detalle a zoom 8–12
+- [ ] Verificar CORS de MeteoSIX v5 (`servizos.meteogalicia.gal/apiv5/`) con fetch desde el cliente — determinar si el proxy puede omitirse o es necesario para proteger la API_KEY

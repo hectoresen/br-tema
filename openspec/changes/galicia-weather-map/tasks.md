@@ -1,8 +1,8 @@
 ﻿## 1. InvestigaciÃ³n y decisiones tÃ©cnicas (hacer PRIMERO)
 
 - [ ] 1.1 Investigar endpoints de AEMET OpenData: predicciÃ³n municipal, avisos Meteoalerta; documentar en `docs/api-research.md`
-- [ ] 1.2 Validar acceso a MeteoSIX (MeteoGalicia) y documentar endpoints disponibles en `docs/api-research.md`
-- [ ] 1.3 Mapear campos de AEMET y MeteoSIX al modelo `DayForecast` interno; documentar gaps
+- [x] 1.2 **Resuelto**: Acceso a MeteoSIX v5 (MeteoGalicia) confirmado. API key obtenida. Documentación oficial revisada (95 págs.). Endpoints, variables, field mapping y arquitectura del adaptador documentados en `docs/api-research.md` sección 3 y `design.md` Decision 21.
+- [x] 1.3 Mapear campos de AEMET y MeteoSIX al modelo `DayForecast` interno; documentar gaps. **Resuelto**: Ver `docs/api-research.md` — AEMET (sección 1) y MeteoSIX v5 (sección 3.6). Gap conocido: AEMET no tiene `cloudCover` (usa `estadoCielo` categórico); MeteoSIX sí tiene `cloud_area_fraction` (%).
 - [ ] 1.4 Evaluar RainViewer API: obtener timestamps de animaciÃ³n, verificar lÃ­mites del tier gratuito, documentar endpoint
 - [x] 1.5 **Resuelto**: Vercel — Edge Function para proxy AEMET en el mismo repo, SPA desplegada automáticamente desde Git, tier gratuito suficiente. Configurar `vercel.json` con rewrite `/api/*` en el bloque 7.
 - [x] 1.6 **Resuelto**: Panel reactivo sobre el mapa (SPA sin router). selectedConcello store controla visibilidad. Stack: Vite + Svelte puro sin SvelteKit.
@@ -62,8 +62,31 @@
 - [ ] 7.2 Implementar `AemetProvider` en `src/providers/aemet.ts` con `getForecast` usando endpoint municipal
 - [ ] 7.3 Implementar `getAlerts()` usando AEMET Meteoalerta por CCAA/provincia — ⚠️ **Formato CAP/XML** (posiblemente ZIP+XML, no JSON): evaluar complejidad de parseo antes de implementar; si es costoso, mantener `mock-alerts.json` como fallback y dejar esta tarea para una iteración posterior
 - [ ] 7.4 Mapear respuesta AEMET al modelo `DayForecast` (usando `docs/api-research.md`)
-- [ ] 7.5 AÃ±adir gestiÃ³n de API key via variable de entorno; fallback a Open-Meteo si no estÃ¡ configurada
+- [ ] 7.5 Añadir gestión de API key via variable de entorno; fallback a Open-Meteo si no está configurada
 - [ ] 7.6 Cambiar el proveedor activo en `src/providers/index.ts` a `AemetProvider`
+
+## 7b. Adaptador MeteoSIX v5 (prioridad post-MVP 2 — después de AEMET)
+
+> Ver `design.md` Decision 21 para la arquitectura completa del adaptador y field mapping.
+
+- [ ] 7b.1 Crear thin proxy serverless `/api/meteosix.ts` (Vercel Edge Function) que inyecta `METEOSIX_API_KEY` desde variable de entorno y reenvía a `https://servizos.meteogalicia.gal/apiv5/`. Más simple que AEMET: una sola redirección, sin doble-fetch.
+- [ ] 7b.2 Crear `src/providers/meteosix-codes.ts` con la tabla de mapping `sky_state → WMO-like code` (20 entradas, ver `docs/api-research.md` sección 3.5)
+- [ ] 7b.3 Implementar `MeteoSIXProvider` en `src/providers/meteosix.ts`:
+  - Petición a `/api/meteosix` con `coords=lon,lat&variables=sky_state,temperature,precipitation_amount,wind,relative_humidity,cloud_area_fraction&lang=gl&format=application/json`
+  - Parseo de la respuesta GeoJSON v5 (estructura `features[0].properties.days[].variables[]`)
+  - Agrupación de valores horarios en slots `morning`/`afternoon`/`night`
+- [ ] 7b.4 Mapear respuesta MeteoSIX al modelo `DayForecast` siguiendo la tabla en `design.md` Decision 21:
+  - `sky_state` → `weatherCode` via `meteosix-codes.ts`
+  - `temperature` (hourly) → `temperature.min`/`max`/`current`
+  - `precipitation_amount` → `precipitation.value` (suma del slot)
+  - `wind.moduleValue` → `wind.speed` (media del slot, km/h)
+  - `wind.directionValue` → `wind.direction` (media del slot, grados)
+  - `relative_humidity` → `humidity` (media del slot)
+  - `cloud_area_fraction` → `cloudCover` (media del slot, %) — **rellena el gap de AEMET**
+  - `precipitationProbability`: heurística por `sky_state` (RAIN/SHOWERS→80%, DRIZZLE→50%, etc.)
+- [ ] 7b.5 Añadir gestión de errores: excepción 216 (fuera de cobertura geográfica) → fallback a `OpenMeteoProvider` sin error UI; errores 005/006 (API key) → log en Sentry + fallback
+- [ ] 7b.6 Cambiar el proveedor activo en `src/providers/index.ts` a `MeteoSIXProvider` (con AEMET como fallback para alertas y cobertura fuera de Galicia)
+- [ ] 7b.7 Añadir `METEOSIX_API_KEY` a las variables de entorno de Vercel y al `.env.example` local
 
 ## 8. Stores de estado global
 

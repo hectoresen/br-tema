@@ -44,14 +44,16 @@ No existe actualmente ninguna aplicación en este repositorio. Se parte de cero.
 | Prioridad | Proveedor | Cobertura | Detalle | API key | CORS |
 |---|---|---|---|---|---|
 | 1 | **AEMET OpenData** | España (municipios) | Avisos oficiales, predicción municipal | Gratuita (registro) | Necesita proxy |
-| 2 | **MeteoSIX (MeteoGalicia)** | Galicia (concellos) | Máxima precisión local | Acceso pendiente | A verificar |
+| 2 | **MeteoSIX (MeteoGalicia)** | Galicia (concellos) | Máxima precisión local, `cloud_area_fraction` directo, idioma gallego nativo | API key obtenida ✅ | Necesita proxy (para proteger clave) |
 | 3 | **Open-Meteo** | Mundial | Datos horarios sin API key | No requiere | Sí (CORS abierto) |
 
-AEMET es la fuente oficial española con avisos meteoalerta por CC.AA. y municipio. MeteoSIX es la fuente de referencia para Galicia en detalle de concello. Open-Meteo actúa como fallback funcional.
+AEMET es la fuente oficial española con avisos meteoalerta por CC.AA. y municipio. MeteoSIX v5 (MeteoGalicia) es la fuente de referencia para Galicia con cobertura hasta concello, datos horarios WRF, y soporte nativo de gallego (`lang=gl`). MeteoSIX también proporciona `cloud_area_fraction` como porcentaje directo, eliminando la limitación de AEMET. Open-Meteo actúa como fallback funcional global.
 
 **CORS para AEMET**: AEMET OpenData usa CORS restrictivo. Se añadirá un thin proxy (Cloudflare Worker o Vercel Edge Function ~10 líneas) que reenvía la request añadiendo la API key. El proxy es el único componente serverless del proyecto.
 
-**Tarea de investigación**: Como primer paso de implementación se investigarán y documentarán los endpoints exactos de AEMET municipio, el modelo de datos de MeteoSIX y se validará qué campos devuelve cada uno frente al modelo `DayForecast` interno.
+**CORS para MeteoSIX**: La API v5 requiere `API_KEY` en la URL. La clave no debe exponerse en el cliente. Se añadirá un proxy análogo al de AEMET en `/api/meteosix/` (Vercel Edge Function). Ver Decision 21 para arquitectura del adaptador MeteoSIX.
+
+**Tarea de investigación**: ✅ Completada. Ver `docs/api-research.md` para la documentación completa de AEMET y MeteoSIX v5.
 
 ---
 
@@ -429,6 +431,70 @@ El desarrollador es el responsable del tratamiento a efectos del RGPD. El email 
 **Fuera de scope:** DPA formal con Vercel y Sentry — para un proyecto personal sin usuarios registrados, el tier gratuito de ambos incluye términos suficientes. Revisar si Brétema escala o incorpora registro de usuarios.
 
 **Rationale**: La ausencia de banner de cookies es una ventaja de UX significativa — se mantiene eligiendo deliberadamente herramientas RGPD-compliant por diseño. La política de privacidad es una obligación legal, no opcional.
+
+---
+
+### 21. Adaptador MeteoSIX v5 — arquitectura y field mapping
+
+**Contexto**: MeteoSIX v5 (MeteoGalicia) tiene API key confirmada y documentación oficial completa (`docs/MeteosixApi/API_MeteoSIX_v5_gl.pdf`). Es el proveedor post-MVP prioritario por encima de AEMET para el contexto gallego.
+
+**Decisión**: Implementar `MeteoSIXProvider` en `src/providers/meteosix.ts` detrás de un Vercel Edge Function proxy en `/api/meteosix/` (protege la API_KEY). El adaptador traduce la respuesta v5 GeoJSON al modelo `DayForecast` interno.
+
+**Arquitectura del proxy** (`/api/meteosix.ts`):
+```typescript
+export async function GET(req: Request) {
+  const url = new URL(req.url)
+  const path = url.searchParams.get('path') ?? '/getNumericForecastInfo'
+  const params = url.searchParams
+  params.delete('path')
+  params.set('API_KEY', process.env.METEOSIX_API_KEY!)
+  const upstream = `https://servizos.meteogalicia.gal/apiv5${path}?${params.toString()}`
+  const res = await fetch(upstream)
+  const data = await res.json()
+  return Response.json(data)
+}
+```
+> Un único forward — no hay doble-redirect. Más simple que el proxy AEMET.
+
+**Variables a solicitar por defecto**:
+```
+sky_state,temperature,precipitation_amount,wind,relative_humidity,cloud_area_fraction
+```
+
+**Field mapping** `MeteoSIXProvider → DayForecast`:
+
+| Campo DayForecast | Variable MeteoSIX v5 | Transformación |
+|---|---|---|
+| `weatherCode` | `sky_state` (hourly) | `METEOSIX_SKY_STATE_MAP[value]` → WMO-like code |
+| `temperature.min` | `temperature` | `Math.min(...slotHours)` |
+| `temperature.max` | `temperature` | `Math.max(...slotHours)` |
+| `temperature.current` | `temperature` | Hora más cercana al instante actual |
+| `precipitation.value` | `precipitation_amount` | Suma del slot (l/m²) |
+| `precipitationProbability` | *(no directo)* | Heurística por `sky_state`: RAIN/SHOWERS→80%, DRIZZLE→50%, WEAK_RAIN→40%, PARTLY_CLOUDY→15%, SUNNY→5% |
+| `wind.speed` | `wind.moduleValue` | Media del slot (km/h) |
+| `wind.direction` | `wind.directionValue` | Media del slot (grados) |
+| `humidity` | `relative_humidity` | Media del slot (%) |
+| `cloudCover` | `cloud_area_fraction` | Media del slot (%) — ✅ sin gap |
+
+**Slot mapping** (datos horarios → morning/afternoon/night):
+- `morning`: horas 06–12 UTC+1 (horas 05–11 UTC)
+- `afternoon`: horas 12–18 UTC+1 (horas 11–17 UTC)
+- `night`: horas 18–06 UTC+1 del día siguiente (horas 17–05 UTC)
+
+**Idioma**: `lang=gl` en todas las peticiones → textos devueltos en gallego nativo. Ventaja única frente a AEMET.
+
+**Tabla de sky_state → WMO code**: definir en `src/providers/meteosix-codes.ts` (20 entradas, ver `docs/api-research.md` sección 3.5).
+
+**Error handling**:
+- Excepción 216 (punto fuera de cobertura) → fallback a Open-Meteo sin error visible al usuario
+- Excepción 005/006 (API key) → log en Sentry, fallback a Open-Meteo
+- Red timeout → fallback automático
+
+**Rationale**: MeteoSIX v5 supera a Open-Meteo para Galicia: mayor resolución espacial (malla WRF 1km), datos en gallego nativo, `cloud_area_fraction` directo (sin la limitación de AEMET), y un proxy más simple que AEMET (sin doble-redirect). La API key obtenida convierte este adaptador en post-MVP inmediato una vez el MVP Open-Meteo esté estabilizado.
+
+**Open Questions resueltas**:
+- ~~¿API key de MeteoSIX disponible?~~ → **Resuelto**: obtenida ✅
+- ~~¿CORS abierto o necesita proxy?~~ → **Decisión**: usar proxy por seguridad (no exponer API_KEY en cliente)
 
 ---
 
