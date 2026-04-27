@@ -7,6 +7,15 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added (FEAT/weather-icons — Block 5)
+
+- `src/icons/sunny.svg`, `partly-cloudy.svg`, `cloudy.svg`, `fog.svg`, `rain-light.svg`, `rain-heavy.svg`, `snow.svg`, `thunderstorm.svg` — 8 stroke-based SVG icons using `currentColor` for theme compatibility
+- `src/icons/get-weather-icon.ts` — `getWeatherIcon(forecast: SlotForecast): WeatherIconId` pure function. Priority chain: thunderstorm → snow → rain-heavy → rain-light → fog → cloudy → partly-cloudy → sunny, mapping WMO codes + precipitation/cloudCover thresholds from `design.md`
+- `src/components/WeatherIcon.svelte` — inline SVG component; props: `id: WeatherIconId`, `size?: number`, `label?: string`
+- `src/components/dev/IconPreview.svelte` — dev-only icon grid with all 8 icons at 4 sizes, correctness check column, colour theme variants
+- `App.svelte` — dev toggle button (tree-shaken in prod) to open icon preview via dynamic import
+- `src/icons/get-weather-icon.test.ts` — 17 unit tests covering all icon branches and all 8 reachable states
+
 ### Added (FEAT/static-data — Block 4)
 
 - `src/data/galicia-provinces.geojson` — 4 provinces, simplified with RDP (0.05° tolerance, island filtering) → 34.6 KB; script: `scripts/build-provinces-geojson.cjs`

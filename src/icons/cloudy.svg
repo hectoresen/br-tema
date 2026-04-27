@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+  <!-- Back cloud -->
+  <path d="M8 30a7 7 0 0 1 0-14 7 7 0 0 1 13.5-3A6 6 0 1 1 28 30H8z"
+        stroke="currentColor" stroke-width="2" stroke-linejoin="round"
+        fill="currentColor" fill-opacity="0.15" opacity="0.6"/>
+  <!-- Front cloud -->
+  <path d="M14 38a8 8 0 0 1 0-16 8 8 0 0 1 15.5-3A7 7 0 1 1 38 38H14z"
+        stroke="currentColor" stroke-width="2" stroke-linejoin="round"
+        fill="currentColor" fill-opacity="0.3"/>
+</svg>
