@@ -1,0 +1,2506 @@
+[
+  {
+    "id": "15007000000",
+    "name": "A Baña",
+    "nameGl": "A Baña",
+    "provinceId": "corunha",
+    "lat": 42.9615644,
+    "lon": -8.7488818
+  },
+  {
+    "id": "15018000000",
+    "name": "A Capela",
+    "nameGl": "A Capela",
+    "provinceId": "corunha",
+    "lat": 43.4414891,
+    "lon": -8.0412047
+  },
+  {
+    "id": "15041000000",
+    "name": "A Laracha",
+    "nameGl": "A Laracha",
+    "provinceId": "corunha",
+    "lat": 43.2436564,
+    "lon": -8.5508482
+  },
+  {
+    "id": "15067000000",
+    "name": "A Pobra do Caramiñal",
+    "nameGl": "A Pobra do Caramiñal",
+    "provinceId": "corunha",
+    "lat": 42.6285776,
+    "lon": -8.9448873
+  },
+  {
+    "id": "15001000000",
+    "name": "Abegondo",
+    "nameGl": "Abegondo",
+    "provinceId": "corunha",
+    "lat": 43.2139637,
+    "lon": -8.2908573
+  },
+  {
+    "id": "15002000000",
+    "name": "Ames",
+    "nameGl": "Ames",
+    "provinceId": "corunha",
+    "lat": 42.8904783,
+    "lon": -8.645073
+  },
+  {
+    "id": "15003000000",
+    "name": "Aranga",
+    "nameGl": "Aranga",
+    "provinceId": "corunha",
+    "lat": 43.2229011,
+    "lon": -8.0189145
+  },
+  {
+    "id": "15004000000",
+    "name": "Ares",
+    "nameGl": "Ares",
+    "provinceId": "corunha",
+    "lat": 43.4386731,
+    "lon": -8.2558763
+  },
+  {
+    "id": "15005000000",
+    "name": "Arteixo",
+    "nameGl": "Arteixo",
+    "provinceId": "corunha",
+    "lat": 43.3086256,
+    "lon": -8.5093544
+  },
+  {
+    "id": "15006000000",
+    "name": "Arzúa",
+    "nameGl": "Arzúa",
+    "provinceId": "corunha",
+    "lat": 42.923795,
+    "lon": -8.1824361
+  },
+  {
+    "id": "15070000000",
+    "name": "As Pontes de García Rodríguez",
+    "nameGl": "As Pontes de García Rodríguez",
+    "provinceId": "corunha",
+    "lat": 43.4703834,
+    "lon": -7.8788707
+  },
+  {
+    "id": "15081000000",
+    "name": "As Somozas",
+    "nameGl": "As Somozas",
+    "provinceId": "corunha",
+    "lat": 43.5275382,
+    "lon": -7.9195303
+  },
+  {
+    "id": "15008000000",
+    "name": "Bergondo",
+    "nameGl": "Bergondo",
+    "provinceId": "corunha",
+    "lat": 43.312395,
+    "lon": -8.2461747
+  },
+  {
+    "id": "15009000000",
+    "name": "Betanzos",
+    "nameGl": "Betanzos",
+    "provinceId": "corunha",
+    "lat": 43.275712,
+    "lon": -8.2250201
+  },
+  {
+    "id": "15010000000",
+    "name": "Boimorto",
+    "nameGl": "Boimorto",
+    "provinceId": "corunha",
+    "lat": 43.0125856,
+    "lon": -8.1245896
+  },
+  {
+    "id": "15011000000",
+    "name": "Boiro",
+    "nameGl": "Boiro",
+    "provinceId": "corunha",
+    "lat": 42.6644048,
+    "lon": -8.8900321
+  },
+  {
+    "id": "15012000000",
+    "name": "Boqueixón",
+    "nameGl": "Boqueixón",
+    "provinceId": "corunha",
+    "lat": 42.8328766,
+    "lon": -8.4095538
+  },
+  {
+    "id": "15013000000",
+    "name": "Brión",
+    "nameGl": "Brión",
+    "provinceId": "corunha",
+    "lat": 42.8548234,
+    "lon": -8.7281298
+  },
+  {
+    "id": "15014000000",
+    "name": "Cabana de Bergantiños",
+    "nameGl": "Cabana de Bergantiños",
+    "provinceId": "corunha",
+    "lat": 43.1898049,
+    "lon": -8.9037471
+  },
+  {
+    "id": "15015000000",
+    "name": "Cabanas",
+    "nameGl": "Cabanas",
+    "provinceId": "corunha",
+    "lat": 43.4337352,
+    "lon": -8.1306383
+  },
+  {
+    "id": "15016000000",
+    "name": "Camariñas",
+    "nameGl": "Camariñas",
+    "provinceId": "corunha",
+    "lat": 43.1610162,
+    "lon": -9.147436
+  },
+  {
+    "id": "15017000000",
+    "name": "Cambre",
+    "nameGl": "Cambre",
+    "provinceId": "corunha",
+    "lat": 43.2816766,
+    "lon": -8.3309315
+  },
+  {
+    "id": "15019000000",
+    "name": "Carballo",
+    "nameGl": "Carballo",
+    "provinceId": "corunha",
+    "lat": 43.2085192,
+    "lon": -8.6787775
+  },
+  {
+    "id": "15901000000",
+    "name": "Cariño",
+    "nameGl": "Cariño",
+    "provinceId": "corunha",
+    "lat": 43.7285431,
+    "lon": -7.902591
+  },
+  {
+    "id": "15020000000",
+    "name": "Carnota",
+    "nameGl": "Carnota",
+    "provinceId": "corunha",
+    "lat": 42.838038,
+    "lon": -9.1079237
+  },
+  {
+    "id": "15021000000",
+    "name": "Carral",
+    "nameGl": "Carral",
+    "provinceId": "corunha",
+    "lat": 43.2075361,
+    "lon": -8.3467168
+  },
+  {
+    "id": "15022000000",
+    "name": "Cedeira",
+    "nameGl": "Cedeira",
+    "provinceId": "corunha",
+    "lat": 43.6768256,
+    "lon": -8.0013747
+  },
+  {
+    "id": "15023000000",
+    "name": "Cee",
+    "nameGl": "Cee",
+    "provinceId": "corunha",
+    "lat": 42.9603932,
+    "lon": -9.1995539
+  },
+  {
+    "id": "15024000000",
+    "name": "Cerceda",
+    "nameGl": "Cerceda",
+    "provinceId": "corunha",
+    "lat": 43.1627012,
+    "lon": -8.4964614
+  },
+  {
+    "id": "15025000000",
+    "name": "Cerdido",
+    "nameGl": "Cerdido",
+    "provinceId": "corunha",
+    "lat": 43.6043526,
+    "lon": -7.9726884
+  },
+  {
+    "id": "15027000000",
+    "name": "Coirós",
+    "nameGl": "Coirós",
+    "provinceId": "corunha",
+    "lat": 43.2461918,
+    "lon": -8.1358746
+  },
+  {
+    "id": "15028000000",
+    "name": "Corcubión",
+    "nameGl": "Corcubión",
+    "provinceId": "corunha",
+    "lat": 42.9331324,
+    "lon": -9.2002359
+  },
+  {
+    "id": "15029000000",
+    "name": "Coristanco",
+    "nameGl": "Coristanco",
+    "provinceId": "corunha",
+    "lat": 43.1632874,
+    "lon": -8.7722463
+  },
+  {
+    "id": "15031000000",
+    "name": "Culleredo",
+    "nameGl": "Culleredo",
+    "provinceId": "corunha",
+    "lat": 43.2778297,
+    "lon": -8.4116468
+  },
+  {
+    "id": "15032000000",
+    "name": "Curtis",
+    "nameGl": "Curtis",
+    "provinceId": "corunha",
+    "lat": 43.1353752,
+    "lon": -8.0510559
+  },
+  {
+    "id": "15033000000",
+    "name": "Dodro",
+    "nameGl": "Dodro",
+    "provinceId": "corunha",
+    "lat": 42.7212068,
+    "lon": -8.7167811
+  },
+  {
+    "id": "15034000000",
+    "name": "Dumbría",
+    "nameGl": "Dumbría",
+    "provinceId": "corunha",
+    "lat": 42.9842505,
+    "lon": -9.0907864
+  },
+  {
+    "id": "15035000000",
+    "name": "Fene",
+    "nameGl": "Fene",
+    "provinceId": "corunha",
+    "lat": 43.4553496,
+    "lon": -8.1517081
+  },
+  {
+    "id": "15036000000",
+    "name": "Ferrol",
+    "nameGl": "Ferrol",
+    "provinceId": "corunha",
+    "lat": 43.5112484,
+    "lon": -8.2670831
+  },
+  {
+    "id": "15037000000",
+    "name": "Fisterra",
+    "nameGl": "Fisterra",
+    "provinceId": "corunha",
+    "lat": 42.9285392,
+    "lon": -9.2596536
+  },
+  {
+    "id": "15038000000",
+    "name": "Frades",
+    "nameGl": "Frades",
+    "provinceId": "corunha",
+    "lat": 43.0495435,
+    "lon": -8.2760179
+  },
+  {
+    "id": "15039000000",
+    "name": "Irixoa",
+    "nameGl": "Irixoa",
+    "provinceId": "corunha",
+    "lat": 43.2876482,
+    "lon": -8.0669552
+  },
+  {
+    "id": "15030000000",
+    "name": "La Coruña",
+    "nameGl": "A Coruña",
+    "provinceId": "corunha",
+    "lat": 43.3466266,
+    "lon": -8.4217693
+  },
+  {
+    "id": "15040000000",
+    "name": "Laxe",
+    "nameGl": "Laxe",
+    "provinceId": "corunha",
+    "lat": 43.1923056,
+    "lon": -9.0251668
+  },
+  {
+    "id": "15042000000",
+    "name": "Lousame",
+    "nameGl": "Lousame",
+    "provinceId": "corunha",
+    "lat": 42.7733626,
+    "lon": -8.8471019
+  },
+  {
+    "id": "15043000000",
+    "name": "Malpica de Bergantiños",
+    "nameGl": "Malpica de Bergantiños",
+    "provinceId": "corunha",
+    "lat": 43.3073166,
+    "lon": -8.8220717
+  },
+  {
+    "id": "15044000000",
+    "name": "Mañón",
+    "nameGl": "Mañón",
+    "provinceId": "corunha",
+    "lat": 43.6696146,
+    "lon": -7.7335778
+  },
+  {
+    "id": "15045000000",
+    "name": "Mazaricos",
+    "nameGl": "Mazaricos",
+    "provinceId": "corunha",
+    "lat": 42.9278025,
+    "lon": -8.9970568
+  },
+  {
+    "id": "15046000000",
+    "name": "Melide",
+    "nameGl": "Melide",
+    "provinceId": "corunha",
+    "lat": 42.9331375,
+    "lon": -8.035186
+  },
+  {
+    "id": "15047000000",
+    "name": "Mesía",
+    "nameGl": "Mesía",
+    "provinceId": "corunha",
+    "lat": 43.0908252,
+    "lon": -8.2655289
+  },
+  {
+    "id": "15048000000",
+    "name": "Miño",
+    "nameGl": "Miño",
+    "provinceId": "corunha",
+    "lat": 43.3578908,
+    "lon": -8.1763232
+  },
+  {
+    "id": "15049000000",
+    "name": "Moeche",
+    "nameGl": "Moeche",
+    "provinceId": "corunha",
+    "lat": 43.5622517,
+    "lon": -7.9762408
+  },
+  {
+    "id": "15050000000",
+    "name": "Monfero",
+    "nameGl": "Monfero",
+    "provinceId": "corunha",
+    "lat": 43.3463448,
+    "lon": -8.0031621
+  },
+  {
+    "id": "15051000000",
+    "name": "Mugardos",
+    "nameGl": "Mugardos",
+    "provinceId": "corunha",
+    "lat": 43.4494726,
+    "lon": -8.2374941
+  },
+  {
+    "id": "15053000000",
+    "name": "Muros",
+    "nameGl": "Muros",
+    "provinceId": "corunha",
+    "lat": 42.7988002,
+    "lon": -9.0368811
+  },
+  {
+    "id": "15052000000",
+    "name": "Muxía",
+    "nameGl": "Muxía",
+    "provinceId": "corunha",
+    "lat": 43.0654662,
+    "lon": -9.1970336
+  },
+  {
+    "id": "15054000000",
+    "name": "Narón",
+    "nameGl": "Narón",
+    "provinceId": "corunha",
+    "lat": 43.5325761,
+    "lon": -8.1717249
+  },
+  {
+    "id": "15055000000",
+    "name": "Neda",
+    "nameGl": "Neda",
+    "provinceId": "corunha",
+    "lat": 43.4994198,
+    "lon": -8.1293859
+  },
+  {
+    "id": "15056000000",
+    "name": "Negreira",
+    "nameGl": "Negreira",
+    "provinceId": "corunha",
+    "lat": 42.907723,
+    "lon": -8.8036729
+  },
+  {
+    "id": "15057000000",
+    "name": "Noia",
+    "nameGl": "Noia",
+    "provinceId": "corunha",
+    "lat": 42.7976759,
+    "lon": -8.866812
+  },
+  {
+    "id": "15066000000",
+    "name": "O Pino",
+    "nameGl": "O Pino",
+    "provinceId": "corunha",
+    "lat": 42.9457704,
+    "lon": -8.3207806
+  },
+  {
+    "id": "15071000000",
+    "name": "O Porto do Son",
+    "nameGl": "O Porto do Son",
+    "provinceId": "corunha",
+    "lat": 42.6866543,
+    "lon": -8.9892485
+  },
+  {
+    "id": "15058000000",
+    "name": "Oleiros",
+    "nameGl": "Oleiros",
+    "provinceId": "corunha",
+    "lat": 43.3554125,
+    "lon": -8.3397073
+  },
+  {
+    "id": "15059000000",
+    "name": "Ordes",
+    "nameGl": "Ordes",
+    "provinceId": "corunha",
+    "lat": 43.0852888,
+    "lon": -8.4063791
+  },
+  {
+    "id": "15060000000",
+    "name": "Oroso",
+    "nameGl": "Oroso",
+    "provinceId": "corunha",
+    "lat": 43.0000853,
+    "lon": -8.3824651
+  },
+  {
+    "id": "15061000000",
+    "name": "Ortigueira",
+    "nameGl": "Ortigueira",
+    "provinceId": "corunha",
+    "lat": 43.6519302,
+    "lon": -7.8416893
+  },
+  {
+    "id": "15062000000",
+    "name": "Outes",
+    "nameGl": "Outes",
+    "provinceId": "corunha",
+    "lat": 42.8454108,
+    "lon": -8.9144397
+  },
+  {
+    "id": "15902000000",
+    "name": "Oza Cesuras",
+    "nameGl": "Oza Cesuras",
+    "provinceId": "corunha",
+    "lat": 43.1938266,
+    "lon": -8.1762846
+  },
+  {
+    "id": "15064000000",
+    "name": "Paderne",
+    "nameGl": "Paderne",
+    "provinceId": "corunha",
+    "lat": 43.2961347,
+    "lon": -8.1612095
+  },
+  {
+    "id": "15065000000",
+    "name": "Padrón",
+    "nameGl": "Padrón",
+    "provinceId": "corunha",
+    "lat": 42.759849,
+    "lon": -8.6287282
+  },
+  {
+    "id": "15068000000",
+    "name": "Ponteceso",
+    "nameGl": "Ponteceso",
+    "provinceId": "corunha",
+    "lat": 43.2618877,
+    "lon": -8.8758487
+  },
+  {
+    "id": "15069000000",
+    "name": "Puentedeume",
+    "nameGl": "Pontedeume",
+    "provinceId": "corunha",
+    "lat": 43.4008129,
+    "lon": -8.1613521
+  },
+  {
+    "id": "15072000000",
+    "name": "Rianxo",
+    "nameGl": "Rianxo",
+    "provinceId": "corunha",
+    "lat": 42.6910506,
+    "lon": -8.783399
+  },
+  {
+    "id": "15073000000",
+    "name": "Ribeira",
+    "nameGl": "Ribeira",
+    "provinceId": "corunha",
+    "lat": 42.5506708,
+    "lon": -9.0212508
+  },
+  {
+    "id": "15074000000",
+    "name": "Rois",
+    "nameGl": "Rois",
+    "provinceId": "corunha",
+    "lat": 42.7886905,
+    "lon": -8.7119841
+  },
+  {
+    "id": "15075000000",
+    "name": "Sada",
+    "nameGl": "Sada",
+    "provinceId": "corunha",
+    "lat": 43.3472027,
+    "lon": -8.2770619
+  },
+  {
+    "id": "15076000000",
+    "name": "San Sadurniño",
+    "nameGl": "San Sadurniño",
+    "provinceId": "corunha",
+    "lat": 43.5310884,
+    "lon": -8.0433034
+  },
+  {
+    "id": "15077000000",
+    "name": "Santa Comba",
+    "nameGl": "Santa Comba",
+    "provinceId": "corunha",
+    "lat": 43.0383769,
+    "lon": -8.7996591
+  },
+  {
+    "id": "15078000000",
+    "name": "Santiago de Compostela",
+    "nameGl": "Santiago de Compostela",
+    "provinceId": "corunha",
+    "lat": 42.9068876,
+    "lon": -8.5110497
+  },
+  {
+    "id": "15079000000",
+    "name": "Santiso",
+    "nameGl": "Santiso",
+    "provinceId": "corunha",
+    "lat": 42.8715244,
+    "lon": -8.0765945
+  },
+  {
+    "id": "15080000000",
+    "name": "Sobrado",
+    "nameGl": "Sobrado",
+    "provinceId": "corunha",
+    "lat": 43.0590273,
+    "lon": -8.0096383
+  },
+  {
+    "id": "15082000000",
+    "name": "Teo",
+    "nameGl": "Teo",
+    "provinceId": "corunha",
+    "lat": 42.7943729,
+    "lon": -8.5622122
+  },
+  {
+    "id": "15083000000",
+    "name": "Toques",
+    "nameGl": "Toques",
+    "provinceId": "corunha",
+    "lat": 42.9690051,
+    "lon": -7.9591761
+  },
+  {
+    "id": "15084000000",
+    "name": "Tordoia",
+    "nameGl": "Tordoia",
+    "provinceId": "corunha",
+    "lat": 43.0872468,
+    "lon": -8.570886
+  },
+  {
+    "id": "15085000000",
+    "name": "Touro",
+    "nameGl": "Touro",
+    "provinceId": "corunha",
+    "lat": 42.860875,
+    "lon": -8.3071028
+  },
+  {
+    "id": "15086000000",
+    "name": "Trazo",
+    "nameGl": "Trazo",
+    "provinceId": "corunha",
+    "lat": 43.0110435,
+    "lon": -8.5333286
+  },
+  {
+    "id": "15088000000",
+    "name": "Val do Dubra",
+    "nameGl": "Val do Dubra",
+    "provinceId": "corunha",
+    "lat": 43.0224875,
+    "lon": -8.6561386
+  },
+  {
+    "id": "15087000000",
+    "name": "Valdoviño",
+    "nameGl": "Valdoviño",
+    "provinceId": "corunha",
+    "lat": 43.6092983,
+    "lon": -8.1214521
+  },
+  {
+    "id": "15089000000",
+    "name": "Vedra",
+    "nameGl": "Vedra",
+    "provinceId": "corunha",
+    "lat": 42.7861093,
+    "lon": -8.4592805
+  },
+  {
+    "id": "15091000000",
+    "name": "Vilarmaior",
+    "nameGl": "Vilarmaior",
+    "provinceId": "corunha",
+    "lat": 43.3550536,
+    "lon": -8.1265451
+  },
+  {
+    "id": "15090000000",
+    "name": "Vilasantar",
+    "nameGl": "Vilasantar",
+    "provinceId": "corunha",
+    "lat": 43.0758586,
+    "lon": -8.0958297
+  },
+  {
+    "id": "15092000000",
+    "name": "Vimianzo",
+    "nameGl": "Vimianzo",
+    "provinceId": "corunha",
+    "lat": 43.0939775,
+    "lon": -9.0442554
+  },
+  {
+    "id": "15093000000",
+    "name": "Zas",
+    "nameGl": "Zas",
+    "provinceId": "corunha",
+    "lat": 43.086181,
+    "lon": -8.9144705
+  },
+  {
+    "id": "27018000000",
+    "name": "A Fonsagrada",
+    "nameGl": "A Fonsagrada",
+    "provinceId": "lugo",
+    "lat": 43.1474494,
+    "lon": -7.0753929
+  },
+  {
+    "id": "27047000000",
+    "name": "A Pobra do Brollón",
+    "nameGl": "A Pobra do Brollón",
+    "provinceId": "lugo",
+    "lat": 42.5485996,
+    "lon": -7.361704
+  },
+  {
+    "id": "27048000000",
+    "name": "A Pontenova",
+    "nameGl": "A Pontenova",
+    "provinceId": "lugo",
+    "lat": 43.3259705,
+    "lon": -7.1754899
+  },
+  {
+    "id": "27053000000",
+    "name": "A Ribeira de Piquín",
+    "nameGl": "A Ribeira de Piquín",
+    "provinceId": "lugo",
+    "lat": 43.1985583,
+    "lon": -7.1990625
+  },
+  {
+    "id": "27001000000",
+    "name": "Abadín",
+    "nameGl": "Abadín",
+    "provinceId": "lugo",
+    "lat": 43.3601707,
+    "lon": -7.4863301
+  },
+  {
+    "id": "27002000000",
+    "name": "Alfoz do Castrodouro",
+    "nameGl": "Alfoz do Castrodouro",
+    "provinceId": "lugo",
+    "lat": 43.5049092,
+    "lon": -7.4436123
+  },
+  {
+    "id": "27003000000",
+    "name": "Antas de Ulla",
+    "nameGl": "Antas de Ulla",
+    "provinceId": "lugo",
+    "lat": 42.778352,
+    "lon": -7.9003142
+  },
+  {
+    "id": "27037000000",
+    "name": "As Nogais",
+    "nameGl": "As Nogais",
+    "provinceId": "lugo",
+    "lat": 42.7868005,
+    "lon": -7.1000451
+  },
+  {
+    "id": "27004000000",
+    "name": "Baleira",
+    "nameGl": "Baleira",
+    "provinceId": "lugo",
+    "lat": 43.0538056,
+    "lon": -7.192244
+  },
+  {
+    "id": "27901000000",
+    "name": "Baralla",
+    "nameGl": "Baralla",
+    "provinceId": "lugo",
+    "lat": 42.9115886,
+    "lon": -7.2539454
+  },
+  {
+    "id": "27005000000",
+    "name": "Barreiros",
+    "nameGl": "Barreiros",
+    "provinceId": "lugo",
+    "lat": 43.5150078,
+    "lon": -7.2284157
+  },
+  {
+    "id": "27006000000",
+    "name": "Becerreá",
+    "nameGl": "Becerreá",
+    "provinceId": "lugo",
+    "lat": 42.8841204,
+    "lon": -7.1430697
+  },
+  {
+    "id": "27007000000",
+    "name": "Begonte",
+    "nameGl": "Begonte",
+    "provinceId": "lugo",
+    "lat": 43.1537177,
+    "lon": -7.6907654
+  },
+  {
+    "id": "27008000000",
+    "name": "Bóveda",
+    "nameGl": "Bóveda",
+    "provinceId": "lugo",
+    "lat": 42.635015,
+    "lon": -7.4909973
+  },
+  {
+    "id": "27902000000",
+    "name": "Burela",
+    "nameGl": "Burela",
+    "provinceId": "lugo",
+    "lat": 43.6588665,
+    "lon": -7.363084
+  },
+  {
+    "id": "27009000000",
+    "name": "Carballedo",
+    "nameGl": "Carballedo",
+    "provinceId": "lugo",
+    "lat": 42.5307252,
+    "lon": -7.8168852
+  },
+  {
+    "id": "27010000000",
+    "name": "Castro de Rei",
+    "nameGl": "Castro de Rei",
+    "provinceId": "lugo",
+    "lat": 43.1752487,
+    "lon": -7.4540448
+  },
+  {
+    "id": "27011000000",
+    "name": "Castroverde",
+    "nameGl": "Castroverde",
+    "provinceId": "lugo",
+    "lat": 43.0264901,
+    "lon": -7.3407539
+  },
+  {
+    "id": "27012000000",
+    "name": "Cervantes",
+    "nameGl": "Cervantes",
+    "provinceId": "lugo",
+    "lat": 42.8262572,
+    "lon": -6.9717334
+  },
+  {
+    "id": "27013000000",
+    "name": "Cervo",
+    "nameGl": "Cervo",
+    "provinceId": "lugo",
+    "lat": 43.6525555,
+    "lon": -7.4283115
+  },
+  {
+    "id": "27016000000",
+    "name": "Chantada",
+    "nameGl": "Chantada",
+    "provinceId": "lugo",
+    "lat": 42.6107582,
+    "lon": -7.7992156
+  },
+  {
+    "id": "27015000000",
+    "name": "Cospeito",
+    "nameGl": "Cospeito",
+    "provinceId": "lugo",
+    "lat": 43.2172531,
+    "lon": -7.535704
+  },
+  {
+    "id": "27017000000",
+    "name": "Folgoso do Courel",
+    "nameGl": "Folgoso do Courel",
+    "provinceId": "lugo",
+    "lat": 42.6163373,
+    "lon": -7.1653881
+  },
+  {
+    "id": "27019000000",
+    "name": "Foz",
+    "nameGl": "Foz",
+    "provinceId": "lugo",
+    "lat": 43.5826016,
+    "lon": -7.323749
+  },
+  {
+    "id": "27020000000",
+    "name": "Friol",
+    "nameGl": "Friol",
+    "provinceId": "lugo",
+    "lat": 43.032792,
+    "lon": -7.8112006
+  },
+  {
+    "id": "27022000000",
+    "name": "Guitiriz",
+    "nameGl": "Guitiriz",
+    "provinceId": "lugo",
+    "lat": 43.2140875,
+    "lon": -7.8253861
+  },
+  {
+    "id": "27023000000",
+    "name": "Guntín",
+    "nameGl": "Guntín",
+    "provinceId": "lugo",
+    "lat": 42.9007195,
+    "lon": -7.6540473
+  },
+  {
+    "id": "27026000000",
+    "name": "Láncara",
+    "nameGl": "Láncara",
+    "provinceId": "lugo",
+    "lat": 42.8504081,
+    "lon": -7.3363416
+  },
+  {
+    "id": "27027000000",
+    "name": "Lourenzá",
+    "nameGl": "Lourenzá",
+    "provinceId": "lugo",
+    "lat": 43.4599015,
+    "lon": -7.2829065
+  },
+  {
+    "id": "27028000000",
+    "name": "Lugo",
+    "nameGl": "Lugo",
+    "provinceId": "lugo",
+    "lat": 42.991009,
+    "lon": -7.5706266
+  },
+  {
+    "id": "27029000000",
+    "name": "Meira",
+    "nameGl": "Meira",
+    "provinceId": "lugo",
+    "lat": 43.219937,
+    "lon": -7.2560422
+  },
+  {
+    "id": "27030000000",
+    "name": "Mondoñedo",
+    "nameGl": "Mondoñedo",
+    "provinceId": "lugo",
+    "lat": 43.4478488,
+    "lon": -7.3609468
+  },
+  {
+    "id": "27031000000",
+    "name": "Monforte de Lemos",
+    "nameGl": "Monforte de Lemos",
+    "provinceId": "lugo",
+    "lat": 42.5101954,
+    "lon": -7.4980252
+  },
+  {
+    "id": "27032000000",
+    "name": "Monterroso",
+    "nameGl": "Monterroso",
+    "provinceId": "lugo",
+    "lat": 42.8067268,
+    "lon": -7.7996742
+  },
+  {
+    "id": "27033000000",
+    "name": "Muras",
+    "nameGl": "Muras",
+    "provinceId": "lugo",
+    "lat": 43.4854968,
+    "lon": -7.6641658
+  },
+  {
+    "id": "27034000000",
+    "name": "Navia de Suarna",
+    "nameGl": "Navia de Suarna",
+    "provinceId": "lugo",
+    "lat": 42.9623961,
+    "lon": -6.9548927
+  },
+  {
+    "id": "27035000000",
+    "name": "Negueira de Muñiz",
+    "nameGl": "Negueira de Muñiz",
+    "provinceId": "lugo",
+    "lat": 43.1316761,
+    "lon": -6.8926473
+  },
+  {
+    "id": "27014000000",
+    "name": "O Corgo",
+    "nameGl": "O Corgo",
+    "provinceId": "lugo",
+    "lat": 42.9323979,
+    "lon": -7.4252054
+  },
+  {
+    "id": "27024000000",
+    "name": "O Incio",
+    "nameGl": "O Incio",
+    "provinceId": "lugo",
+    "lat": 42.6665383,
+    "lon": -7.3906062
+  },
+  {
+    "id": "27043000000",
+    "name": "O Páramo",
+    "nameGl": "O Páramo",
+    "provinceId": "lugo",
+    "lat": 42.8350918,
+    "lon": -7.5202348
+  },
+  {
+    "id": "27058000000",
+    "name": "O Saviñao",
+    "nameGl": "O Saviñao",
+    "provinceId": "lugo",
+    "lat": 42.6448678,
+    "lon": -7.6422354
+  },
+  {
+    "id": "27063000000",
+    "name": "O Valadouro",
+    "nameGl": "O Valadouro",
+    "provinceId": "lugo",
+    "lat": 43.5345115,
+    "lon": -7.4658571
+  },
+  {
+    "id": "27064000000",
+    "name": "O Vicedo",
+    "nameGl": "O Vicedo",
+    "provinceId": "lugo",
+    "lat": 43.6853727,
+    "lon": -7.6697017
+  },
+  {
+    "id": "27038000000",
+    "name": "Ourol",
+    "nameGl": "Ourol",
+    "provinceId": "lugo",
+    "lat": 43.5539565,
+    "lon": -7.6364199
+  },
+  {
+    "id": "27039000000",
+    "name": "Outeiro de Rei",
+    "nameGl": "Outeiro de Rei",
+    "provinceId": "lugo",
+    "lat": 43.1068632,
+    "lon": -7.6086367
+  },
+  {
+    "id": "27040000000",
+    "name": "Palas de Rei",
+    "nameGl": "Palas de Rei",
+    "provinceId": "lugo",
+    "lat": 42.8983933,
+    "lon": -7.86775
+  },
+  {
+    "id": "27041000000",
+    "name": "Pantón",
+    "nameGl": "Pantón",
+    "provinceId": "lugo",
+    "lat": 42.5088409,
+    "lon": -7.6423409
+  },
+  {
+    "id": "27042000000",
+    "name": "Paradela",
+    "nameGl": "Paradela",
+    "provinceId": "lugo",
+    "lat": 42.7360057,
+    "lon": -7.5822502
+  },
+  {
+    "id": "27044000000",
+    "name": "Pastoriza",
+    "nameGl": "Pastoriza",
+    "provinceId": "lugo",
+    "lat": 43.2949158,
+    "lon": -7.3573122
+  },
+  {
+    "id": "27045000000",
+    "name": "Piedrafita del Cebrero",
+    "nameGl": "Pedrafita do Cebreiro",
+    "provinceId": "lugo",
+    "lat": 42.6870751,
+    "lon": -7.0865339
+  },
+  {
+    "id": "27046000000",
+    "name": "Pol",
+    "nameGl": "Pol",
+    "provinceId": "lugo",
+    "lat": 43.1428983,
+    "lon": -7.3313738
+  },
+  {
+    "id": "27049000000",
+    "name": "Portomarín",
+    "nameGl": "Portomarín",
+    "provinceId": "lugo",
+    "lat": 42.8155108,
+    "lon": -7.6821593
+  },
+  {
+    "id": "27050000000",
+    "name": "Quiroga",
+    "nameGl": "Quiroga",
+    "provinceId": "lugo",
+    "lat": 42.4658637,
+    "lon": -7.2184324
+  },
+  {
+    "id": "27056000000",
+    "name": "Rábade",
+    "nameGl": "Rábade",
+    "provinceId": "lugo",
+    "lat": 43.1249023,
+    "lon": -7.6223281
+  },
+  {
+    "id": "27051000000",
+    "name": "Ribadeo",
+    "nameGl": "Ribadeo",
+    "provinceId": "lugo",
+    "lat": 43.5114609,
+    "lon": -7.1194274
+  },
+  {
+    "id": "27052000000",
+    "name": "Ribas de Sil",
+    "nameGl": "Ribas de Sil",
+    "provinceId": "lugo",
+    "lat": 42.4293916,
+    "lon": -7.3133085
+  },
+  {
+    "id": "27054000000",
+    "name": "Riotorto",
+    "nameGl": "Riotorto",
+    "provinceId": "lugo",
+    "lat": 43.3256279,
+    "lon": -7.2616409
+  },
+  {
+    "id": "27055000000",
+    "name": "Samos",
+    "nameGl": "Samos",
+    "provinceId": "lugo",
+    "lat": 42.6940652,
+    "lon": -7.2819934
+  },
+  {
+    "id": "27057000000",
+    "name": "Sarria",
+    "nameGl": "Sarria",
+    "provinceId": "lugo",
+    "lat": 42.7713354,
+    "lon": -7.4356637
+  },
+  {
+    "id": "27059000000",
+    "name": "Sober",
+    "nameGl": "Sober",
+    "provinceId": "lugo",
+    "lat": 42.4402381,
+    "lon": -7.5374247
+  },
+  {
+    "id": "27060000000",
+    "name": "Taboada",
+    "nameGl": "Taboada",
+    "provinceId": "lugo",
+    "lat": 42.7206034,
+    "lon": -7.7650618
+  },
+  {
+    "id": "27061000000",
+    "name": "Trabada",
+    "nameGl": "Trabada",
+    "provinceId": "lugo",
+    "lat": 43.4351536,
+    "lon": -7.1642621
+  },
+  {
+    "id": "27062000000",
+    "name": "Triacastela",
+    "nameGl": "Triacastela",
+    "provinceId": "lugo",
+    "lat": 42.7621049,
+    "lon": -7.2196091
+  },
+  {
+    "id": "27065000000",
+    "name": "Vilalba",
+    "nameGl": "Vilalba",
+    "provinceId": "lugo",
+    "lat": 43.3177284,
+    "lon": -7.6736511
+  },
+  {
+    "id": "27066000000",
+    "name": "Viveiro",
+    "nameGl": "Viveiro",
+    "provinceId": "lugo",
+    "lat": 43.6434399,
+    "lon": -7.5711906
+  },
+  {
+    "id": "27021000000",
+    "name": "Xermade",
+    "nameGl": "Xermade",
+    "provinceId": "lugo",
+    "lat": 43.3641285,
+    "lon": -7.7876417
+  },
+  {
+    "id": "27025000000",
+    "name": "Xove",
+    "nameGl": "Xove",
+    "provinceId": "lugo",
+    "lat": 43.6614091,
+    "lon": -7.5162419
+  },
+  {
+    "id": "32003000000",
+    "name": "A Arnoia",
+    "nameGl": "A Arnoia",
+    "provinceId": "ourense",
+    "lat": 42.2521431,
+    "lon": -8.1317089
+  },
+  {
+    "id": "32014000000",
+    "name": "A Bola",
+    "nameGl": "A Bola",
+    "provinceId": "ourense",
+    "lat": 42.1437128,
+    "lon": -7.8962188
+  },
+  {
+    "id": "32034000000",
+    "name": "A Gudiña",
+    "nameGl": "A Gudiña",
+    "provinceId": "ourense",
+    "lat": 42.0412055,
+    "lon": -7.1664483
+  },
+  {
+    "id": "32047000000",
+    "name": "A Merca",
+    "nameGl": "A Merca",
+    "provinceId": "ourense",
+    "lat": 42.2101102,
+    "lon": -7.9066314
+  },
+  {
+    "id": "32048000000",
+    "name": "A Mezquita",
+    "nameGl": "A Mezquita",
+    "provinceId": "ourense",
+    "lat": 42.0127878,
+    "lon": -7.0381606
+  },
+  {
+    "id": "32059000000",
+    "name": "A Peroxa",
+    "nameGl": "A Peroxa",
+    "provinceId": "ourense",
+    "lat": 42.4518604,
+    "lon": -7.7962628
+  },
+  {
+    "id": "32063000000",
+    "name": "A Pobra de Trives",
+    "nameGl": "A Pobra de Trives",
+    "provinceId": "ourense",
+    "lat": 42.3287366,
+    "lon": -7.2829079
+  },
+  {
+    "id": "32072000000",
+    "name": "A Rúa",
+    "nameGl": "A Rúa",
+    "provinceId": "ourense",
+    "lat": 42.4167867,
+    "lon": -7.1261625
+  },
+  {
+    "id": "32080000000",
+    "name": "A Teixeira",
+    "nameGl": "A Teixeira",
+    "provinceId": "ourense",
+    "lat": 42.3680535,
+    "lon": -7.4707564
+  },
+  {
+    "id": "32083000000",
+    "name": "A Veiga",
+    "nameGl": "A Veiga",
+    "provinceId": "ourense",
+    "lat": 42.2678544,
+    "lon": -6.9465931
+  },
+  {
+    "id": "32001000000",
+    "name": "Allariz",
+    "nameGl": "Allariz",
+    "provinceId": "ourense",
+    "lat": 42.1932153,
+    "lon": -7.8090035
+  },
+  {
+    "id": "32002000000",
+    "name": "Amoeiro",
+    "nameGl": "Amoeiro",
+    "provinceId": "ourense",
+    "lat": 42.3927638,
+    "lon": -7.932158
+  },
+  {
+    "id": "32004000000",
+    "name": "Avión",
+    "nameGl": "Avión",
+    "provinceId": "ourense",
+    "lat": 42.3875798,
+    "lon": -8.273124
+  },
+  {
+    "id": "32005000000",
+    "name": "Baltar",
+    "nameGl": "Baltar",
+    "provinceId": "ourense",
+    "lat": 41.935941,
+    "lon": -7.7432691
+  },
+  {
+    "id": "32006000000",
+    "name": "Bande",
+    "nameGl": "Bande",
+    "provinceId": "ourense",
+    "lat": 42.022318,
+    "lon": -7.970333
+  },
+  {
+    "id": "32007000000",
+    "name": "Baños de Molgas",
+    "nameGl": "Baños de Molgas",
+    "provinceId": "ourense",
+    "lat": 42.2238338,
+    "lon": -7.6877796
+  },
+  {
+    "id": "32008000000",
+    "name": "Barbadás",
+    "nameGl": "Barbadás",
+    "provinceId": "ourense",
+    "lat": 42.3011412,
+    "lon": -7.9113356
+  },
+  {
+    "id": "32010000000",
+    "name": "Beade",
+    "nameGl": "Beade",
+    "provinceId": "ourense",
+    "lat": 42.3290539,
+    "lon": -8.1358649
+  },
+  {
+    "id": "32011000000",
+    "name": "Beariz",
+    "nameGl": "Beariz",
+    "provinceId": "ourense",
+    "lat": 42.4864672,
+    "lon": -8.296535
+  },
+  {
+    "id": "32013000000",
+    "name": "Boborás",
+    "nameGl": "Boborás",
+    "provinceId": "ourense",
+    "lat": 42.4495065,
+    "lon": -8.174579
+  },
+  {
+    "id": "32016000000",
+    "name": "Calvos de Randín",
+    "nameGl": "Calvos de Randín",
+    "provinceId": "ourense",
+    "lat": 41.9256571,
+    "lon": -7.8562264
+  },
+  {
+    "id": "32018000000",
+    "name": "Carballeda de Avia",
+    "nameGl": "Carballeda de Avia",
+    "provinceId": "ourense",
+    "lat": 42.3354638,
+    "lon": -8.1990978
+  },
+  {
+    "id": "32017000000",
+    "name": "Carballeda de Valdeorras",
+    "nameGl": "Carballeda de Valdeorras",
+    "provinceId": "ourense",
+    "lat": 42.3432466,
+    "lon": -6.8544714
+  },
+  {
+    "id": "32020000000",
+    "name": "Cartelle",
+    "nameGl": "Cartelle",
+    "provinceId": "ourense",
+    "lat": 42.2375131,
+    "lon": -8.0244701
+  },
+  {
+    "id": "32022000000",
+    "name": "Castrelo de Miño",
+    "nameGl": "Castrelo de Miño",
+    "provinceId": "ourense",
+    "lat": 42.2964726,
+    "lon": -8.0676235
+  },
+  {
+    "id": "32021000000",
+    "name": "Castrelo do Val",
+    "nameGl": "Castrelo do Val",
+    "provinceId": "ourense",
+    "lat": 42.0424781,
+    "lon": -7.3662135
+  },
+  {
+    "id": "32024000000",
+    "name": "Celanova",
+    "nameGl": "Celanova",
+    "provinceId": "ourense",
+    "lat": 42.1666257,
+    "lon": -7.9811902
+  },
+  {
+    "id": "32025000000",
+    "name": "Cenlle",
+    "nameGl": "Cenlle",
+    "provinceId": "ourense",
+    "lat": 42.3417508,
+    "lon": -8.0650465
+  },
+  {
+    "id": "32029000000",
+    "name": "Chandrexa de Queixa",
+    "nameGl": "Chandrexa de Queixa",
+    "provinceId": "ourense",
+    "lat": 42.2582401,
+    "lon": -7.3675188
+  },
+  {
+    "id": "32026000000",
+    "name": "Coles",
+    "nameGl": "Coles",
+    "provinceId": "ourense",
+    "lat": 42.4075794,
+    "lon": -7.8412803
+  },
+  {
+    "id": "32027000000",
+    "name": "Cortegada",
+    "nameGl": "Cortegada",
+    "provinceId": "ourense",
+    "lat": 42.212198,
+    "lon": -8.1537766
+  },
+  {
+    "id": "32028000000",
+    "name": "Cualedro",
+    "nameGl": "Cualedro",
+    "provinceId": "ourense",
+    "lat": 41.9765963,
+    "lon": -7.6048387
+  },
+  {
+    "id": "32030000000",
+    "name": "Entrimo",
+    "nameGl": "Entrimo",
+    "provinceId": "ourense",
+    "lat": 41.9538034,
+    "lon": -8.1450886
+  },
+  {
+    "id": "32031000000",
+    "name": "Esgos",
+    "nameGl": "Esgos",
+    "provinceId": "ourense",
+    "lat": 42.3338023,
+    "lon": -7.6977784
+  },
+  {
+    "id": "32033000000",
+    "name": "Gomesende",
+    "nameGl": "Gomesende",
+    "provinceId": "ourense",
+    "lat": 42.1889919,
+    "lon": -8.097808
+  },
+  {
+    "id": "32038000000",
+    "name": "Larouco",
+    "nameGl": "Larouco",
+    "provinceId": "ourense",
+    "lat": 42.3599397,
+    "lon": -7.1659812
+  },
+  {
+    "id": "32039000000",
+    "name": "Laza",
+    "nameGl": "Laza",
+    "provinceId": "ourense",
+    "lat": 42.1065837,
+    "lon": -7.4574319
+  },
+  {
+    "id": "32040000000",
+    "name": "Leiro",
+    "nameGl": "Leiro",
+    "provinceId": "ourense",
+    "lat": 42.36966,
+    "lon": -8.1585399
+  },
+  {
+    "id": "32041000000",
+    "name": "Lobeira",
+    "nameGl": "Lobeira",
+    "provinceId": "ourense",
+    "lat": 42.0034676,
+    "lon": -8.0423186
+  },
+  {
+    "id": "32042000000",
+    "name": "Lobios",
+    "nameGl": "Lobios",
+    "provinceId": "ourense",
+    "lat": 41.9044497,
+    "lon": -8.0978145
+  },
+  {
+    "id": "32043000000",
+    "name": "Maceda",
+    "nameGl": "Maceda",
+    "provinceId": "ourense",
+    "lat": 42.2566578,
+    "lon": -7.6032474
+  },
+  {
+    "id": "32044000000",
+    "name": "Manzaneda",
+    "nameGl": "Manzaneda",
+    "provinceId": "ourense",
+    "lat": 42.2732283,
+    "lon": -7.2215718
+  },
+  {
+    "id": "32045000000",
+    "name": "Maside",
+    "nameGl": "Maside",
+    "provinceId": "ourense",
+    "lat": 42.4201112,
+    "lon": -8.0209097
+  },
+  {
+    "id": "32046000000",
+    "name": "Melón",
+    "nameGl": "Melón",
+    "provinceId": "ourense",
+    "lat": 42.2741557,
+    "lon": -8.2161355
+  },
+  {
+    "id": "32049000000",
+    "name": "Montederramo",
+    "nameGl": "Montederramo",
+    "provinceId": "ourense",
+    "lat": 42.2689689,
+    "lon": -7.5209312
+  },
+  {
+    "id": "32050000000",
+    "name": "Monterrei",
+    "nameGl": "Monterrei",
+    "provinceId": "ourense",
+    "lat": 41.9495299,
+    "lon": -7.5300914
+  },
+  {
+    "id": "32051000000",
+    "name": "Muíños",
+    "nameGl": "Muíños",
+    "provinceId": "ourense",
+    "lat": 41.9390577,
+    "lon": -7.9753657
+  },
+  {
+    "id": "32052000000",
+    "name": "Nogueira de Ramuín",
+    "nameGl": "Nogueira de Ramuín",
+    "provinceId": "ourense",
+    "lat": 42.403209,
+    "lon": -7.7053172
+  },
+  {
+    "id": "32009000000",
+    "name": "O Barco de Valdeorras",
+    "nameGl": "O Barco de Valdeorras",
+    "provinceId": "ourense",
+    "lat": 42.4301249,
+    "lon": -6.9740403
+  },
+  {
+    "id": "32015000000",
+    "name": "O Bolo",
+    "nameGl": "O Bolo",
+    "provinceId": "ourense",
+    "lat": 42.2908473,
+    "lon": -7.110302
+  },
+  {
+    "id": "32019000000",
+    "name": "O Carballiño",
+    "nameGl": "O Carballiño",
+    "provinceId": "ourense",
+    "lat": 42.4467392,
+    "lon": -8.0815991
+  },
+  {
+    "id": "32023000000",
+    "name": "O Castro de Caldelas",
+    "nameGl": "O Castro de Caldelas",
+    "provinceId": "ourense",
+    "lat": 42.3720385,
+    "lon": -7.4003372
+  },
+  {
+    "id": "32035000000",
+    "name": "O Irixo",
+    "nameGl": "O Irixo",
+    "provinceId": "ourense",
+    "lat": 42.5123771,
+    "lon": -8.1496351
+  },
+  {
+    "id": "32058000000",
+    "name": "O Pereiro de Aguiar",
+    "nameGl": "O Pereiro de Aguiar",
+    "provinceId": "ourense",
+    "lat": 42.3493824,
+    "lon": -7.7779458
+  },
+  {
+    "id": "32071000000",
+    "name": "O Riós",
+    "nameGl": "O Riós",
+    "provinceId": "ourense",
+    "lat": 41.9753318,
+    "lon": -7.2644045
+  },
+  {
+    "id": "32053000000",
+    "name": "Oímbra",
+    "nameGl": "Oímbra",
+    "provinceId": "ourense",
+    "lat": 41.874045,
+    "lon": -7.5195655
+  },
+  {
+    "id": "32012000000",
+    "name": "Os Blancos",
+    "nameGl": "Os Blancos",
+    "provinceId": "ourense",
+    "lat": 41.9787591,
+    "lon": -7.7571425
+  },
+  {
+    "id": "32054000000",
+    "name": "Ourense",
+    "nameGl": "Ourense",
+    "provinceId": "ourense",
+    "lat": 42.3439066,
+    "lon": -7.9047214
+  },
+  {
+    "id": "32055000000",
+    "name": "Paderne de Allariz",
+    "nameGl": "Paderne de Allariz",
+    "provinceId": "ourense",
+    "lat": 42.2739386,
+    "lon": -7.7448874
+  },
+  {
+    "id": "32056000000",
+    "name": "Padrenda",
+    "nameGl": "Padrenda",
+    "provinceId": "ourense",
+    "lat": 42.1188928,
+    "lon": -8.1525261
+  },
+  {
+    "id": "32057000000",
+    "name": "Parada de Sil",
+    "nameGl": "Parada de Sil",
+    "provinceId": "ourense",
+    "lat": 42.3610056,
+    "lon": -7.5643296
+  },
+  {
+    "id": "32060000000",
+    "name": "Petín",
+    "nameGl": "Petín",
+    "provinceId": "ourense",
+    "lat": 42.3606054,
+    "lon": -7.0907552
+  },
+  {
+    "id": "32061000000",
+    "name": "Piñor",
+    "nameGl": "Piñor",
+    "provinceId": "ourense",
+    "lat": 42.5231872,
+    "lon": -8.0085329
+  },
+  {
+    "id": "32064000000",
+    "name": "Pontedeva",
+    "nameGl": "Pontedeva",
+    "provinceId": "ourense",
+    "lat": 42.1669653,
+    "lon": -8.1404534
+  },
+  {
+    "id": "32062000000",
+    "name": "Porqueira",
+    "nameGl": "Porqueira",
+    "provinceId": "ourense",
+    "lat": 42.0245611,
+    "lon": -7.8565333
+  },
+  {
+    "id": "32065000000",
+    "name": "Punxín",
+    "nameGl": "Punxín",
+    "provinceId": "ourense",
+    "lat": 42.3674622,
+    "lon": -8.0069586
+  },
+  {
+    "id": "32066000000",
+    "name": "Quintela de Leirado",
+    "nameGl": "Quintela de Leirado",
+    "provinceId": "ourense",
+    "lat": 42.1199846,
+    "lon": -8.0891224
+  },
+  {
+    "id": "32067000000",
+    "name": "Rairiz de Veiga",
+    "nameGl": "Rairiz de Veiga",
+    "provinceId": "ourense",
+    "lat": 42.0902961,
+    "lon": -7.8595012
+  },
+  {
+    "id": "32068000000",
+    "name": "Ramirás",
+    "nameGl": "Ramirás",
+    "provinceId": "ourense",
+    "lat": 42.1842843,
+    "lon": -8.029917
+  },
+  {
+    "id": "32069000000",
+    "name": "Ribadavia",
+    "nameGl": "Ribadavia",
+    "provinceId": "ourense",
+    "lat": 42.2876478,
+    "lon": -8.1318886
+  },
+  {
+    "id": "32073000000",
+    "name": "Rubiá",
+    "nameGl": "Rubiá",
+    "provinceId": "ourense",
+    "lat": 42.4653204,
+    "lon": -6.8947657
+  },
+  {
+    "id": "32074000000",
+    "name": "San Amaro",
+    "nameGl": "San Amaro",
+    "provinceId": "ourense",
+    "lat": 42.3673924,
+    "lon": -8.0648249
+  },
+  {
+    "id": "32075000000",
+    "name": "San Cibrao das Viñas",
+    "nameGl": "San Cibrao das Viñas",
+    "provinceId": "ourense",
+    "lat": 42.279196,
+    "lon": -7.8522029
+  },
+  {
+    "id": "32076000000",
+    "name": "San Cristovo de Cea",
+    "nameGl": "San Cristovo de Cea",
+    "provinceId": "ourense",
+    "lat": 42.5007715,
+    "lon": -7.9681224
+  },
+  {
+    "id": "32070000000",
+    "name": "San Xoán de Río",
+    "nameGl": "San Xoán de Río",
+    "provinceId": "ourense",
+    "lat": 42.3823287,
+    "lon": -7.3130307
+  },
+  {
+    "id": "32077000000",
+    "name": "Sandiás",
+    "nameGl": "Sandiás",
+    "provinceId": "ourense",
+    "lat": 42.1110344,
+    "lon": -7.7405148
+  },
+  {
+    "id": "32078000000",
+    "name": "Sarreaus",
+    "nameGl": "Sarreaus",
+    "provinceId": "ourense",
+    "lat": 42.0981505,
+    "lon": -7.6189196
+  },
+  {
+    "id": "32079000000",
+    "name": "Taboadela",
+    "nameGl": "Taboadela",
+    "provinceId": "ourense",
+    "lat": 42.2457833,
+    "lon": -7.8269633
+  },
+  {
+    "id": "32081000000",
+    "name": "Toén",
+    "nameGl": "Toén",
+    "provinceId": "ourense",
+    "lat": 42.3053698,
+    "lon": -7.9586139
+  },
+  {
+    "id": "32082000000",
+    "name": "Trasmiras",
+    "nameGl": "Trasmiras",
+    "provinceId": "ourense",
+    "lat": 42.0240917,
+    "lon": -7.6210791
+  },
+  {
+    "id": "32084000000",
+    "name": "Verea",
+    "nameGl": "Verea",
+    "provinceId": "ourense",
+    "lat": 42.0998685,
+    "lon": -7.9939138
+  },
+  {
+    "id": "32085000000",
+    "name": "Verín",
+    "nameGl": "Verín",
+    "provinceId": "ourense",
+    "lat": 41.8951971,
+    "lon": -7.4135509
+  },
+  {
+    "id": "32086000000",
+    "name": "Viana do Bolo",
+    "nameGl": "Viana do Bolo",
+    "provinceId": "ourense",
+    "lat": 42.1589967,
+    "lon": -7.0768443
+  },
+  {
+    "id": "32087000000",
+    "name": "Vilamarín",
+    "nameGl": "Vilamarín",
+    "provinceId": "ourense",
+    "lat": 42.4617157,
+    "lon": -7.8931771
+  },
+  {
+    "id": "32088000000",
+    "name": "Vilamartín de Valdeorras",
+    "nameGl": "Vilamartín de Valdeorras",
+    "provinceId": "ourense",
+    "lat": 42.4422404,
+    "lon": -7.0599401
+  },
+  {
+    "id": "32089000000",
+    "name": "Vilar de Barrio",
+    "nameGl": "Vilar de Barrio",
+    "provinceId": "ourense",
+    "lat": 42.1764025,
+    "lon": -7.5664676
+  },
+  {
+    "id": "32090000000",
+    "name": "Vilar de Santos",
+    "nameGl": "Vilar de Santos",
+    "provinceId": "ourense",
+    "lat": 42.10132,
+    "lon": -7.802658
+  },
+  {
+    "id": "32091000000",
+    "name": "Vilardevós",
+    "nameGl": "Vilardevós",
+    "provinceId": "ourense",
+    "lat": 41.9165788,
+    "lon": -7.2947
+  },
+  {
+    "id": "32092000000",
+    "name": "Vilariño de Conso",
+    "nameGl": "Vilariño de Conso",
+    "provinceId": "ourense",
+    "lat": 42.1486805,
+    "lon": -7.2712956
+  },
+  {
+    "id": "32032000000",
+    "name": "Xinzo de Limia",
+    "nameGl": "Xinzo de Limia",
+    "provinceId": "ourense",
+    "lat": 42.0350174,
+    "lon": -7.7134905
+  },
+  {
+    "id": "32036000000",
+    "name": "Xunqueira de Ambía",
+    "nameGl": "Xunqueira de Ambía",
+    "provinceId": "ourense",
+    "lat": 42.1834765,
+    "lon": -7.7149155
+  },
+  {
+    "id": "32037000000",
+    "name": "Xunqueira de Espadanedo",
+    "nameGl": "Xunqueira de Espadanedo",
+    "provinceId": "ourense",
+    "lat": 42.3272132,
+    "lon": -7.6378759
+  },
+  {
+    "id": "36009000000",
+    "name": "A Caniza",
+    "nameGl": "A Caniza",
+    "provinceId": "pontevedra",
+    "lat": 42.2157441,
+    "lon": -8.3049318
+  },
+  {
+    "id": "36017000000",
+    "name": "A Estrada",
+    "nameGl": "A Estrada",
+    "provinceId": "pontevedra",
+    "lat": 42.680573,
+    "lon": -8.472493
+  },
+  {
+    "id": "36023000000",
+    "name": "A Guarda",
+    "nameGl": "A Guarda",
+    "provinceId": "pontevedra",
+    "lat": 41.902916,
+    "lon": -8.8581144
+  },
+  {
+    "id": "36901000000",
+    "name": "A Illa de Arousa",
+    "nameGl": "A Illa de Arousa",
+    "provinceId": "pontevedra",
+    "lat": 42.5468005,
+    "lon": -8.8940752
+  },
+  {
+    "id": "36025000000",
+    "name": "A Lama",
+    "nameGl": "A Lama",
+    "provinceId": "pontevedra",
+    "lat": 42.4151241,
+    "lon": -8.3889077
+  },
+  {
+    "id": "36020000000",
+    "name": "Agolada",
+    "nameGl": "Agolada",
+    "provinceId": "pontevedra",
+    "lat": 42.7773681,
+    "lon": -8.0343744
+  },
+  {
+    "id": "36001000000",
+    "name": "Arbo",
+    "nameGl": "Arbo",
+    "provinceId": "pontevedra",
+    "lat": 42.1205823,
+    "lon": -8.3137275
+  },
+  {
+    "id": "36034000000",
+    "name": "As Neves",
+    "nameGl": "As Neves",
+    "provinceId": "pontevedra",
+    "lat": 42.1231783,
+    "lon": -8.4031861
+  },
+  {
+    "id": "36003000000",
+    "name": "Baiona",
+    "nameGl": "Baiona",
+    "provinceId": "pontevedra",
+    "lat": 42.0884721,
+    "lon": -8.8527249
+  },
+  {
+    "id": "36002000000",
+    "name": "Barro",
+    "nameGl": "Barro",
+    "provinceId": "pontevedra",
+    "lat": 42.521446,
+    "lon": -8.6452302
+  },
+  {
+    "id": "36004000000",
+    "name": "Bueu",
+    "nameGl": "Bueu",
+    "provinceId": "pontevedra",
+    "lat": 42.3469118,
+    "lon": -8.8424673
+  },
+  {
+    "id": "36005000000",
+    "name": "Caldas de Reis",
+    "nameGl": "Caldas de Reis",
+    "provinceId": "pontevedra",
+    "lat": 42.6180297,
+    "lon": -8.6634123
+  },
+  {
+    "id": "36006000000",
+    "name": "Cambados",
+    "nameGl": "Cambados",
+    "provinceId": "pontevedra",
+    "lat": 42.499938,
+    "lon": -8.7970025
+  },
+  {
+    "id": "36008000000",
+    "name": "Cangas de Morrazo",
+    "nameGl": "Cangas de Morrazo",
+    "provinceId": "pontevedra",
+    "lat": 42.2779024,
+    "lon": -8.8163356
+  },
+  {
+    "id": "36010000000",
+    "name": "Catoira",
+    "nameGl": "Catoira",
+    "provinceId": "pontevedra",
+    "lat": 42.6583961,
+    "lon": -8.7065935
+  },
+  {
+    "id": "36902000000",
+    "name": "Cerdedo Cotobade",
+    "nameGl": "Cerdedo Cotobade",
+    "provinceId": "pontevedra",
+    "lat": 42.5032717,
+    "lon": -8.4561853
+  },
+  {
+    "id": "36013000000",
+    "name": "Covelo",
+    "nameGl": "Covelo",
+    "provinceId": "pontevedra",
+    "lat": 42.2684215,
+    "lon": -8.3376072
+  },
+  {
+    "id": "36014000000",
+    "name": "Crecente",
+    "nameGl": "Crecente",
+    "provinceId": "pontevedra",
+    "lat": 42.1894634,
+    "lon": -8.2209372
+  },
+  {
+    "id": "36015000000",
+    "name": "Cuntis",
+    "nameGl": "Cuntis",
+    "provinceId": "pontevedra",
+    "lat": 42.6401673,
+    "lon": -8.5578154
+  },
+  {
+    "id": "36016000000",
+    "name": "Dozón",
+    "nameGl": "Dozón",
+    "provinceId": "pontevedra",
+    "lat": 42.595342,
+    "lon": -8.0386496
+  },
+  {
+    "id": "36018000000",
+    "name": "Forcarei",
+    "nameGl": "Forcarei",
+    "provinceId": "pontevedra",
+    "lat": 42.5759692,
+    "lon": -8.3149465
+  },
+  {
+    "id": "36019000000",
+    "name": "Fornelos de Montes",
+    "nameGl": "Fornelos de Montes",
+    "provinceId": "pontevedra",
+    "lat": 42.327995,
+    "lon": -8.4206702
+  },
+  {
+    "id": "36021000000",
+    "name": "Gondomar",
+    "nameGl": "Gondomar",
+    "provinceId": "pontevedra",
+    "lat": 42.1114477,
+    "lon": -8.7489668
+  },
+  {
+    "id": "36024000000",
+    "name": "Lalín",
+    "nameGl": "Lalín",
+    "provinceId": "pontevedra",
+    "lat": 42.6574457,
+    "lon": -8.126462
+  },
+  {
+    "id": "36026000000",
+    "name": "Marín",
+    "nameGl": "Marín",
+    "provinceId": "pontevedra",
+    "lat": 42.3661005,
+    "lon": -8.7112502
+  },
+  {
+    "id": "36027000000",
+    "name": "Meaño",
+    "nameGl": "Meaño",
+    "provinceId": "pontevedra",
+    "lat": 42.4528855,
+    "lon": -8.7862014
+  },
+  {
+    "id": "36028000000",
+    "name": "Meis",
+    "nameGl": "Meis",
+    "provinceId": "pontevedra",
+    "lat": 42.4997198,
+    "lon": -8.7194184
+  },
+  {
+    "id": "36029000000",
+    "name": "Moaña",
+    "nameGl": "Moaña",
+    "provinceId": "pontevedra",
+    "lat": 42.2977246,
+    "lon": -8.7109742
+  },
+  {
+    "id": "36030000000",
+    "name": "Mondariz",
+    "nameGl": "Mondariz",
+    "provinceId": "pontevedra",
+    "lat": 42.2390797,
+    "lon": -8.4331072
+  },
+  {
+    "id": "36031000000",
+    "name": "Mondariz Balneario",
+    "nameGl": "Mondariz Balneario",
+    "provinceId": "pontevedra",
+    "lat": 42.2197049,
+    "lon": -8.4715015
+  },
+  {
+    "id": "36032000000",
+    "name": "Moraña",
+    "nameGl": "Moraña",
+    "provinceId": "pontevedra",
+    "lat": 42.5626345,
+    "lon": -8.5814386
+  },
+  {
+    "id": "36033000000",
+    "name": "Mos",
+    "nameGl": "Mos",
+    "provinceId": "pontevedra",
+    "lat": 42.1884795,
+    "lon": -8.6290364
+  },
+  {
+    "id": "36035000000",
+    "name": "Nigrán",
+    "nameGl": "Nigrán",
+    "provinceId": "pontevedra",
+    "lat": 42.1425567,
+    "lon": -8.8021772
+  },
+  {
+    "id": "36007000000",
+    "name": "O Campo Lameiro",
+    "nameGl": "O Campo Lameiro",
+    "provinceId": "pontevedra",
+    "lat": 42.5378633,
+    "lon": -8.5198048
+  },
+  {
+    "id": "36022000000",
+    "name": "O Grove",
+    "nameGl": "O Grove",
+    "provinceId": "pontevedra",
+    "lat": 42.4703645,
+    "lon": -8.889152
+  },
+  {
+    "id": "36039000000",
+    "name": "O Porriño",
+    "nameGl": "O Porriño",
+    "provinceId": "pontevedra",
+    "lat": 42.1360042,
+    "lon": -8.6388095
+  },
+  {
+    "id": "36048000000",
+    "name": "O Rosal",
+    "nameGl": "O Rosal",
+    "provinceId": "pontevedra",
+    "lat": 41.9366082,
+    "lon": -8.8292855
+  },
+  {
+    "id": "36036000000",
+    "name": "Oia",
+    "nameGl": "Oia",
+    "provinceId": "pontevedra",
+    "lat": 42.0318853,
+    "lon": -8.8415394
+  },
+  {
+    "id": "36037000000",
+    "name": "Pazos de Borbén",
+    "nameGl": "Pazos de Borbén",
+    "provinceId": "pontevedra",
+    "lat": 42.2847848,
+    "lon": -8.5382677
+  },
+  {
+    "id": "36041000000",
+    "name": "Poio",
+    "nameGl": "Poio",
+    "provinceId": "pontevedra",
+    "lat": 42.4418824,
+    "lon": -8.7049075
+  },
+  {
+    "id": "36043000000",
+    "name": "Ponte Caldelas",
+    "nameGl": "Ponte Caldelas",
+    "provinceId": "pontevedra",
+    "lat": 42.3837864,
+    "lon": -8.5134273
+  },
+  {
+    "id": "36042000000",
+    "name": "Ponteareas",
+    "nameGl": "Ponteareas",
+    "provinceId": "pontevedra",
+    "lat": 42.1884771,
+    "lon": -8.502068
+  },
+  {
+    "id": "36038000000",
+    "name": "Pontevedra",
+    "nameGl": "Pontevedra",
+    "provinceId": "pontevedra",
+    "lat": 42.4281447,
+    "lon": -8.6271323
+  },
+  {
+    "id": "36040000000",
+    "name": "Portas",
+    "nameGl": "Portas",
+    "provinceId": "pontevedra",
+    "lat": 42.5640304,
+    "lon": -8.660295
+  },
+  {
+    "id": "36044000000",
+    "name": "Puentecesures",
+    "nameGl": "Pontecesures",
+    "provinceId": "pontevedra",
+    "lat": 42.7169601,
+    "lon": -8.6346055
+  },
+  {
+    "id": "36045000000",
+    "name": "Redondela",
+    "nameGl": "Redondela",
+    "provinceId": "pontevedra",
+    "lat": 42.2799073,
+    "lon": -8.6215377
+  },
+  {
+    "id": "36046000000",
+    "name": "Ribadumia",
+    "nameGl": "Ribadumia",
+    "provinceId": "pontevedra",
+    "lat": 42.5134732,
+    "lon": -8.7548451
+  },
+  {
+    "id": "36047000000",
+    "name": "Rodeiro",
+    "nameGl": "Rodeiro",
+    "provinceId": "pontevedra",
+    "lat": 42.6531791,
+    "lon": -7.9487821
+  },
+  {
+    "id": "36049000000",
+    "name": "Salceda de Caselas",
+    "nameGl": "Salceda de Caselas",
+    "provinceId": "pontevedra",
+    "lat": 42.1065106,
+    "lon": -8.5853487
+  },
+  {
+    "id": "36050000000",
+    "name": "Salvaterra de Miño",
+    "nameGl": "Salvaterra de Miño",
+    "provinceId": "pontevedra",
+    "lat": 42.1185157,
+    "lon": -8.4736863
+  },
+  {
+    "id": "36051000000",
+    "name": "Sangenjo",
+    "nameGl": "Sanxenxo",
+    "provinceId": "pontevedra",
+    "lat": 42.4222261,
+    "lon": -8.8194937
+  },
+  {
+    "id": "36052000000",
+    "name": "Silleda",
+    "nameGl": "Silleda",
+    "provinceId": "pontevedra",
+    "lat": 42.6873306,
+    "lon": -8.2835634
+  },
+  {
+    "id": "36053000000",
+    "name": "Soutomaior",
+    "nameGl": "Soutomaior",
+    "provinceId": "pontevedra",
+    "lat": 42.3386392,
+    "lon": -8.5686917
+  },
+  {
+    "id": "36054000000",
+    "name": "Tomiño",
+    "nameGl": "Tomiño",
+    "provinceId": "pontevedra",
+    "lat": 41.9955499,
+    "lon": -8.7341349
+  },
+  {
+    "id": "36055000000",
+    "name": "Tui",
+    "nameGl": "Tui",
+    "provinceId": "pontevedra",
+    "lat": 42.0669901,
+    "lon": -8.6418391
+  },
+  {
+    "id": "36056000000",
+    "name": "Valga",
+    "nameGl": "Valga",
+    "provinceId": "pontevedra",
+    "lat": 42.6892719,
+    "lon": -8.6601485
+  },
+  {
+    "id": "36057000000",
+    "name": "Vigo",
+    "nameGl": "Vigo",
+    "provinceId": "pontevedra",
+    "lat": 42.1985673,
+    "lon": -8.7726604
+  },
+  {
+    "id": "36059000000",
+    "name": "Vila de Cruces",
+    "nameGl": "Vila de Cruces",
+    "provinceId": "pontevedra",
+    "lat": 42.7916996,
+    "lon": -8.2258687
+  },
+  {
+    "id": "36058000000",
+    "name": "Vilaboa",
+    "nameGl": "Vilaboa",
+    "provinceId": "pontevedra",
+    "lat": 42.3433138,
+    "lon": -8.6492026
+  },
+  {
+    "id": "36060000000",
+    "name": "Vilagarcía de Arousa",
+    "nameGl": "Vilagarcía de Arousa",
+    "provinceId": "pontevedra",
+    "lat": 42.5950203,
+    "lon": -8.7522081
+  },
+  {
+    "id": "36061000000",
+    "name": "Vilanova de Arousa",
+    "nameGl": "Vilanova de Arousa",
+    "provinceId": "pontevedra",
+    "lat": 42.5539072,
+    "lon": -8.7643699
+  }
+]

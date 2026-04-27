@@ -11,3 +11,7 @@ dist/
 
 # Coverage
 coverage/
+
+# Build script temp files
+*.tmp.geojson
+*.tmp.json

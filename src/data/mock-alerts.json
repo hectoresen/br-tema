@@ -1,0 +1,47 @@
+[
+  {
+    "id": "mock-alert-001",
+    "severity": "yellow",
+    "phenomenon": "wind",
+    "provinceIds": ["corunha", "lugo"],
+    "startTime": "2025-01-01T06:00:00+01:00",
+    "endTime": "2025-01-01T18:00:00+01:00",
+    "description": "Viento del noroeste de 50-70 km/h en zonas de costa. Rachas de hasta 80 km/h en cabos expuestos."
+  },
+  {
+    "id": "mock-alert-002",
+    "severity": "orange",
+    "phenomenon": "rain",
+    "provinceIds": ["pontevedra", "corunha"],
+    "startTime": "2025-01-02T00:00:00+01:00",
+    "endTime": "2025-01-02T12:00:00+01:00",
+    "description": "Lluvias persistentes con acumulados de 40-60 mm en 12 horas. Posibles inundaciones en zonas bajas."
+  },
+  {
+    "id": "mock-alert-003",
+    "severity": "yellow",
+    "phenomenon": "coast",
+    "provinceIds": ["corunha", "lugo", "pontevedra"],
+    "startTime": "2025-01-01T12:00:00+01:00",
+    "endTime": "2025-01-02T00:00:00+01:00",
+    "description": "Mar combinada de 3-4 metros en el litoral atlántico gallego. Precaución en actividades marítimas."
+  },
+  {
+    "id": "mock-alert-004",
+    "severity": "red",
+    "phenomenon": "snow",
+    "provinceIds": ["ourense", "lugo"],
+    "startTime": "2025-01-03T00:00:00+01:00",
+    "endTime": "2025-01-03T12:00:00+01:00",
+    "description": "Nevada intensa en cotas superiores a 600m. Acumulados de 20-40 cm. Riesgo de corte de vías de comunicación."
+  },
+  {
+    "id": "mock-alert-005",
+    "severity": "yellow",
+    "phenomenon": "fog",
+    "provinceIds": ["ourense"],
+    "startTime": "2025-01-04T06:00:00+01:00",
+    "endTime": "2025-01-04T10:00:00+01:00",
+    "description": "Niebla densa en valles del interior de Ourense. Visibilidad inferior a 200 metros en algunas zonas."
+  }
+]
