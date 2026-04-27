@@ -7,6 +7,17 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added (FEAT/i18n — Block 3)
+
+- `svelte-i18n` configured with `navigator.language` auto-detection in `src/i18n/index.ts`
+- `src/i18n/es.json` — Spanish translation (base language, 60+ keys)
+- `src/i18n/gl.json` — Galician translation (full parity with ES)
+- `src/i18n/en.json` — English stub (full structure, for future extension)
+- `src/i18n/pt.json` — Portuguese stub (full structure, for future extension)
+- `LanguageSelector.svelte` component — ES/GL toggle in the header, ARIA-compliant
+- `App.svelte` updated: uses `$_()` for all strings, header with language selector
+- 7 unit tests for `setupI18n` (locale detection, fallback, message registration)
+
 ### Added (FEAT/project-setup — Block 2)
 
 - Project scaffold: Vite + Svelte + TypeScript SPA, no router

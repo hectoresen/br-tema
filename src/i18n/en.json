@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "Brétema",
+    "tagline": "Weather in Galicia",
+    "loading": "Loading…",
+    "error": {
+      "generic": "An error occurred",
+      "network": "Network error. Check your connection.",
+      "noData": "No data available"
+    }
+  },
+  "nav": {
+    "map": "Map",
+    "alerts": "Alerts",
+    "webcams": "Webcams"
+  },
+  "language": {
+    "label": "Language",
+    "es": "Español",
+    "gl": "Galego",
+    "en": "English",
+    "pt": "Português"
+  },
+  "forecast": {
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "day": "Day {n}",
+    "slots": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "night": "Night"
+    },
+    "temperature": {
+      "label": "Temperature",
+      "min": "Min.",
+      "max": "Max.",
+      "current": "Current",
+      "unit": "{value}°"
+    },
+    "precipitation": {
+      "label": "Precipitation",
+      "probability": "Rain prob.",
+      "value": "{value} mm",
+      "probability_value": "{value}%"
+    },
+    "wind": {
+      "label": "Wind",
+      "speed": "{value} km/h",
+      "direction": {
+        "N": "North",
+        "NE": "Northeast",
+        "E": "East",
+        "SE": "Southeast",
+        "S": "South",
+        "SW": "Southwest",
+        "W": "West",
+        "NW": "Northwest"
+      }
+    },
+    "humidity": {
+      "label": "Humidity",
+      "value": "{value}%"
+    },
+    "cloudCover": {
+      "label": "Cloud cover",
+      "value": "{value}%"
+    },
+    "partial": "Partial data"
+  },
+  "weather": {
+    "sunny": "Clear",
+    "partly-cloudy": "Partly cloudy",
+    "cloudy": "Cloudy",
+    "fog": "Fog",
+    "rain-light": "Light rain",
+    "rain-heavy": "Heavy rain",
+    "snow": "Snow",
+    "thunderstorm": "Thunderstorm"
+  },
+  "alert": {
+    "title": "Weather alert",
+    "severity": {
+      "yellow": "Yellow",
+      "orange": "Orange",
+      "red": "Red"
+    },
+    "phenomenon": {
+      "wind": "Wind",
+      "rain": "Rain",
+      "snow": "Snow",
+      "thunderstorm": "Thunderstorm",
+      "coast": "Coastal",
+      "heat": "Heat",
+      "frost": "Frost",
+      "fog": "Fog",
+      "other": "Other"
+    },
+    "active": "Active alerts",
+    "none": "No active alerts",
+    "until": "Until {time}",
+    "from": "From {time}"
+  },
+  "map": {
+    "loading": "Loading map…",
+    "zoomIn": "Zoom in",
+    "zoomOut": "Zoom out",
+    "layers": {
+      "label": "Layers",
+      "general": "General",
+      "wind": "Wind",
+      "precipitation": "Rain",
+      "temperature": "Temperature",
+      "humidity": "Humidity",
+      "storms": "Storms",
+      "webcams": "Webcams",
+      "satellite": "Satellite"
+    }
+  },
+  "province": {
+    "corunha": "A Coruña",
+    "lugo": "Lugo",
+    "ourense": "Ourense",
+    "pontevedra": "Pontevedra"
+  },
+  "concello": {
+    "search": "Search concello…",
+    "notFound": "Concello not found",
+    "back": "Back to map"
+  },
+  "webcam": {
+    "loading": "Loading camera…",
+    "unavailable": "Camera unavailable",
+    "source": "Source: {source}"
+  }
+}

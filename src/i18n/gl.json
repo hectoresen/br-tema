@@ -1,0 +1,135 @@
+{
+  "app": {
+    "title": "Brétema",
+    "tagline": "O tempo en Galicia",
+    "loading": "Cargando…",
+    "error": {
+      "generic": "Produciuse un erro",
+      "network": "Erro de rede. Comproba a túa conexión.",
+      "noData": "Non hai datos dispoñibles"
+    }
+  },
+  "nav": {
+    "map": "Mapa",
+    "alerts": "Avisos",
+    "webcams": "Webcams"
+  },
+  "language": {
+    "label": "Idioma",
+    "es": "Español",
+    "gl": "Galego",
+    "en": "English",
+    "pt": "Português"
+  },
+  "forecast": {
+    "today": "Hoxe",
+    "tomorrow": "Mañá",
+    "day": "Día {n}",
+    "slots": {
+      "morning": "Mañá",
+      "afternoon": "Tarde",
+      "night": "Noite"
+    },
+    "temperature": {
+      "label": "Temperatura",
+      "min": "Mín.",
+      "max": "Máx.",
+      "current": "Actual",
+      "unit": "{value}°"
+    },
+    "precipitation": {
+      "label": "Precipitación",
+      "probability": "Prob. choiva",
+      "value": "{value} mm",
+      "probability_value": "{value}%"
+    },
+    "wind": {
+      "label": "Vento",
+      "speed": "{value} km/h",
+      "direction": {
+        "N": "Norte",
+        "NE": "Nordeste",
+        "E": "Leste",
+        "SE": "Surleste",
+        "S": "Sur",
+        "SW": "Suroeste",
+        "W": "Oeste",
+        "NW": "Noroeste"
+      }
+    },
+    "humidity": {
+      "label": "Humidade",
+      "value": "{value}%"
+    },
+    "cloudCover": {
+      "label": "Nubosidade",
+      "value": "{value}%"
+    },
+    "partial": "Datos parciais"
+  },
+  "weather": {
+    "sunny": "Despexado",
+    "partly-cloudy": "Parcialmente nubrado",
+    "cloudy": "Nubrado",
+    "fog": "Néboa",
+    "rain-light": "Choiva lixeira",
+    "rain-heavy": "Choiva intensa",
+    "snow": "Neve",
+    "thunderstorm": "Tormenta"
+  },
+  "alert": {
+    "title": "Aviso meteorolóxico",
+    "severity": {
+      "yellow": "Amarelo",
+      "orange": "Laranxa",
+      "red": "Vermello"
+    },
+    "phenomenon": {
+      "wind": "Vento",
+      "rain": "Choiva",
+      "snow": "Neve",
+      "thunderstorm": "Tormenta",
+      "coast": "Costeiro",
+      "heat": "Calor",
+      "frost": "Xeada",
+      "fog": "Néboa",
+      "other": "Outro"
+    },
+    "active": "Avisos activos",
+    "none": "Sen avisos activos",
+    "until": "Ata {time}",
+    "from": "Dende {time}"
+  },
+  "map": {
+    "loading": "Cargando mapa…",
+    "zoomIn": "Achegar",
+    "zoomOut": "Afastar",
+    "layers": {
+      "label": "Capas",
+      "general": "Xeral",
+      "wind": "Vento",
+      "precipitation": "Choiva",
+      "temperature": "Temperatura",
+      "humidity": "Humidade",
+      "storms": "Tormentas",
+      "webcams": "Webcams",
+      "satellite": "Satélite"
+    }
+  },
+  "province": {
+    "corunha": "A Coruña",
+    "lugo": "Lugo",
+    "ourense": "Ourense",
+    "pontevedra": "Pontevedra"
+  },
+  "concello": {
+    "search": "Buscar concello…",
+    "notFound": "Concello non atopado",
+    "back": "Volver ao mapa"
+  },
+  "webcam": {
+    "loading": "Cargando cámara…",
+    "unavailable": "Cámara non dispoñible",
+    "source": "Fonte: {source}"
+  }
+}
