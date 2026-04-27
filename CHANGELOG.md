@@ -7,6 +7,18 @@ Format based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added (FEAT/open-meteo — Block 6)
+
+- `src/config/provinces.ts` — canonical province centre coordinates for `getProvinceForecast()` resolution
+- `src/providers/open-meteo.ts` — `OpenMeteoProvider` implementing the full `WeatherProvider` interface:
+  - `getForecast(lat, lon, days)` — hourly data fetched from `api.open-meteo.com`, grouped into morning/afternoon/night slots with per-slot min/max/current temperature, precipitation sum+probability, wind avg, humidity avg, cloudCover avg, mode weatherCode
+  - `getProvinceForecast(provinceId, days)` — delegates to province centre coords
+  - `getConcelloForecast(concelloId, days)` — resolves coords from `concellos.json` (lazy-loaded, cached)
+  - `getAlerts()` — stub returning `mock-alerts.json` (Open-Meteo has no alert feed)
+  - Network errors, HTTP error codes, and malformed responses all throw descriptive errors
+- `src/providers/index.ts` — `activeProvider` export (currently `OpenMeteoProvider`; swap here to change provider)
+- `src/providers/open-meteo.test.ts` — 14 unit tests covering slot grouping, URL params, error paths, and alert fallback
+
 ### Added (FEAT/weather-icons — Block 5)
 
 - `src/icons/sunny.svg`, `partly-cloudy.svg`, `cloudy.svg`, `fog.svg`, `rain-light.svg`, `rain-heavy.svg`, `snow.svg`, `thunderstorm.svg` — 8 stroke-based SVG icons using `currentColor` for theme compatibility
