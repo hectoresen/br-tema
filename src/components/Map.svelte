@@ -41,6 +41,12 @@
 
   // ── State ────────────────────────────────────────────────────────────────────
 
+  // mapWrapperEl: the outer positioned div that MapLibre never touches.
+  // mapEl: given to MapLibre as its canvas container.
+  //   MapLibre adds class 'maplibregl-map' which sets position:relative via its
+  //   bundled CSS. We counter this with an inline style (inline > class specificity)
+  //   so mapEl stays position:absolute and fills mapWrapperEl at all times.
+  let mapWrapperEl: HTMLDivElement
   let mapEl: HTMLDivElement
   let map: maplibregl.Map | null = null
   let mapReady = false
@@ -154,18 +160,18 @@
     // so mapEl.clientWidth/clientHeight are correct when MapLibre reads them.
     // tick() only flushes Svelte's DOM updates but does NOT guarantee layout.
     requestAnimationFrame(() => {
-      if (!mapEl) return
+      if (!mapEl || !mapWrapperEl) return
 
-      const w = mapEl.clientWidth
-      const h = mapEl.clientHeight
-      console.log('[Map] rAF fired — container:', w, 'x', h)
+      const w = mapWrapperEl.clientWidth
+      const h = mapWrapperEl.clientHeight
+      console.log('[Map] rAF fired — wrapper:', w, 'x', h)
       if (w === 0 || h === 0) {
-        console.error('[Map] Container has 0 dimensions at rAF time. Layout not ready?')
+        console.error('[Map] Wrapper has 0 dimensions at rAF time. Layout not ready?')
         // Retry after another frame to give flex layout more time
         requestAnimationFrame(() => {
-          if (!mapEl) return
-          console.log('[Map] Retry rAF — container:', mapEl.clientWidth, 'x', mapEl.clientHeight)
-          if (mapEl.clientWidth === 0 || mapEl.clientHeight === 0) {
+          if (!mapEl || !mapWrapperEl) return
+          console.log('[Map] Retry rAF — wrapper:', mapWrapperEl.clientWidth, 'x', mapWrapperEl.clientHeight)
+          if (mapWrapperEl.clientWidth === 0 || mapWrapperEl.clientHeight === 0) {
             console.error('[Map] Still 0 after double rAF — skipping map init')
             return
           }
@@ -178,7 +184,7 @@
   })
 
   function initMapLibre() {
-    if (!mapEl || map) return
+    if (!mapEl || !mapWrapperEl || map) return
     map = new maplibregl.Map({
       container: mapEl,
       style: MAP_STYLE_URL,
@@ -200,9 +206,11 @@
       'top-right'
     )
 
-    // Keep canvas correctly sized whenever the flex container resizes
+    // Observe the WRAPPER (which MapLibre never touches), not mapEl.
+    // MapLibre adds class 'maplibregl-map' to mapEl which changes its CSS
+    // position — observing mapEl directly would give wrong dimensions.
     resizeObserver = new ResizeObserver(() => { map?.resize() })
-    resizeObserver.observe(mapEl)
+    resizeObserver.observe(mapWrapperEl)
 
     map.on('error', (e) => {
       console.warn('[MapLibre error]', e.error?.message ?? e)
@@ -322,13 +330,7 @@
         const canvas = map?.getCanvas()
         const cw = canvas?.width ?? 0
         const ch = canvas?.height ?? 0
-        console.log('[Map] idle fired — canvas:', cw, 'x', ch, '| mapEl:', mapEl?.clientWidth, 'x', mapEl?.clientHeight)
-        if (cw === 0 || ch === 0) {
-          console.error('[Map] Canvas is 0x0 at idle! Forcing resize and waiting for next idle...')
-          map?.resize()
-          map?.once('idle', () => { mapReady = true })
-          return
-        }
+        console.log('[Map] idle — canvas:', cw, 'x', ch, '| wrapper:', mapWrapperEl?.clientWidth, 'x', mapWrapperEl?.clientHeight, '| mapEl:', mapEl?.clientWidth, 'x', mapEl?.clientHeight)
         mapReady = true
         console.log('[Map] mapReady = true')
       })
@@ -466,9 +468,19 @@
 
 <!-- 9.9 responsive: fill parent height set by App.svelte (h-screen minus header) -->
 <!-- bg-neutral-100 (light) / bg-neutral-950 (dark): shown only while tiles load -->
-<div class="relative w-full h-full bg-neutral-100 dark:bg-neutral-950">
-  <!-- MapLibre canvas container (task 9.1) -->
-  <div bind:this={mapEl} class="absolute inset-0" role="application" aria-label={$_('map.loading')}></div>
+<div bind:this={mapWrapperEl} class="relative w-full h-full bg-neutral-100 dark:bg-neutral-950">
+  <!--
+    mapEl is given to MapLibre as its canvas container.
+    MapLibre adds the CSS class 'maplibregl-map' which sets position:relative.
+    We use an inline style for position:absolute so it wins (inline > class
+    specificity), keeping mapEl stretched to fill mapWrapperEl at all times.
+  -->
+  <div
+    bind:this={mapEl}
+    style="position:absolute;top:0;right:0;bottom:0;left:0;"
+    role="application"
+    aria-label={$_('map.loading')}
+  ></div>
 
   <!-- Placeholder (task 9.0): covers canvas until map.loaded() fires -->
   {#if !mapReady}
