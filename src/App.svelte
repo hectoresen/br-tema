@@ -12,10 +12,9 @@
   let isDark = false
 
   onMount(() => {
+    // Default is always light. Dark only if the user has explicitly chosen it.
     const stored = localStorage.getItem('bretema-theme')
-    isDark = stored !== null
-      ? stored === 'dark'
-      : window.matchMedia('(prefers-color-scheme: dark)').matches
+    isDark = stored === 'dark'
     applyTheme(isDark)
   })
 

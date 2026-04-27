@@ -273,12 +273,12 @@
 
       // 'idle' fires when tiles are rendered and no pending transitions.
       // Only then remove the placeholder — keeps it visible during real load.
+      // Concellos are NOT loaded here — they are lazy-loaded only when the user
+      // switches to concello view. Loading the 5.4 MB GeoJSON during startup
+      // causes MapLibre to re-process its tile stack mid-render, which clears
+      // the WebGL canvas on many drivers.
       map.once('idle', () => {
         mapReady = true
-        // Defer concellos load to AFTER the map is visually stable.
-        // Adding a large GeoJSON source synchronously inside load can
-        // interfere with tile rendering on some drivers.
-        setTimeout(() => { void loadConcellosLayer() }, 300)
       })
     })
     }) // end requestAnimationFrame
@@ -379,6 +379,15 @@
         markersDebounce = null
       }, 60)
     }
+  }
+
+  // Lazy-load concellos the first time the user switches to concello view (task 9.8)
+  // We defer the 5.4 MB GeoJSON import until it is actually needed so it does
+  // NOT interfere with the initial tile-render cycle (which caused the black screen).
+  let _concellosRequested = false
+  $: if (mapLevel === 'concello' && mapReady && map && !_concellosRequested) {
+    _concellosRequested = true
+    void loadConcellosLayer()
   }
 
   // Toggle concello layer visibility when mapLevel or load state changes (task 9.8)
