@@ -137,22 +137,6 @@
     }
   }
 
-  // ── Province layer paint ─────────────────────────────────────────────────────
-
-  function updateProvincePaint() {
-    if (!map || !mapReady) return
-    const selId = get(selectedProvince) ?? '____'
-    map.setPaintProperty('provinces-fill', 'fill-color', [
-      'case',
-      ['boolean', ['feature-state', 'hover'], false],
-      'rgba(64,64,64,0.7)',
-      ['==', ['get', 'id'], selId],
-      'rgba(29,78,216,0.28)',
-      'rgba(23,23,23,0.25)',
-    ])
-    map.setPaintProperty('provinces-fill', 'fill-opacity', 1)
-  }
-
   // ── Map initialisation ────────────────────────────────────────────────────────
 
   let hoveredProvinceId: string | null = null
@@ -193,12 +177,22 @@
       })
 
       // Fill layer (task 9.2, 9.7)
+      // feature-state expressions for hover+selected live HERE in the layer definition.
+      // NEVER call setPaintProperty() with feature-state expressions after load —
+      // that forces MapLibre to recompile the shader program, clearing the canvas.
       map.addLayer({
         id: 'provinces-fill',
         type: 'fill',
         source: 'provinces',
         paint: {
-          'fill-color': 'rgba(23,23,23,0.25)',
+          'fill-color': [
+            'case',
+            ['boolean', ['feature-state', 'selected'], false],
+            'rgba(29,78,216,0.28)',
+            ['boolean', ['feature-state', 'hover'], false],
+            'rgba(64,64,64,0.7)',
+            'rgba(23,23,23,0.25)',
+          ],
           'fill-opacity': 1,
         },
       })
@@ -259,8 +253,6 @@
 
       // ── Province icon markers (task 9.3) ──────────────────────────────────
       addProvinceMarkers()
-
-      updateProvincePaint()
 
       // ── Lazily load concello GeoJSON ──────────────────────────────────────
       loadConcellosLayer()
@@ -335,9 +327,25 @@
     }
   }
 
+  // ── Province selection feature-state (task 9.7) ───────────────────────────────
+  // Track which province was previously selected so we can clear its feature-state.
+  // Using setFeatureState() is correct here — it never touches shader programs.
+  let _prevSelected: string | null = null
+  $: if (mapReady && map) {
+    if (_prevSelected && _prevSelected !== $selectedProvince) {
+      map.setFeatureState({ source: 'provinces', id: _prevSelected }, { selected: false })
+    }
+    if ($selectedProvince) {
+      map.setFeatureState({ source: 'provinces', id: $selectedProvince }, { selected: true })
+    }
+    _prevSelected = $selectedProvince ?? null
+  }
+
   // ── Reactive updates ──────────────────────────────────────────────────────────
 
-  // Re-render markers when forecast data or selected day/slot/province changes
+  // Re-render markers when forecast data or selected day/slot/province changes.
+  // updateProvincePaint() has been removed — selection is now handled via
+  // setFeatureState above, which does NOT recompile shaders.
   $: {
     $forecastData
     $selectedDay
@@ -345,7 +353,6 @@
     $selectedProvince
     if (mapReady) {
       updateAllMarkers()
-      updateProvincePaint()
     }
   }
 
