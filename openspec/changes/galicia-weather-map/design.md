@@ -434,7 +434,99 @@ El desarrollador es el responsable del tratamiento a efectos del RGPD. El email 
 
 ---
 
-### 21. Adaptador MeteoSIX v5 — arquitectura y field mapping
+### 21. Sistema de diseño visual
+
+**Decisión**: Brétema usa verde atlántico como color corporativo — no el azul institucional de apps de tiempo genéricas. Todos los design tokens derivan de esta identidad.
+
+#### Paleta de color
+
+Tokens definidos en `tailwind.config.ts` bajo `theme.extend.colors.bretema`:
+
+```
+--bretema-green-900: #1A2E24   ← cabecera dark mode
+--bretema-green-800: #2D4A3E   ← cabecera, botones activos, layer activo
+--bretema-green-700: #3D5A3E   ← hover states, borde provincia seleccionada
+--bretema-green-600: #4A7060   ← bordes sobre fondo verde
+--bretema-green-100: #9EC4B0   ← texto secundario sobre verde
+--bretema-green-50:  #F0F5F2   ← fondo día actual en tarjeta concello
+
+--bretema-stone-100: #F5F3EF   ← fondo general de la app (no blanco puro)
+--bretema-stone-50:  #E8E5DF   ← bordes sobre fondo stone
+
+--bretema-amber:     #C4862A   ← temperatura máxima
+--bretema-blue:      #185FA5   ← temperatura mínima, lluvia %
+--bretema-atlantic:  #B8D4E8   ← fondo del mapa (océano Atlántico)
+
+--bretema-alert-yellow:       #F9C74F   ← aviso nivel amarillo
+--bretema-alert-yellow-text:  #7A5800
+--bretema-alert-orange:       #F4845F   ← aviso nivel naranja
+--bretema-alert-orange-text:  #6B2500
+--bretema-alert-red:          #E63946   ← aviso nivel rojo
+--bretema-alert-red-text:     #FFFFFF
+```
+
+#### Tipografía
+
+Fuente del sistema (`font-sans` de Tailwind) en todos los casos — sin fuentes externas para no penalizar el LCP. Jerarquía:
+
+| Uso | Tamaño | Weight | Notas |
+|---|---|---|---|
+| Cabecera app | 15px | 500 | tracking 0.02em |
+| Nombre concello | 13px | 500 | — |
+| Etiquetas | 12px | 400 | — |
+| Metadatos | 11px | 400 | color secundario |
+| Atribución | 10px | 400 | color terciario |
+| Temperaturas | 11px | 500 | máx amber, mín blue |
+
+Mínimo absoluto: 10px. En móvil temperaturas y etiquetas de provincia: 12px mínimo.
+
+#### Cabecera (`Header.svelte`)
+
+Altura fija 44px. Fondo `bretema-green-800`. Sin sombra — borde inferior `0.5px solid bretema-green-600`. Contenido: logotipo (punto verde `#7EB89A` + texto "Brétema" en `#E8F0EC`) a la izquierda. Selector de idioma GL/ES a la derecha como dos botones pill pequeños — activo con borde `#7EB89A`, inactivo en `#9EC4B0` sin borde sólido. En móvil el selector colapsa a un único botón mostrando el idioma activo.
+
+#### Barra de avisos (`AlertsBanner.svelte`)
+
+Fondo `#FFF8E1`, borde inferior `0.5px solid bretema-alert-yellow`. Altura variable — nunca fixed. Icono 16px en `#F9C74F`. Texto 12px/500 color `#7A5800`. Chips a la derecha con color según nivel. Sin avisos: fondo `bretema-stone-100`, texto "Sen avisos activos" en color terciario, sin icono. La barra permanece visible (sin avisos) para evitar CLS.
+
+#### Selector de capas (`LayerSelector.svelte`)
+
+Barra horizontal sobre el mapa. Fondo blanco, borde inferior `0.5px`. Botones 11px, padding `4px 10px`, border-radius `4px`. Inactivo: fondo transparente, borde `0.5px` secundario. Activo: fondo `bretema-green-800`, texto blanco. En móvil: scroll horizontal sin wrap.
+
+Orden fijo (frecuencia de uso esperada, no alfabético): **Xeral · Vento · Temperatura · Humidade · Precipitación · Tormentas · Webcams · Satélite**
+
+#### Mapa (`Map.svelte`)
+
+Estilo base: `positron` (OpenFreeMap) — limpio y minimal, permite buena lectura de iconos meteorológicos superpuestos. Zoom inicial: 7.1 (muestra toda Galicia incluyendo borde sur con Portugal sin exceso de contexto).
+
+Capas de provincia: fill transparente por defecto, hover `bretema-green-700` al 12% opacidad, selected al 22%. Bordes `bretema-green-700` al 60% opacidad, grosor 1.5px.
+
+Iconos de provincia: círculo blanco 36px, opacidad 0.92, borde blanco semitransparente, icono meteorológico 18px. Debajo: nombre en 10px sobre pastilla blanca semitransparente + temperatura máx/mín. En móvil: 28px para no solaparse.
+
+Etiqueta de fecha/franja: esquina inferior izquierda, fondo `rgba(30,50,40,0.75)`, texto blanco 11px/500, padding `3px 8px`, border-radius `3px`.
+
+#### Barra temporal (`TimeBar.svelte`)
+
+Fondo blanco, borde superior `0.5px`. Fila única: flecha ← · slots Mañá/Tarde/Noite · selector días · flecha →. Slots en flex iguales, bordes compartidos, border-radius solo en extremos. Activo: `bretema-green-800`, texto blanco. Días arriba en 10px/0.7 opacidad. Selector de días: 4 pills de 10px, gap 4px; activo `bretema-green-700` texto blanco. Flechas: 28px cuadradas, borde `0.5px`.
+
+#### Sidebar — buscador y tarjeta concello
+
+Buscador: input 36px, fondo `bretema-stone-100`, borde `0.5px` secundario. Debajo: accesos rápidos 7 ciudades principales, 11px `bretema-green-800`. Tarjeta: fondo blanco, border-radius-lg, borde `0.5px`. Grid 4 columnas, columna activa con fondo `bretema-green-50`. Temps: máx `bretema-amber`, mín `bretema-blue`, 11px/500.
+
+#### Panel de provincia (`ProvinceReport.svelte`)
+
+Fondo blanco, border-radius-lg, borde `0.5px`, padding 12px. Grid 2×2 stat cards. Cada stat: fondo `bretema-stone-100`, etiqueta 10px/secundario, valor 14px/500. Sin iconos en stat cards.
+
+#### Layout responsive
+
+| Breakpoint | Sidebar | Notas |
+|---|---|---|
+| ≤390px | Oculto, scroll vertical debajo del mapa | Panel provincia = slide-up drawer 100vw×60vh |
+| 640–1024px | 240px fijo | — |
+| >1024px | 280px fijo | Panel provincia dentro del sidebar, empuja tarjeta hacia abajo |
+
+---
+
+### 22. Adaptador MeteoSIX v5 — arquitectura y field mapping
 
 **Contexto**: MeteoSIX v5 (MeteoGalicia) tiene API key confirmada y documentación oficial completa (`docs/MeteosixApi/API_MeteoSIX_v5_gl.pdf`). Es el proveedor post-MVP prioritario por encima de AEMET para el contexto gallego.
 

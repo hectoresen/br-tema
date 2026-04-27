@@ -246,6 +246,7 @@
       // feature-state expressions for hover+selected live HERE in the layer definition.
       // NEVER call setPaintProperty() with feature-state expressions after load —
       // that forces MapLibre to recompile the shader program, clearing the canvas.
+      // Default fill is transparent so the map tiles show through cleanly.
       map.addLayer({
         id: 'provinces-fill',
         type: 'fill',
@@ -254,10 +255,10 @@
           'fill-color': [
             'case',
             ['boolean', ['feature-state', 'selected'], false],
-            'rgba(29,78,216,0.28)',
+            'rgba(61,90,62,0.22)',
             ['boolean', ['feature-state', 'hover'], false],
-            'rgba(64,64,64,0.7)',
-            'rgba(23,23,23,0.25)',
+            'rgba(61,90,62,0.12)',
+            'rgba(0,0,0,0)',
           ],
           'fill-opacity': 1,
         },
@@ -269,8 +270,9 @@
         type: 'line',
         source: 'provinces',
         paint: {
-          'line-color': '#525252',
+          'line-color': '#3D5A3E',
           'line-width': 1.5,
+          'line-opacity': 0.6,
         },
       })
 

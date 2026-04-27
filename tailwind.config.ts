@@ -6,19 +6,42 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Brand
+        // ── Brétema brand palette (Decision 21) ─────────────────────────────
+        bretema: {
+          // Atlantic green — primary brand colour
+          'green-900': '#1A2E24',
+          'green-800': '#2D4A3E',
+          'green-700': '#3D5A3E',
+          'green-600': '#4A7060',
+          'green-100': '#9EC4B0',
+          'green-50':  '#F0F5F2',
+          // Stone — app background
+          'stone-100': '#F5F3EF',
+          'stone-50':  '#E8E5DF',
+          // Data colours
+          'amber':     '#C4862A',
+          'blue':      '#185FA5',
+          'atlantic':  '#B8D4E8',
+          // Alert severity
+          'alert-yellow':       '#F9C74F',
+          'alert-yellow-text':  '#7A5800',
+          'alert-orange':       '#F4845F',
+          'alert-orange-text':  '#6B2500',
+          'alert-red':          '#E63946',
+          'alert-red-text':     '#FFFFFF',
+        },
+        // ── Legacy tokens (kept for backwards compatibility) ─────────────────
         sky: {
           DEFAULT: '#3b82f6',
           light: '#93c5fd',
           dark: '#1d4ed8',
         },
-        // Alert severity
         alert: {
-          yellow: '#eab308',
-          orange: '#f97316',
-          red: '#ef4444',
+          yellow: '#F9C74F',
+          orange: '#F4845F',
+          red:    '#E63946',
         },
-        // Neutral scale (dark-first)
+        // Neutral scale
         neutral: {
           950: '#0a0a0a',
           900: '#171717',
