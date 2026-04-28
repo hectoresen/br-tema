@@ -131,6 +131,25 @@
   "webcam": {
     "loading": "Loading camera…",
     "unavailable": "Camera unavailable",
-    "source": "Source: {source}"
+    "source": "Source: {source}",
+    "open": "Open camera ↗"
+  },
+  "ui": {
+    "close": "Close",
+    "nav_time": "Time navigation",
+    "prev": "Previous",
+    "next": "Next",
+    "concello_detail": "Concello detail"
+  },
+  "privacy": {
+    "link": "Privacy",
+    "title": "Privacy & data",
+    "intro": "Brétema does not collect personal data or use tracking cookies.",
+    "data_heading": "What data is used",
+    "data_body": "Your browser makes direct requests to Open-Meteo (weather forecast) and RainViewer (radar). No request passes through Brétema's own servers.",
+    "analytics_heading": "Analytics",
+    "analytics_body": "We use Plausible Analytics, which is cookieless and does not collect personally identifiable information. All data is aggregated and anonymous.",
+    "contact_heading": "Contact",
+    "contact_body": "For any privacy-related query: privacy@bretema.app"
   }
 }

@@ -131,6 +131,25 @@
   "webcam": {
     "loading": "A carregar câmara…",
     "unavailable": "Câmara indisponível",
-    "source": "Fonte: {source}"
+    "source": "Fonte: {source}",
+    "open": "Abrir câmara ↗"
+  },
+  "ui": {
+    "close": "Fechar",
+    "nav_time": "Navegação temporal",
+    "prev": "Anterior",
+    "next": "Seguinte",
+    "concello_detail": "Detalhe do concello"
+  },
+  "privacy": {
+    "link": "Privacidade",
+    "title": "Privacidade e dados",
+    "intro": "Brétema não recolhe dados pessoais nem usa cookies de rastreamento.",
+    "data_heading": "Que dados são usados",
+    "data_body": "O seu navegador faz pedidos diretos ao Open-Meteo (previsão meteorológica) e ao RainViewer (radar). Nenhum pedido passa pelos servidores próprios do Brétema.",
+    "analytics_heading": "Analytics",
+    "analytics_body": "Usamos o Plausible Analytics, que não usa cookies e não recolhe informação pessoal identificável. Os dados são agregados e anónimos.",
+    "contact_heading": "Contacto",
+    "contact_body": "Para qualquer dúvida sobre privacidade: privacidade@bretema.app"
   }
 }

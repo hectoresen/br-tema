@@ -8,6 +8,7 @@
    * Task 11: webcam icons on map + popup with name, source, and URL.
    */
   import { onDestroy } from 'svelte'
+  import { get } from 'svelte/store'
   import maplibregl from 'maplibre-gl'
   import { _ } from 'svelte-i18n'
   import type maplibreglTypes from 'maplibre-gl'
@@ -62,17 +63,18 @@
   function buildPopupHTML(webcam: Webcam): string {
     const title = webcam.nameGl ?? webcam.name
     const mockLabel = webcam.mock ? ' <span style="color:#9A9A9A;">(demo)</span>' : ''
+    const t = get(_)
     const linkHTML = webcam.url
       ? `<a href="${webcam.url}" target="_blank" rel="noopener noreferrer"
             style="display:block;margin-top:6px;font-size:11px;color:#185FA5;text-decoration:underline;">
-            Abrir cámara ↗
+            ${t('webcam.open')}
           </a>`
-      : `<span style="display:block;margin-top:6px;font-size:11px;color:#9A9A9A;">Non dispoñible</span>`
+      : `<span style="display:block;margin-top:6px;font-size:11px;color:#9A9A9A;">${t('webcam.unavailable')}</span>`
 
     return `
       <div style="font-family:system-ui,sans-serif;min-width:160px;max-width:220px;">
         <p style="font-size:13px;font-weight:500;color:#1A1A1A;margin:0 0 2px;">${title}${mockLabel}</p>
-        <p style="font-size:11px;color:#9A9A9A;margin:0;">Fonte: ${webcam.source}</p>
+        <p style="font-size:11px;color:#9A9A9A;margin:0;">${t('webcam.source', { values: { source: webcam.source } })}</p>
         ${linkHTML}
       </div>
     `

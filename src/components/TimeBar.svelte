@@ -63,7 +63,7 @@
   class="flex-shrink-0 flex items-center gap-2 px-3 py-2"
   style="background:#FFFFFF; border-top:0.5px solid #E8E5DF;"
   role="navigation"
-  aria-label="Navegación temporal"
+  aria-label={$_('ui.nav_time')}
 >
 
   <!-- ── Left arrow ── -->
@@ -71,7 +71,7 @@
     type="button"
     class="flex items-center justify-center flex-shrink-0 transition-opacity"
     style="width:36px; height:36px; border:0.5px solid #E8E5DF; border-radius:4px; background:transparent; {canGoPrev ? '' : 'opacity:0.3; pointer-events:none;'}"
-    aria-label="Anterior"
+    aria-label={$_('ui.prev')}
     disabled={!canGoPrev}
     on:click={prev}
   >
@@ -122,7 +122,7 @@
     type="button"
     class="flex items-center justify-center flex-shrink-0 transition-opacity"
     style="width:36px; height:36px; border:0.5px solid #E8E5DF; border-radius:4px; background:transparent; {canGoNext ? '' : 'opacity:0.3; pointer-events:none;'}"
-    aria-label="Seguinte"
+    aria-label={$_('ui.next')}
     disabled={!canGoNext}
     on:click={next}
   >
