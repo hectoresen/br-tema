@@ -16,12 +16,14 @@
   import { MAP_STYLE_URL, GALICIA_CENTER, GALICIA_ZOOM } from '../config/map'
   import { PROVINCE_CENTRES } from '../config/provinces'
   import {
+    activeLayer,
     selectedProvince,
     selectedConcello,
     selectedDay,
     selectedTimeSlot,
     concellosGeoJSONLoaded,
     DAYS_AHEAD,
+    type MapLayer,
   } from '../stores/index'
   import { forecastData } from '../stores/forecast'
   import { getWeatherIcon } from '../icons/get-weather-icon'
@@ -82,6 +84,126 @@
 
   // ── Marker helpers ────────────────────────────────────────────────────────────
 
+  // ── Data-layer helpers ─────────────────────────────────────────────────────
+
+  function normalizeTemp(temp: number): number {
+    // Maps -5°C..35°C to 0..100
+    return Math.max(0, Math.min(100, ((temp - (-5)) / 40) * 100))
+  }
+
+  function isThunderstormCode(code: number): boolean {
+    return code === 95 || code === 96 || code === 99
+  }
+
+  function updateDataFeatureStates() {
+    if (!map || !mapReady) return
+    const day = get(selectedDay)
+    const slot = get(selectedTimeSlot)
+    for (const id of PROVINCE_IDS) {
+      const s = getProvinceSlot(id, day, slot)
+      if (!s) continue
+      map.setFeatureState({ source: 'provinces', id }, {
+        tempNorm: normalizeTemp(s.temperature.max),
+        precipNorm: s.precipitation.probability,
+        humidNorm: s.humidity,
+        stormNorm: isThunderstormCode(s.weatherCode) ? 100 : 0,
+      })
+    }
+  }
+
+  function addDataLayers() {
+    if (!map) return
+    const BEFORE = 'provinces-fill'
+
+    // Temperature layer (cold blue → white → hot red)
+    map.addLayer({
+      id: 'provinces-data-temp',
+      type: 'fill',
+      source: 'provinces',
+      layout: { visibility: 'none' },
+      paint: {
+        'fill-color': [
+          'interpolate', ['linear'],
+          ['coalesce', ['feature-state', 'tempNorm'], 50],
+          0,  '#4393C3',
+          50, '#F7F7F7',
+          100, '#E63946',
+        ],
+        'fill-opacity': 0.65,
+      },
+    }, BEFORE)
+
+    // Precipitation layer (transparent → bretema-blue)
+    map.addLayer({
+      id: 'provinces-data-precip',
+      type: 'fill',
+      source: 'provinces',
+      layout: { visibility: 'none' },
+      paint: {
+        'fill-color': '#185FA5',
+        'fill-opacity': [
+          'interpolate', ['linear'],
+          ['coalesce', ['feature-state', 'precipNorm'], 0],
+          0, 0,
+          40, 0.15,
+          100, 0.65,
+        ],
+      },
+    }, BEFORE)
+
+    // Humidity layer (transparent → bretema-green-800)
+    map.addLayer({
+      id: 'provinces-data-humidity',
+      type: 'fill',
+      source: 'provinces',
+      layout: { visibility: 'none' },
+      paint: {
+        'fill-color': '#2D4A3E',
+        'fill-opacity': [
+          'interpolate', ['linear'],
+          ['coalesce', ['feature-state', 'humidNorm'], 50],
+          0, 0,
+          50, 0.2,
+          100, 0.6,
+        ],
+      },
+    }, BEFORE)
+
+    // Storms layer (transparent → alert-orange)
+    map.addLayer({
+      id: 'provinces-data-storms',
+      type: 'fill',
+      source: 'provinces',
+      layout: { visibility: 'none' },
+      paint: {
+        'fill-color': '#F4845F',
+        'fill-opacity': [
+          'interpolate', ['linear'],
+          ['coalesce', ['feature-state', 'stormNorm'], 0],
+          0, 0,
+          100, 0.55,
+        ],
+      },
+    }, BEFORE)
+  }
+
+  function syncDataLayerVisibility(layer: MapLayer) {
+    if (!map) return
+    const layers: Record<string, boolean> = {
+      'provinces-data-temp':     layer === 'temperature',
+      'provinces-data-precip':   layer === 'precipitation',
+      'provinces-data-humidity': layer === 'humidity',
+      'provinces-data-storms':   layer === 'storms',
+    }
+    for (const [id, visible] of Object.entries(layers)) {
+      if (map.getLayer(id)) {
+        map.setLayoutProperty(id, 'visibility', visible ? 'visible' : 'none')
+      }
+    }
+  }
+
+  // ── Marker helpers ────────────────────────────────────────────────────────────
+
   function buildMarkerEl(provinceId: ProvinceId): HTMLDivElement {
     const el = document.createElement('div')
     el.style.cssText = 'cursor:pointer;'
@@ -98,13 +220,40 @@
     const day = get(selectedDay)
     const slot = get(selectedTimeSlot)
     const slotData = getProvinceSlot(provinceId, day, slot)
-    const iconId: WeatherIconId = slotData ? getWeatherIcon(slotData) : 'cloudy'
     const isSelected = get(selectedProvince) === provinceId
+    const layer = get(activeLayer)
 
     // Light-mode-first colours; same in both themes (map tiles are always light)
     const bg = isSelected ? 'rgba(29,78,216,0.9)' : 'rgba(255,255,255,0.92)'
     const border = isSelected ? '#3b82f6' : '#d4d4d4'
     const color = isSelected ? '#ffffff' : '#171717'
+
+    if (layer === 'wind' && slotData) {
+      // Wind marker: speed + directional arrow
+      const speed = Math.round(slotData.wind.speed)
+      // Wind direction is where wind comes FROM; arrow points where it's going
+      const headingDeg = (slotData.wind.direction + 180) % 360
+      el.innerHTML = `
+        <div style="
+          background:${bg};border:2px solid ${border};border-radius:999px;
+          width:44px;height:44px;display:flex;flex-direction:column;
+          align-items:center;justify-content:center;
+          box-shadow:0 2px 8px rgba(0,0,0,0.5);color:${color};
+          transition:transform 0.15s,border-color 0.15s;position:relative;
+          gap:0;
+        ">
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14">
+            <path d="M7 1L11.5 11.5L7 9L2.5 11.5Z" fill="${isSelected ? '#fff' : '#185FA5'}" transform="rotate(${headingDeg} 7 7)"/>
+          </svg>
+          <span style="font-size:10px;font-weight:500;font-family:system-ui,sans-serif;line-height:1;">${speed}</span>
+          <span style="position:absolute;bottom:-16px;left:50%;transform:translateX(-50%);font-size:9px;font-family:system-ui,sans-serif;color:#a3a3a3;white-space:nowrap;">km/h</span>
+        </div>
+      `
+      return
+    }
+
+    // Default: weather icon + temperature
+    const iconId: WeatherIconId = slotData ? getWeatherIcon(slotData) : 'cloudy'
     const tempText = slotData ? `${Math.round(slotData.temperature.max)}°` : ''
 
     // Extract just the inner SVG content (strip outer <svg> tag) and embed at size 26
@@ -320,6 +469,9 @@
         selectedProvince.set(current === id ? null : id)
       })
 
+      // ── Data fill layers (tasks 10.4-10.7) ──────────────────────────────────
+      addDataLayers()
+
       // ── Province icon markers (task 9.3) ──────────────────────────────────
       addProvinceMarkers()
 
@@ -421,20 +573,27 @@
 
   // ── Reactive updates ──────────────────────────────────────────────────────────
 
-  // Re-render markers on data/selection changes — debounced to prevent
-  // rapid-fire innerHTML sets when all 4 province forecasts arrive at once.
+  // Re-render markers + data feature-states on data/selection/layer changes.
+  // Debounced to avoid rapid-fire DOM sets when all 4 province forecasts arrive.
   $: {
     $forecastData
     $selectedDay
     $selectedTimeSlot
     $selectedProvince
+    $activeLayer
     if (mapReady) {
       if (markersDebounce) clearTimeout(markersDebounce)
       markersDebounce = setTimeout(() => {
         updateAllMarkers()
+        updateDataFeatureStates()
         markersDebounce = null
       }, 60)
     }
+  }
+
+  // Sync data-layer visibility when activeLayer store changes
+  $: if (mapReady && map) {
+    syncDataLayerVisibility($activeLayer)
   }
 
   // Lazy-load concellos the first time the user switches to concello view (task 9.8)

@@ -8,12 +8,14 @@
   import Sidebar from './components/Sidebar.svelte'
   import { alerts } from './stores/alerts'
   import { forecastData } from './stores/forecast'
-  import { DAYS_AHEAD } from './stores/ui'
+  import { DAYS_AHEAD, selectedConcello } from './stores/ui'
+  import concellosRaw from './data/concellos.json'
 
   // Dev-only preview — tree-shaken away in production builds
   const DEV = import.meta.env.DEV
   let showDevIcons = false
 
+  const concellosData = concellosRaw as Array<{ id: string; name: string; nameGl: string }>
   const PROVINCE_IDS = ['corunha', 'lugo', 'ourense', 'pontevedra'] as const
 
   onMount(() => {
@@ -21,6 +23,16 @@
     // Task 8.12 — load all 4 provinces in parallel at startup so markers have data
     void Promise.all(PROVINCE_IDS.map((id) => forecastData.loadProvince(id, DAYS_AHEAD)))
   })
+
+  // Task 18.3 — dynamic <title> reactive to selectedConcello
+  $: {
+    const c = $selectedConcello
+      ? concellosData.find((x) => x.id === $selectedConcello)
+      : null
+    document.title = c
+      ? `${c.nameGl ?? c.name} — Brétema`
+      : 'Brétema — O tempo en Galicia'
+  }
 </script>
 
 <!--
