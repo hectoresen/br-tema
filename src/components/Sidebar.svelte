@@ -1,8 +1,9 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
-  import { searchConcello } from '../stores'
+  import { searchConcello, selectedConcello } from '../stores'
   import ConcellosCard from './ConcellosCard.svelte'
   import ProvinceReport from './ProvinceReport.svelte'
+  import ConcellosDetail from './ConcellosDetail.svelte'
   import concellosRaw from '../data/concellos.json'
 
   const concellosData = concellosRaw as Array<{
@@ -51,8 +52,12 @@
 <!-- Sidebar wrapper: white background, full height -->
 <div class="flex flex-col bg-white" style="min-height:100%;">
 
-  <!-- Search input -->
-  <div class="relative px-3 pt-3 pb-2">
+  {#if $selectedConcello}
+    <!-- Full concello detail view (task 16) -->
+    <ConcellosDetail />
+  {:else}
+    <!-- Search input -->
+    <div class="relative px-3 pt-3 pb-2">
     <input
       type="search"
       bind:value={searchText}
@@ -118,4 +123,5 @@
 
   <!-- Province report (when a province is selected on the map) -->
   <ProvinceReport />
+  {/if}
 </div>

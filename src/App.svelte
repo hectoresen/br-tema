@@ -7,13 +7,19 @@
   import Map from './components/Map.svelte'
   import Sidebar from './components/Sidebar.svelte'
   import { alerts } from './stores/alerts'
+  import { forecastData } from './stores/forecast'
+  import { DAYS_AHEAD } from './stores/ui'
 
   // Dev-only preview — tree-shaken away in production builds
   const DEV = import.meta.env.DEV
   let showDevIcons = false
 
+  const PROVINCE_IDS = ['corunha', 'lugo', 'ourense', 'pontevedra'] as const
+
   onMount(() => {
     alerts.load()
+    // Task 8.12 — load all 4 provinces in parallel at startup so markers have data
+    void Promise.all(PROVINCE_IDS.map((id) => forecastData.loadProvince(id, DAYS_AHEAD)))
   })
 </script>
 

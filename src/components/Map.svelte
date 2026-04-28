@@ -29,6 +29,7 @@
   import type { SlotForecast, TimeSlot } from '../types/forecast'
   import type { WeatherIconId } from '../types/weather-icon'
   import MapPlaceholder from './MapPlaceholder.svelte'
+  import Attribution from './Attribution.svelte'
   import provincesGeoJSON from '../data/galicia-provinces.geojson'
 
   // ── Config ──────────────────────────────────────────────────────────────────
@@ -491,9 +492,11 @@
     </div>
   {/if}
 
+  <!-- Data attribution overlay (task 20.1-20.2) -->
+  <Attribution />
+
   <!-- Hover tooltip (task 9.4) -->
-  {#if tooltipVisible && tooltipProvinceId}
-    <div
+  {#if tooltipVisible && tooltipProvinceId}    <div
       class="absolute z-20 pointer-events-none"
       style="left:{tooltipX + 12}px;top:{tooltipY - 12}px"
     >
