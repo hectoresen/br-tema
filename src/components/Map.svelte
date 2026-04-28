@@ -32,6 +32,8 @@
   import type { WeatherIconId } from '../types/weather-icon'
   import MapPlaceholder from './MapPlaceholder.svelte'
   import Attribution from './Attribution.svelte'
+  import WebcamLayer from './WebcamLayer.svelte'
+  import SatelliteLayer from './SatelliteLayer.svelte'
   import provincesGeoJSON from '../data/galicia-provinces.geojson'
 
   // ── Config ──────────────────────────────────────────────────────────────────
@@ -653,6 +655,16 @@
 
   <!-- Data attribution overlay (task 20.1-20.2) -->
   <Attribution />
+
+  <!-- Webcam markers (Task 11) — mounted only when webcams layer is active -->
+  {#if mapReady && map && $activeLayer === 'webcams'}
+    <WebcamLayer {map} />
+  {/if}
+
+  <!-- Satellite radar overlay (Task 12) — mounted only when satellite layer is active -->
+  {#if mapReady && map && $activeLayer === 'satellite'}
+    <SatelliteLayer {map} />
+  {/if}
 
   <!-- Hover tooltip (task 9.4) -->
   {#if tooltipVisible && tooltipProvinceId}    <div

@@ -93,7 +93,21 @@
 
   <!-- Loading / error / data states -->
   {#if isLoading && days.length === 0}
-    <div class="py-4 text-center" style="font-size:11px; color:#9A9A9A;">{$_('app.loading')}</div>
+    <!-- Skeleton: 4-column placeholder -->
+    <div class="grid grid-cols-4 overflow-hidden rounded-xl" style="border:0.5px solid #E8E5DF;">
+      {#each [0,1,2,3] as i}
+        <div
+          class="flex flex-col items-center gap-1.5 py-2 px-1"
+          style:border-right={i < 3 ? '0.5px solid #E8E5DF' : 'none'}
+        >
+          <div class="rounded" style="width:28px;height:9px;background:#E8E5DF;"></div>
+          <div class="rounded-full" style="width:20px;height:20px;background:#E8E5DF;"></div>
+          <div class="rounded" style="width:22px;height:9px;background:#E8E5DF;"></div>
+          <div class="rounded" style="width:22px;height:9px;background:#E8E5DF;"></div>
+          <div class="rounded" style="width:20px;height:8px;background:#E8E5DF;"></div>
+        </div>
+      {/each}
+    </div>
   {:else if hasError && days.length === 0}
     <div class="py-4 text-center" style="font-size:11px; color:#9A9A9A;">{$_('app.error.generic')}</div>
   {:else if days.length > 0}

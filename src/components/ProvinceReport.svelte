@@ -47,7 +47,15 @@
     </div>
 
     {#if isLoading && days.length === 0}
-      <div class="py-3 text-center" style="font-size:11px; color:#9A9A9A;">{$_('app.loading')}</div>
+      <!-- Skeleton: 2×2 stat grid -->
+      <div class="grid grid-cols-2 gap-1.5">
+        {#each [0,1,2,3] as _}
+          <div class="rounded-lg p-2" style="background:#F5F3EF; min-height:52px;">
+            <div class="rounded mb-2" style="width:40px;height:8px;background:#E8E5DF;"></div>
+            <div class="rounded" style="width:32px;height:14px;background:#E8E5DF;"></div>
+          </div>
+        {/each}
+      </div>
     {:else if hasError && days.length === 0}
       <div class="py-3 text-center" style="font-size:11px; color:#9A9A9A;">{$_('app.error.generic')}</div>
     {:else if currentSlot}
