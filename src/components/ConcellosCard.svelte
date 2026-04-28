@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte'
   import { _, locale } from 'svelte-i18n'
-  import { forecastData, alerts, searchConcello, selectedDay } from '../stores'
+  import { forecastData, alerts, searchConcello, selectedDay, selectedConcello } from '../stores'
   import WeatherIcon from './WeatherIcon.svelte'
   import { getWeatherIcon } from '../icons/get-weather-icon'
   import type { DayForecast } from '../types/forecast'
@@ -77,11 +77,18 @@
 </script>
 
 <div style="padding:12px 12px 8px;">
-  <!-- Card header: concello name -->
-  <div class="flex items-center mb-2" style="min-height:20px;">
+  <!-- Card header: concello name + "ver detalle" trigger -->
+  <div class="flex items-center justify-between mb-2" style="min-height:20px;">
     <span class="font-medium truncate" style="font-size:13px; color:#1A1A1A;">
       {currentConcello?.nameGl ?? currentConcello?.name ?? $searchConcello}
     </span>
+    <button
+      class="flex-shrink-0 ml-2"
+      style="font-size:11px; color:#3D5A3E; padding:2px 0;"
+      on:click={() => selectedConcello.set($searchConcello)}
+    >
+      ›
+    </button>
   </div>
 
   <!-- Loading / error / data states -->
