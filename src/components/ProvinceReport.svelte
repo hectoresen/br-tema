@@ -42,7 +42,7 @@
         class="leading-none"
         style="font-size:12px; color:#9A9A9A; padding:4px;"
         on:click={() => selectedProvince.set(null)}
-        aria-label="Pechar"
+        aria-label={$_('ui.close')}
       >✕</button>
     </div>
 

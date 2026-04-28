@@ -1,5 +1,6 @@
 ﻿<script lang="ts">
   import { onMount } from 'svelte'
+  import { _ } from 'svelte-i18n'
   import LanguageSelector from './components/LanguageSelector.svelte'
   import AlertsBanner from './components/AlertsBanner.svelte'
   import ErrorBanner from './components/ErrorBanner.svelte'
@@ -12,10 +13,12 @@
   import { DAYS_AHEAD, selectedConcello } from './stores/ui'
   import concellosRaw from './data/concellos.json'
   import ConcellosDetail from './components/ConcellosDetail.svelte'
+  import PrivacyModal from './components/PrivacyModal.svelte'
 
   // Dev-only preview — tree-shaken away in production builds
   const DEV = import.meta.env.DEV
   let showDevIcons = false
+  let showPrivacy = false
 
   const concellosData = concellosRaw as Array<{ id: string; name: string; nameGl: string }>
   const PROVINCE_IDS = ['corunha', 'lugo', 'ourense', 'pontevedra'] as const
@@ -104,7 +107,7 @@
           class="fixed inset-0 z-40 flex flex-col md:hidden"
           role="dialog"
           aria-modal="true"
-          aria-label="Detalle do concello"
+          aria-label={$_('ui.concello_detail')}
         >
           <!-- Backdrop -->
           <div
@@ -112,7 +115,7 @@
             style="background:rgba(0,0,0,0.35);"
             role="button"
             tabindex="0"
-            aria-label="Pechar"
+            aria-label={$_('ui.close')}
             on:click={() => selectedConcello.set(null)}
             on:keydown={(e) => e.key === 'Escape' && selectedConcello.set(null)}
           ></div>
@@ -133,5 +136,25 @@
         <Sidebar />
       </aside>
     </div>
+
+    <!-- ── Footer: privacy link (Task 21.4) ── -->
+    <footer
+      class="flex-shrink-0 flex items-center justify-center px-4 py-1.5"
+      style="background:#FFFFFF; border-top:0.5px solid #E8E5DF;"
+    >
+      <button
+        type="button"
+        class="transition-colors"
+        style="font-size:11px; color:#9A9A9A;"
+        on:click={() => (showPrivacy = true)}
+      >
+        {$_('privacy.link')}
+      </button>
+    </footer>
+  {/if}
+
+  <!-- ── Privacy modal ── -->
+  {#if showPrivacy}
+    <PrivacyModal on:close={() => (showPrivacy = false)} />
   {/if}
 </div>

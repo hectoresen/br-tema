@@ -131,6 +131,25 @@
   "webcam": {
     "loading": "Cargando cámara…",
     "unavailable": "Cámara no disponible",
-    "source": "Fuente: {source}"
+    "source": "Fuente: {source}",
+    "open": "Abrir cámara ↗"
+  },
+  "ui": {
+    "close": "Cerrar",
+    "nav_time": "Navegación temporal",
+    "prev": "Anterior",
+    "next": "Siguiente",
+    "concello_detail": "Detalle del concejo"
+  },
+  "privacy": {
+    "link": "Privacidad",
+    "title": "Privacidad y datos",
+    "intro": "Brétema no recopila datos personales ni usa cookies de seguimiento.",
+    "data_heading": "Qué datos se usan",
+    "data_body": "Tu navegador realiza peticiones directas a Open-Meteo (pronóstico meteorológico) y a RainViewer (radar). Ninguna petición pasa por servidores propios de Brétema.",
+    "analytics_heading": "Analytics",
+    "analytics_body": "Usamos Plausible Analytics, que no usa cookies y no recopila información personal identificable. Los datos son agregados y anónimos.",
+    "contact_heading": "Contacto",
+    "contact_body": "Para cualquier consulta sobre privacidad: privacidad@bretema.app"
   }
 }

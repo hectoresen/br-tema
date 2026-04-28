@@ -50,7 +50,7 @@
       type="button"
       class="flex-shrink-0 flex items-center justify-center"
       style="width:20px; height:20px; color:#6B2500; opacity:0.6;"
-      aria-label="Pechar"
+      aria-label={$_('ui.close')}
       on:click={() => (dismissed = true)}
     >
       <svg
