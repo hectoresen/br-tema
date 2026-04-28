@@ -1,6 +1,7 @@
 <script lang="ts">
   import { _ } from 'svelte-i18n'
   import { activeLayer, type MapLayer } from '../stores/ui'
+  import { trackEvent } from '../lib/analytics'
 
   // Fixed order per spec (Decision 21) — do not reorder based on state
   const LAYERS: MapLayer[] = [
@@ -16,6 +17,7 @@
 
   function select(layer: MapLayer): void {
     activeLayer.set(layer)
+    trackEvent('layer_change', { layer })
   }
 </script>
 

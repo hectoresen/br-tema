@@ -2,6 +2,7 @@
   import { onMount } from 'svelte'
   import LanguageSelector from './components/LanguageSelector.svelte'
   import AlertsBanner from './components/AlertsBanner.svelte'
+  import ErrorBanner from './components/ErrorBanner.svelte'
   import LayerSelector from './components/LayerSelector.svelte'
   import TimeBar from './components/TimeBar.svelte'
   import Map from './components/Map.svelte'
@@ -10,6 +11,7 @@
   import { forecastData } from './stores/forecast'
   import { DAYS_AHEAD, selectedConcello } from './stores/ui'
   import concellosRaw from './data/concellos.json'
+  import ConcellosDetail from './components/ConcellosDetail.svelte'
 
   // Dev-only preview — tree-shaken away in production builds
   const DEV = import.meta.env.DEV
@@ -79,6 +81,8 @@
   {:else}
     <!-- ── Alerts banner ── full-width, always visible ── -->
     <AlertsBanner />
+    <!-- ── Provider error banner ── shown when forecast API fails ── -->
+    <ErrorBanner />
 
     <!-- ── Body: two-column on desktop, stacked on mobile ── -->
     <div class="flex flex-col md:flex-row md:flex-1 md:min-h-0 md:overflow-hidden">
@@ -87,13 +91,41 @@
       <div class="flex flex-col md:flex-1 md:min-h-0">
         <LayerSelector />
         <!-- Map: min height on mobile, flex-1 on desktop -->
-        <div class="relative min-h-[56vw] md:flex-1 md:min-h-0">
+        <div class="relative min-h-[62vw] md:flex-1 md:min-h-0">
           <Map />
         </div>
         <TimeBar />
       </div>
 
       <!-- ── Sidebar: right column on desktop, below on mobile ── -->
+      <!-- Mobile-only slide-up overlay for concello detail (spec: 16.1) -->
+      {#if $selectedConcello}
+        <div
+          class="fixed inset-0 z-40 flex flex-col md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Detalle do concello"
+        >
+          <!-- Backdrop -->
+          <div
+            class="flex-1"
+            style="background:rgba(0,0,0,0.35);"
+            role="button"
+            tabindex="0"
+            aria-label="Pechar"
+            on:click={() => selectedConcello.set(null)}
+            on:keydown={(e) => e.key === 'Escape' && selectedConcello.set(null)}
+          ></div>
+          <!-- Drawer panel -->
+          <div
+            class="flex flex-col rounded-t-2xl overflow-hidden"
+            style="max-height:82vh; background:#FFFFFF;"
+          >
+            <ConcellosDetail />
+          </div>
+        </div>
+      {/if}
+
       <aside
         class="flex-shrink-0 md:w-[280px] md:overflow-y-auto md:border-l"
         style="border-color:#E8E5DF;"

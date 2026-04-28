@@ -6,7 +6,8 @@
     "error": {
       "generic": "An error occurred",
       "network": "Network error. Check your connection.",
-      "noData": "No data available"
+      "noData": "No data available",
+      "provider": "Could not load forecast data. Retrying…"
     }
   },
   "nav": {

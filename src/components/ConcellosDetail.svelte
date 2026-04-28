@@ -6,6 +6,7 @@
   import { getWeatherIcon } from '../icons/get-weather-icon'
   import concellosRaw from '../data/concellos.json'
   import type { DayForecast, TimeSlot } from '../types/forecast'
+  import { trackEvent } from '../lib/analytics'
 
   const concellosData = concellosRaw as Array<{
     id: string
@@ -24,7 +25,10 @@
   $: currentConcello = concellosData.find((c) => c.id === concelloId)
 
   onMount(() => {
-    if (concelloId) forecastData.loadConcello(concelloId)
+    if (concelloId) {
+      forecastData.loadConcello(concelloId)
+      trackEvent('concello_detail_open')
+    }
   })
 
   // Load whenever selectedConcello changes

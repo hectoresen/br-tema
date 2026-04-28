@@ -7,6 +7,7 @@
   import type { DayForecast } from '../types/forecast'
   import type { AlertSeverity } from '../types/alert'
   import concellosRaw from '../data/concellos.json'
+  import { trackEvent } from '../lib/analytics'
 
   const concellosData = concellosRaw as Array<{
     id: string
@@ -30,7 +31,10 @@
   // Reload when searchConcello changes
   $: {
     const id = $searchConcello
-    if (id) forecastData.loadConcello(id)
+    if (id) {
+      forecastData.loadConcello(id)
+      trackEvent('concello_search')
+    }
   }
 
   function getDayLabel(index: number, dateStr: string): string {

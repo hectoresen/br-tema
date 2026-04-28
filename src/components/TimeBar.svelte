@@ -70,7 +70,7 @@
   <button
     type="button"
     class="flex items-center justify-center flex-shrink-0 transition-opacity"
-    style="width:28px; height:28px; border:0.5px solid #E8E5DF; border-radius:4px; background:transparent; {canGoPrev ? '' : 'opacity:0.3; pointer-events:none;'}"
+    style="width:36px; height:36px; border:0.5px solid #E8E5DF; border-radius:4px; background:transparent; {canGoPrev ? '' : 'opacity:0.3; pointer-events:none;'}"
     aria-label="Anterior"
     disabled={!canGoPrev}
     on:click={prev}
@@ -121,7 +121,7 @@
   <button
     type="button"
     class="flex items-center justify-center flex-shrink-0 transition-opacity"
-    style="width:28px; height:28px; border:0.5px solid #E8E5DF; border-radius:4px; background:transparent; {canGoNext ? '' : 'opacity:0.3; pointer-events:none;'}"
+    style="width:36px; height:36px; border:0.5px solid #E8E5DF; border-radius:4px; background:transparent; {canGoNext ? '' : 'opacity:0.3; pointer-events:none;'}"
     aria-label="Seguinte"
     disabled={!canGoNext}
     on:click={next}
