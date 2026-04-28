@@ -53,8 +53,10 @@
 <div class="flex flex-col bg-white" style="min-height:100%;">
 
   {#if $selectedConcello}
-    <!-- Full concello detail view (task 16) -->
-    <ConcellosDetail />
+    <!-- Desktop: inline detail in sidebar; on mobile the App overlay handles it -->
+    <div class="hidden md:flex flex-col" style="min-height:100%; flex:1;">
+      <ConcellosDetail />
+    </div>
   {:else}
     <!-- Search input -->
     <div class="relative px-3 pt-3 pb-2">

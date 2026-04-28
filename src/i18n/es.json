@@ -6,7 +6,8 @@
     "error": {
       "generic": "Ha ocurrido un error",
       "network": "Error de red. Comprueba tu conexión.",
-      "noData": "No hay datos disponibles"
+      "noData": "No hay datos disponibles",
+      "provider": "No se pudo obtener la previsión. Reintentando…"
     }
   },
   "nav": {
