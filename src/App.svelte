@@ -3,6 +3,7 @@
   import LanguageSelector from './components/LanguageSelector.svelte'
   import AlertsBanner from './components/AlertsBanner.svelte'
   import LayerSelector from './components/LayerSelector.svelte'
+  import TimeBar from './components/TimeBar.svelte'
   import Map from './components/Map.svelte'
   import { alerts } from './stores/alerts'
 
@@ -66,5 +67,8 @@
     <div class="flex-1 min-h-0">
       <Map />
     </div>
+
+    <!-- ── Time bar ── slot + day navigation, always visible ── -->
+    <TimeBar />
   {/if}
 </div>
