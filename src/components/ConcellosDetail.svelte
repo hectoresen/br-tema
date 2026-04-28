@@ -95,7 +95,28 @@
   <!-- Grid body -->
   <div class="flex-1 overflow-y-auto px-3 py-3">
     {#if isLoading && days.length === 0}
-      <div class="py-6 text-center" style="font-size:11px; color:#9A9A9A;">{$_('app.loading')}</div>
+      <!-- Skeleton: header + 4×3 grid placeholder -->
+      <div class="grid" style="grid-template-columns:36px repeat(4,1fr); gap:0;">
+        <div></div>
+        {#each [0,1,2,3] as _}
+          <div class="flex flex-col items-center gap-1 py-1 pb-2">
+            <div class="rounded" style="width:24px;height:8px;background:#E8E5DF;"></div>
+            <div class="rounded" style="width:20px;height:9px;background:#E8E5DF;"></div>
+            <div class="rounded" style="width:16px;height:8px;background:#E8E5DF;"></div>
+          </div>
+        {/each}
+        {#each [0,1,2] as _s}
+          <div class="flex items-center py-1.5">
+            <div class="rounded" style="width:20px;height:8px;background:#E8E5DF;"></div>
+          </div>
+          {#each [0,1,2,3] as _d}
+            <div class="flex flex-col items-center gap-1 py-1.5">
+              <div class="rounded-full" style="width:18px;height:18px;background:#E8E5DF;"></div>
+              <div class="rounded" style="width:14px;height:8px;background:#E8E5DF;"></div>
+            </div>
+          {/each}
+        {/each}
+      </div>
     {:else if hasError && days.length === 0}
       <div class="py-6 text-center" style="font-size:11px; color:#9A9A9A;">{$_('app.error.generic')}</div>
     {:else if days.length > 0}
